@@ -133,6 +133,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DataBase\UserStore.mdf" />
+    <Content Include="App_Data\DataBase\UserStore_log.ldf">
+      <DependentUpon>UserStore.mdf</DependentUpon>
+    </Content>
     <Content Include="img\MenuLogo.png" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
@@ -168,7 +172,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

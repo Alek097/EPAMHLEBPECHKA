@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\UsersStoreDB.cs" />
     <Compile Include="Menu\IMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\MenuItem.cs" />

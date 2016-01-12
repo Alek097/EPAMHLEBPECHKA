@@ -3,3 +3,7 @@ D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaL
 D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaLib.pdb
 D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.dll
 D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.pdb
+E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaLib.dll
+E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaLib.pdb
+E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.dll
+E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.pdb
