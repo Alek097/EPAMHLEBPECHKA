@@ -1,0 +1,5 @@
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.csprojResolveAssemblyReference.cache
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaLib.dll
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaLib.pdb
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.dll
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.pdb

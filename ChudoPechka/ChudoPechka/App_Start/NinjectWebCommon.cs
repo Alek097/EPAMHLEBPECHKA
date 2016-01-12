@@ -5,11 +5,15 @@ namespace ChudoPechka.App_Start
 {
     using System;
     using System.Web;
+    using System.Web.Mvc;
+    using System.Collections.Generic;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
+
+    using ChudoPechkaLib.Menu;
 
     public static class NinjectWebCommon 
     {
@@ -61,6 +65,34 @@ namespace ChudoPechka.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-        }        
+            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+        }
+
+
+        public class NinjectDependencyResolver : IDependencyResolver
+        {
+            private IKernel kernel;
+
+            public NinjectDependencyResolver(IKernel kernelParam)
+            {
+                kernel = kernelParam;
+                AddBindings();
+            }
+
+            public object GetService(Type serviceType)
+            {
+                return kernel.TryGet(serviceType);
+            }
+
+            public IEnumerable<object> GetServices(Type serviceType)
+            {
+                return kernel.GetAll(serviceType);
+            }
+
+            private void AddBindings()
+            {
+                this.kernel.Bind<IMenu>().To<Menu>().InSingletonScope();
+            }
+        }
     }
 }

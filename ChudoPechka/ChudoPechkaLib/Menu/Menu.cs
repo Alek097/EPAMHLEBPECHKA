@@ -8,23 +8,27 @@ using System.Text.RegularExpressions;
 
 namespace ChudoPechkaLib.Menu
 {
-    class Menu
+    public class Menu : IMenu
     {
-        public static Menu Field
+
+
+        public List<MenuItem> MenuItems
         {
             get
             {
-                if (_field == null)
-                    _field = new Menu();
-                return _field;
+                return this._menuItems;
+            }
+
+            set
+            {
+                throw new System.Data.ReadOnlyException();
             }
         }
-        private static Menu _field;
-        public List<MenuItem> MenuItems { get; set; }
 
+        private List<MenuItem> _menuItems = new List<MenuItem>(5);
         private Thread _refreshMenu;
         private const string _chudoPechka = "http://chudo-pechka.by/";
-        private Menu()
+        public Menu()
         {
             this.Loop();
             _refreshMenu = new Thread(new ThreadStart(() =>
@@ -58,7 +62,7 @@ namespace ChudoPechkaLib.Menu
 
         private void ValidationMenu(string html)
         {
-            List<XmlNode> ValidDays = new List<XmlNode>(3);
+            List<XmlNode> ValidDays = new List<XmlNode>(5);
             string xml = this.GetXmlMenu(html);
 
             XmlDocument doc = new XmlDocument();
@@ -96,7 +100,7 @@ namespace ChudoPechkaLib.Menu
                 itemMenu.Menu = node.LastChild.OuterXml
                     .Replace("THIS_IS", "&nbsp")
                     .Replace("<div class=\"but but-zakaz-menu\">Заказать обед</div>", "");
-                this.MenuItems.Add(itemMenu);
+                this._menuItems.Add(itemMenu);
             }
 
         }

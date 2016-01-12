@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChudoPechkaLib.Menu
 {
-    struct MenuItem
+    public struct MenuItem
     {
         public string Day;
         public string Img;

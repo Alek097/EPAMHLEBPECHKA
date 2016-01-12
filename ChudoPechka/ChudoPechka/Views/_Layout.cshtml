@@ -3,26 +3,71 @@
 <html>
 <head>
     <style>
-        body{
-            margin:0px;
+        body {
+            margin: 0px;
+        }
+        #content{
+            width:800px;
+            height:auto;
+            border-right: solid black 1px;
+            border-left: solid black 1px;
+            margin:auto;
+            margin-top:0px;
         }
 
         #cap {
-            width:100%;
-            background-color:#00050A;
-            font-family:Arial;
-            color:white;
-            padding: 4%;
+            background-color: #00050A;
+            width: 100%;
+            height: auto;
+        }
+
+        #menu {
+            list-style: none;
+            color: white;
+            font-family: Arial;
+            font-size: 90%;
+        }
+
+        #logo {
+            width: 5%;
+            height: auto;
+            border-radius: 100%;
+        }
+
+        ul, li {
+            display: inline;
+        }
+
+        ul {
+            padding: 0px;
         }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    @RenderSection("ScriptAndStyle")
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
     <div>
-        <div id="cap">Чудо-Печка</div>
-        @RenderBody()
+        <div id="cap">
+            <img src="http://chudo-pechka.by/assets/templates/Chudopechka/images/logo.png" id="logo" />
+            <div style="float:right; display:inline; margin-right: 1.8%; margin-top: 1.8%;">
+                <ul id="menu">
+                    @if (false)
+                    {
+
+                    }
+                    else
+                    {
+                        <li>Вход</li>
+                        <li>Регистрация</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+            @RenderBody()
+        </div>
     </div>
 </body>
 </html>

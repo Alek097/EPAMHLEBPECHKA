@@ -1,6 +1,23 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-}
-<h2>Index</h2>
 
+}
+@section ScriptAndStyle{
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(window).load(function () {
+            $.ajax({
+                method: "Get",
+                url: "@Url.Action("GetMenu","Home")",
+                contentType: "html",
+                success: function (ResHtml) {
+                    $("#content").html(ResHtml);
+                    $(".menuItem").css("width", "800px");
+                    $(".menuItem > img").css("width","800px")
+                }
+            });
+
+        })
+    </script>
+}
