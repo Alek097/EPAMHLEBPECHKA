@@ -7,3 +7,4 @@ E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaL
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaLib.pdb
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.dll
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.pdb
+E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.csprojResolveAssemblyReference.cache

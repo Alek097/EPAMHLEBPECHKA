@@ -12,13 +12,13 @@ namespace ChudoPechkaLib.Data
 
         public static void Open(string connectionString)
         {
-            _dbConnection = new SqlConnection(connectionString);
-            _dbConnection.Open();
+            //_dbConnection = new SqlConnection(connectionString);
+            //_dbConnection.Open();
         }
 
         public static void Close()
         {
-            _dbConnection.Close();
+            //_dbConnection.Close();
         }
     }
 }
