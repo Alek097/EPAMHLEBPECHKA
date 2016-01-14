@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+@model ChudoPechka.Models.RegisterModel
+
+@section ScriptAndStyle
+    {
+
+    }
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+    <input type="submit" value="Регистрация" />
+}
+
+
