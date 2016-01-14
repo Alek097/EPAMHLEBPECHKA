@@ -13,11 +13,41 @@
                 contentType: "html",
                 success: function (ResHtml) {
                     $("#content").html(ResHtml);
-                    $(".menuItem").css("width", "800px");
-                    $(".menuItem > img").css("width","800px")
+                    $(".menuItem > .imgConteiner > img").attr("class", "footImg");
                 }
             });
-
         })
     </script>
+
+    <style>
+        .menuItem{
+            width: 800px;
+            height: auto;
+            padding-bottom:30px;
+            min-height: 460px;
+        }
+        .text{
+            width:190px;
+            line-height:20px;
+            padding:5px;
+        }
+        .footImg, .imgConteiner {
+            width:600px;
+        }
+        .line{
+            margin:auto;
+        }
+        .head{
+            text-align:center;
+            margin-left:300px;;
+            margin-right:300px;
+        }
+        .imgConteiner{
+            float: right;
+        }
+        .dayName{
+            font-family: 'Segoe Print';
+            font-size: 14pt;
+        }
+    </style>
 }

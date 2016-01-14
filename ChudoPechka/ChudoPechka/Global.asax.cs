@@ -18,8 +18,6 @@ namespace ChudoPechka
 
             string connectionString = WebConfigurationManager.ConnectionStrings["userStore"].ConnectionString;
 
-            System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(connectionString);
-            con.Open();
             UsersStoreDB.Open(connectionString);
         }
 

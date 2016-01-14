@@ -22,7 +22,17 @@ namespace ChudoPechka.Controllers
 
             foreach (ChudoPechkaLib.Menu.MenuItem item in menu.MenuItems)
             {
-                HTML += "<div class=\"menuItem\">" + item.Img + item.Menu + "</div>";
+                HTML += "<div class=\"menuItem\">" +
+                    "<div class=\"head\">"
+                    +"<hr size=\"5\" color=\"black\" width=\"200\" />"
+                    + "<span class=\"dayName\">"+ item.Day + "</span>"+
+                    "<hr size=\"5\" color=\"black\" width=\"200\" />"+
+                    "</div>"+
+                    "<div class=\"imgConteiner\">"
+                    + item.Img +
+                    "</div>" 
+                    + item.Menu + 
+                    "</div>";
             }
             return new ChudoPechka.Controllers.Base.PartialViewResult(HTML);
         }
