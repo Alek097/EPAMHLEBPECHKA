@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 using ChudoPechka.Models;
 
+using ChudoPechkaLib.Data;
+
 namespace ChudoPechka.Controllers
 {
     public class AccountController : ChudoPechka.Controllers.Base.BaseController
@@ -19,7 +21,20 @@ namespace ChudoPechka.Controllers
         [HttpPost]
         public ActionResult Create(RegisterModel model)
         {
-            return View(model);
+            if (!ModelState.IsValid)
+                return View(model);
+            else
+            {
+                UsersStoreDB.Add_User(
+                    model.Login,
+                    model.Password,
+                    model.FirsName,
+                    model.SecondName,
+                    model.SecretQuestion,
+                    model.ResponseQuestion,
+                    model.BirthDay);
+                return Redirect(Url.Action("Index", "Home"));
+            }
         }
     }
 }

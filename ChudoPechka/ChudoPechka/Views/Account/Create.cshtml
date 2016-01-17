@@ -10,16 +10,45 @@
     <script src="@Url.Content("~/Scripts/jquery-2.2.0.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+    <style>
+        #content {
+            padding: 10px 20px 10px 20px;
+            border-bottom: solid black 1px;
+            font-size: 14pt;
+            font-family: Arial;
+        }
+
+        .text-box {
+            width: 400px;
+            height: 25px;
+            margin-bottom: 10px;
+            font-size: 14pt;
+            font-family: Arial;
+        }
+
+        .line {
+            width: 100%;
+        }
+
+        .head {
+            text-align: center;
+        }
+    </style>
 }
 
-@{ 
+<div class="head">
+    <hr size="5" color="black" class="line" />
+    <span style="font-family:'Segoe Print'; font-size:16pt">Регистрация</span>
+    <hr size="5" color="black" class="line" />
+</div>
+@{
     Html.EnableClientValidation();
     Html.EnableUnobtrusiveJavaScript();
 }
 @using (Html.BeginForm())
 {
     @Html.EditorForModel()
-    <input type="submit" value="Регистрация" />
+    <input class="button" type="submit" value="Регистрация" />
 }
 
 
