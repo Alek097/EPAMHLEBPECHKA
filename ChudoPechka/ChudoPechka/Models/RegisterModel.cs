@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 using ChudoPechkaLib.Data.DataAnnotations;
+
 namespace ChudoPechka.Models
 {
     public class RegisterModel

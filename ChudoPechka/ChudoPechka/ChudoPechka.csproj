@@ -133,15 +133,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DataBase\UserStore.mdf">
+    <Content Include="App_Data\DataBase\Store.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\DataBase\UserStore_log.ldf">
-      <DependentUpon>UserStore.mdf</DependentUpon>
+    <Content Include="App_Data\DataBase\Store_log.ldf">
+      <DependentUpon>Store.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Global.asax" />
     <Content Include="img\BG.jpg" />
+    <Content Include="img\Standart\Avatar.jpg" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
     <None Include="scripts\jquery-2.2.0.intellisense.js" />
@@ -160,11 +161,15 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\Base\PartialViewResult.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\RecoveryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Modules\AuthenticationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +183,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="scripts\jquery-2.2.0.min.map" />
     <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\LoginIn.cshtml" />
+    <Content Include="Views\Account\GetUser.cshtml" />
+    <Content Include="Views\Account\Recovery.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
-namespace ChudoPechkaLib
+
+using ChudoPechkaLib;
+
+namespace ChudoPechka.Modules
 {
     class AuthenticationModule : IHttpModule
     {
@@ -21,6 +24,8 @@ namespace ChudoPechkaLib
         private void Authenticate(Object source, EventArgs e)
         {
             HttpContext context = (source as HttpApplication).Context;
+            IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+            auth.Start(context);
         }
     }
 }

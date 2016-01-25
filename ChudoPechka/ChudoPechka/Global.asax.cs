@@ -16,14 +16,13 @@ namespace ChudoPechka
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            string connectionString = WebConfigurationManager.ConnectionStrings["userStore"].ConnectionString;
+            string connectionString = WebConfigurationManager.ConnectionStrings["Store"].ConnectionString;
 
-            UsersStoreDB.Open(connectionString);
+            StoreDB.ConnectionString = connectionString;
         }
 
         protected void Application_End()
         {
-            UsersStoreDB.Close();
         }
     }
 }

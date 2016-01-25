@@ -14,7 +14,8 @@ namespace ChudoPechkaLib.Data.DataAnnotations
     {
         public override bool IsValid(object value)
         {
-            return !UsersStoreDB.HasUser(value.ToString());
+            using (UsersStoreDB db = new UsersStoreDB())
+                return !db.HasUser(value.ToString());
         }
     }
 }

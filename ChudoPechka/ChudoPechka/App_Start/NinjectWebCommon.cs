@@ -13,8 +13,8 @@ namespace ChudoPechka.App_Start
     using Ninject;
     using Ninject.Web.Common;
 
+    using ChudoPechkaLib;
     using ChudoPechkaLib.Menu;
-    using ChudoPechkaLib.Data.Model
 
     public static class NinjectWebCommon 
     {
@@ -93,7 +93,7 @@ namespace ChudoPechka.App_Start
             private void AddBindings()
             {
                 this.kernel.Bind<IMenu>().To<Menu>().InSingletonScope();
-                this.kernel.Bind<IUser>().To<User>().InRequestScope();
+                this.kernel.Bind<IAuthentication>().To<Authentication>().InRequestScope();
             }
         }
     }

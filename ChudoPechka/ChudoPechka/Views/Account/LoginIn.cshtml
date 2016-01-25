@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "LoginIn";
+}
+
+@model ChudoPechka.Models.LoginModel
+
+@section ScriptAndStyle
+{
+    <style>
+        #content {
+            padding: 10px 20px 10px 20px;
+            border-bottom: solid black 1px;
+            width: 760px;
+            font-size: 14pt;
+            font-family: Arial;
+        }
+
+        #Actions, .Action:visited, .Action:hover, .Action {
+            font-size: 8pt;
+            font-family: Calibri;
+            color: rgb(46, 116, 181);
+            text-decoration: none;
+        }
+
+        .line {
+            width: 100%;
+        }
+
+        .head {
+            text-align: center;
+        }
+    </style>
+}
+
+<div class="head">
+    <hr size="5" color="black" class="line" />
+    <span style="font-family:'Segoe Print'; font-size:16pt">Вход</span>
+    <hr size="5" color="black" class="line" />
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+    <input class="button" type="submit" value="Вход" />
+    <span id="Actions"><a class="Action" href="@Url.Action("Create")">Регистрация</a> / <a class="Action">Забыли пароль?</a></span>
+}
+
+

@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿
+@using System.Web.Mvc
+@using ChudoPechkaLib
+@{
+    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+    /*
+    НАПОМИНАНИЕ: Переплетается смысл меню еды и юзер меню. Если не будет лень исправить
+    */
+}
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -27,10 +37,18 @@
         }
 
         #menu {
+            margin: 0px;
             list-style: none;
             color: white;
             font-family: Arial;
             font-size: 90%;
+            height: 100%;
+            width: auto;
+        }
+
+        #conteiner-Menu {
+            float: right;
+            margin-right: 1.8%;
         }
 
         #logo {
@@ -39,8 +57,16 @@
             border-radius: 100%;
         }
 
+        .text-box {
+            width: 400px;
+            height: 25px;
+            margin-bottom: 10px;
+            font-size: 14pt;
+            font-family: Arial;
+        }
+
         ul, li {
-            display: inline;
+            display: inline-block;
         }
 
         ul {
@@ -55,8 +81,106 @@
             font-size: 14pt;
             border: none;
         }
+        /*Начина от сюда пользовательское меню*/
+        .User-menu, .User-menu:hover, .User-menu:visited {
+            color: white;
+            text-decoration: none;
+        }
+
+        .HeadMenuItem {
+            visibility: hidden;
+            background-color: #161e26;
+            width: 100px;
+        }
+
+            .HeadMenuItem:hover {
+                background-color: #00050A;
+            }
+
+        .Menu {
+            display: block;
+            position: absolute;
+            z-index: 500;
+        }
+
+        .name {
+            display: block;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .auth-menu {
+            margin-right: 15px;
+            float: left;
+            width: 100px;
+            text-align: center;
+        }
+
+        #Group-context-menu {
+            /*TODO:Разметка для контекстного меню.*/
+        }
+
+        .context-menu:hover {
+            background-color: #161e26;
+        }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var Elems = ["Group-context-menu"];
+
+        function Render(id) {
+            var elem = "#";
+            Elems.forEach(function (el) {
+                if (el === id)
+                    elem += el;
+            });
+
+            $(elem + ">.HeadMenuItem").css("visibility", "visible");
+            $(elem).css("height", "53.6px")
+            $(elem).css("display", "block")
+        }
+        function Derender(id) {
+            var elem = "#";
+            Elems.forEach(function (el) {
+                if (el === id) {
+                    elem += el;
+
+                }
+            });
+
+            $(elem + ">.HeadMenuItem").css("visibility", "hidden");
+            $(elem).css("height", "0px")
+            $(elem).css("display", "none")
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            function Resize() {
+                var CapSize = $("#cap").height();
+                var spanSize = $(".name>span").height();
+                var exitSize = $(".account-element").height();
+                var aSize = $(".HeadMenuItem>a").height();
+                if (spanSize === null)
+                    spanSize = 15;
+                if(aSize === null)
+                    aSize = 15;
+
+                $("#conteiner-Menu").css("height", CapSize + "px");
+                $(".name").css("height", ((CapSize / 2) + 9) + "px");
+                $(".name>span").css("display", "block");
+                $(".name>span").css("margin-top", ((CapSize - 3 - spanSize) / 2) + "px");
+                $(".account-element").css("margin-top", ((CapSize - 3 - spanSize) / 2) + "px");
+                $(".HeadMenuItem").css("height", CapSize + "px");
+                $(".HeadMenuItem>a").css("display", "block").css("margin-top", ((CapSize - 3 - aSize) / 2) + "px");
+
+            }
+            Resize();
+            $(window).resize(Resize);
+        });
+        function Riderict(url) {
+            location = url;
+        };
+    </script>
     @RenderSection("ScriptAndStyle")
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
@@ -65,16 +189,35 @@
     <div>
         <div id="cap">
             <img src="http://chudo-pechka.by/assets/templates/Chudopechka/images/logo.png" id="logo" />
-            <div style="float:right; display:inline; margin-right: 1.8%; margin-top: 1.8%;">
+            <div id="conteiner-Menu">
                 <ul id="menu">
-                    @if (false)
+                    @if (auth.IsAuthentication)
                     {
-
+                        //(_|_)
+                        //TODO: Добавить элементы аутендифицированного пользователя.
+                        <li class="auth-menu context-menu" onmouseover="Render('Group-context-menu')" onmouseout="Derender('Group-context-menu')">
+                            <div class="name">
+                                <span>Группа</span>
+                            </div>
+                            <ul id="Group-context-menu" class="Menu">
+                                <li class="HeadMenuItem" onclick="Riderict('@Url.Action("Create", "Group")')">
+                                    <a class="User-menu">Создать</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="account-element" style="float:none;">
+                            <a href="@Url.Action("LoginOut","Account")" class="User-menu">Выход</a>
+                        </li>
                     }
                     else
                     {
-                        <li>Вход</li>
-                        <li><a href="@Url.Action("Create","Account")">Регистрация</a></li>
+                        <li class="account-element">
+                            <a href="@Url.Action("LoginIn","Account")" class="User-menu">Вход</a>
+                        </li>
+                        <span> / </span>
+                        <li class="account-element">
+                            <a href="@Url.Action("Create","Account")" class="User-menu">Регистрация</a>
+                        </li>
                     }
                 </ul>
             </div>

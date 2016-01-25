@@ -42,12 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationModule.cs" />
+    <Compile Include="Authentication.cs" />
     <Compile Include="Data\DataAnnotations\DuplicateLoginAttribute.cs" />
-    <Compile Include="Data\Model\CarrierUser.cs" />
-    <Compile Include="Data\Model\IUser.cs" />
+    <Compile Include="Data\GroupsStoreDB.cs" />
+    <Compile Include="Data\Model\Group.cs" />
     <Compile Include="Data\Model\User.cs" />
+    <Compile Include="Data\StoreDB.cs" />
     <Compile Include="Data\UsersStoreDB.cs" />
+    <Compile Include="IAuthentication.cs" />
     <Compile Include="Menu\IMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\MenuItem.cs" />

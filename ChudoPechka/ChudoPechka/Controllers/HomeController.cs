@@ -11,7 +11,6 @@ namespace ChudoPechka.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var a = User;
             return View();
         }
 

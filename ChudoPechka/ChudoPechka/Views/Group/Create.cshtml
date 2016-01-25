@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+@section ScriptAndStyle{
+    <style>
+        #content {
+            padding: 10px;
+            width: 780px;
+            height: 400px;
+        }
+
+        form {
+            margin-left: 190px;
+            margin-top: 160px;
+        }
+    </style>
+}
+@Html.ValidationSummary()
+@using (Html.BeginForm())
+{
+    <label style="font-size: 14pt;font-family:Ariall">Имя:</label><br />
+    <input type="text" class="text-box" name="gName" /><br />
+    <input type="submit" class="button" value="Создать" />
+}
+

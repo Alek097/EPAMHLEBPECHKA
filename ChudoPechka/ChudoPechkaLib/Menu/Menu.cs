@@ -91,8 +91,10 @@ namespace ChudoPechkaLib.Menu
 
         private void SetMenu(List<XmlNode> nodes)
         {
+            List<MenuItem> MenuItems = new List<MenuItem>(5);
             foreach (XmlNode node in nodes)
             {
+
                 MenuItem itemMenu = new MenuItem();
 
                 itemMenu.Day = node.Attributes["id"].InnerText;
@@ -100,9 +102,10 @@ namespace ChudoPechkaLib.Menu
                 itemMenu.Menu = node.LastChild.OuterXml
                     .Replace("THIS_IS", "&nbsp")
                     .Replace("<div class=\"but but-zakaz-menu\">Заказать обед</div>", "");
-                this._menuItems.Add(itemMenu);
-            }
 
+                MenuItems.Add(itemMenu);
+            }
+            this._menuItems = MenuItems;
         }
 
         private string GetXmlMenu(string html)

@@ -120,7 +120,7 @@ E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\ru\System.Web.Mvc.res
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\obj\Debug\ChudoPechka.csprojResolveAssemblyReference.cache
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\obj\Debug\ChudoPechka.dll
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\obj\Debug\ChudoPechka.pdb
-D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\UserStore.mdf
-D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\UserStore_log.ldf
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\UserStore.mdf
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\UserStore_log.ldf
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\Store.mdf
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\Store_log.ldf
