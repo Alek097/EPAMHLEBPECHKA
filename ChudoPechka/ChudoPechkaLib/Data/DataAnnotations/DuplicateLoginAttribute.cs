@@ -14,8 +14,7 @@ namespace ChudoPechkaLib.Data.DataAnnotations
     {
         public override bool IsValid(object value)
         {
-            using (UsersStoreDB db = new UsersStoreDB())
-                return !db.HasUser(value.ToString());
+            return false; //TODO проверка на повторяющийся логин
         }
     }
 }

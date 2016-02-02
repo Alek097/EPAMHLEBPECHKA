@@ -16,9 +16,6 @@ namespace ChudoPechka
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            string connectionString = WebConfigurationManager.ConnectionStrings["Store"].ConnectionString;
-
-            StoreDB.ConnectionString = connectionString;
         }
 
         protected void Application_End()

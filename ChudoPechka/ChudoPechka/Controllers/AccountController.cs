@@ -88,7 +88,7 @@ namespace ChudoPechka.Controllers
             }
             return View();
         }
-        [HttpGet]
+/*        [HttpGet]
         public ActionResult GetUser(string login)
         {
             using (UsersStoreDB db = new UsersStoreDB())
@@ -103,6 +103,6 @@ namespace ChudoPechka.Controllers
                     return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
             }
 
-        }
+        }*/
     }
 }
