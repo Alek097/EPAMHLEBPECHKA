@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace ChudoPechkaLib.Data.Model
 {
@@ -15,21 +15,15 @@ namespace ChudoPechkaLib.Data.Model
         }
         public Guid Id { get; set; }
         public DateTime BirthDay { get; set; }
-
         public string FirsName { get; set; }
-
         public string Login { get; set; }
-
         public string ResponseQuestion { get; set; }
-
         public string SecondName { get; set; }
-
         public string SecretQuestion { get; set; }
-
         public string Password { get; set; }
         public string AvatarPath { get; set; }
-        public List<Group> AuthorGroups { get; set; }
-        public List<Group> Groups { get; set; }
+        public virtual ICollection<Group> AuthorGroups { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
 
         public override bool Equals(object obj)
         {

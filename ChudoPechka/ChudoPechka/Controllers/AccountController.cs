@@ -103,6 +103,6 @@ namespace ChudoPechka.Controllers
                     return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
             }
 
-        }*/
+        }*///TODO: Отдать юзера
     }
 }
