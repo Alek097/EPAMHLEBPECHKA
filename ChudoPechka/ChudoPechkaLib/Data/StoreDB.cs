@@ -4,13 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Data.Entity;
 
-using ChudoPechkaLib.Data.Model;
+using ChudoPechkaLib.Models;
+
 namespace ChudoPechkaLib.Data
 {
-    class StoreDB : DbContext
+    public class StoreDB : DbContext, IStoreDB
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        private DbSet<User> Users { get; set; }
+        private DbSet<Group> Groups { get; set; }
+        private DbSet<Order> Orders { get; set; }
+
+        public bool HasUser(string login)
+        {
+            return this.Users.FirstOrDefault((usr) => usr.Login == login) != null ? true : false;
+        }
+
+        public User GetUser(string login)
+        {
+            return this.Users.FirstOrDefault((usr) => usr.Login == login);
+        }
+        public void AddUser(User usr)
+        {
+            this.Users.Add(usr);
+            this.SaveChanges();
+        }
     }
 }

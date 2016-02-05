@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 
-namespace ChudoPechkaLib.Data.Model
+namespace ChudoPechkaLib.Models
 {
     public class Group
     {
@@ -18,13 +18,6 @@ namespace ChudoPechkaLib.Data.Model
         public Guid? AuthorId { get; set; }
         public virtual User Author { get; set; }
         public virtual ICollection<User> Members { get; set; }
-        public override bool Equals(object obj)
-        {
-            return this.Id.Equals(obj);
-        }
-        public override int GetHashCode()
-        {
-            return this.Id.GetHashCode();
-        }
+
     }
 }

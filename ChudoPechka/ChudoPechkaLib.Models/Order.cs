@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-namespace ChudoPechkaLib.Data.Model
+
+namespace ChudoPechkaLib.Models
 {
-    class Order
+    public class Order
     {
         [Key]
         public Guid Id { get; set; }

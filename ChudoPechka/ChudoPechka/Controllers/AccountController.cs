@@ -6,9 +6,7 @@ using System.Web.Mvc;
 
 using ChudoPechka.Models;
 using ChudoPechkaLib.Data;
-using ChudoPechkaLib.Data.Model;
-
-using ChudoPechkaLib.Data;
+using ChudoPechkaLib;
 
 namespace ChudoPechka.Controllers
 {

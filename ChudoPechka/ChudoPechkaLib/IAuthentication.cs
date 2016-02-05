@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-using ChudoPechkaLib.Data.Model;
+using ChudoPechkaLib.Models;
 
 namespace ChudoPechkaLib
 {

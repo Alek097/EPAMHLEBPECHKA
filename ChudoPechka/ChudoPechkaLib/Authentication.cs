@@ -5,7 +5,7 @@ using System.Data;
 using System.Web;
 using System.Web.Security;
 
-using ChudoPechkaLib.Data.Model;
+using ChudoPechkaLib.Models;
 using ChudoPechkaLib.Data;
 
 namespace ChudoPechkaLib
@@ -27,6 +27,18 @@ namespace ChudoPechkaLib
         }
         public bool IsAuthentication { get; set; }
 
+        User IAuthentication.User
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
         private User _user;
         private HttpContext _httpContext;
         private void SetDate(string login)

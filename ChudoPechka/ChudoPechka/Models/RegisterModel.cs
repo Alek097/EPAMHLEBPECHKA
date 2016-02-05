@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 using ChudoPechkaLib.Data.DataAnnotations;
+using ChudoPechkaLib.Models;
 
 namespace ChudoPechka.Models
 {
@@ -34,5 +35,20 @@ namespace ChudoPechka.Models
         [Required(ErrorMessage = "Введите ответ на вопрос.")]
         [Display(Name = "Ответ на секретный вопрос")]
         public string ResponseQuestion { get; set; }
+
+        public static implicit operator User(RegisterModel model)
+        {
+            User usr = new User();
+
+            usr.Login = model.Login;
+            usr.Password = model.Password;
+            usr.FirsName = model.FirsName;
+            usr.SecondName = model.SecondName;
+            usr.SecretQuestion = model.SecretQuestion;
+            usr.BirthDay = model.BirthDay;
+            usr.AvatarPath = string.Empty;
+
+            return usr;
+        }
     }
 }

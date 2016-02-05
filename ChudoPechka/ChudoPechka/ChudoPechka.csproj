@@ -205,6 +205,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\ChudoPechkaLib.Models\ChudoPechkaLibModels.csproj">
+      <Project>{1eccd275-51a1-40f4-9a92-dd40081cc567}</Project>
+      <Name>ChudoPechkaLibModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChudoPechkaLib\ChudoPechkaLib.csproj">
       <Project>{98397a13-e3b8-4381-a39f-3cebf58384d5}</Project>
       <Name>ChudoPechkaLib</Name>

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
+using ChudoPechkaLib.Models;
+
 namespace ChudoPechka.Models
 {
     public class LoginModel
