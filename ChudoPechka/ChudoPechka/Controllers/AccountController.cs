@@ -25,14 +25,7 @@ namespace ChudoPechka.Controllers
                 return View(model);
             else
             {
-                Auth.RegisterUser(
-                    model.Login,
-                    model.Password,
-                    model.FirsName,
-                    model.SecondName,
-                    model.SecretQuestion,
-                    model.ResponseQuestion,
-                    model.BirthDay);
+                Auth.RegisterUser(model);
                 return Redirect(Url.Action("Index", "Home"));
             }
         }

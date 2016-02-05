@@ -41,36 +41,61 @@ namespace ChudoPechkaLib
         }
         private User _user;
         private HttpContext _httpContext;
-        private void SetDate(string login)
-        {
-
-        }
 
         public void Start(HttpContext context)
         {
+            this._httpContext = context;
+            HttpCookie cookie = context.Request.Cookies[COOKIE_NAME];
 
+            if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                using (StoreDB db = new StoreDB())
+                {
+                    this._user = db.GetUser(ticket.Name);
+                    this.IsAuthentication = this.User != null ? true : false;
+                }
+            }
         }
         public bool LoginIn(string login, string password)
         {
-                return false;
+            using (StoreDB db = new StoreDB())
+            {
+                if (db.IsContainUser(login, password))
+                {
+                    this.CreateCookie(login);
+                    return true;
+                }
+            }
+            return false;
         }
         public void LoginOut()
         {
             this.DeleteCookies();
         }
-        public void RegisterUser(string login, string password, string firstName, string secondName, string secretQuestion, string responseQuestion, DateTime birthDay)
+        public void RegisterUser(User newUser)
         {
-
-            this.LoginIn(login, password);
+            using (StoreDB db = new StoreDB())
+                db.AddUser(newUser);
         }
-        public void RegisterGroup(string Name)
+        public void RegisterGroup(string name)
         {
-            
+            using (StoreDB db = new StoreDB())
+                db.AddGroup(new Group(name, this.User));
         }
 
         public bool UpdatePassword(string login, string newPass, string responseQuestion)
         {
-            return true;
+
+            using (StoreDB db = new StoreDB())
+            {
+                if (db.IsContainUser(login) && db.ResponceOnQuestion(login, responseQuestion))
+                {
+                    db.UpdatePassword(login, newPass);
+                    return true;
+                }
+            }
+            return false;
         }
         private void DeleteCookies()
         {

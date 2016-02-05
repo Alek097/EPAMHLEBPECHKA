@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 using ChudoPechkaLib.Data;
+using ChudoPechkaLib.Models;
 
 namespace ChudoPechkaLib.Data.DataAnnotations
 {
@@ -14,7 +15,10 @@ namespace ChudoPechkaLib.Data.DataAnnotations
     {
         public override bool IsValid(object value)
         {
-            return false; //TODO проверка на повторяющийся логин
+            string login = (string)value;
+
+            using (StoreDB db = new StoreDB())
+                return !db.IsContainUser(login);
         }
     }
 }

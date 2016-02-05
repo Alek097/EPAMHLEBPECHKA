@@ -19,5 +19,10 @@ namespace ChudoPechkaLib.Models
         public virtual User Author { get; set; }
         public virtual ICollection<User> Members { get; set; }
 
+        public Group(string name, User author)
+        {
+            this.Name = name;
+            this.Author = author;
+        }
     }
 }

@@ -141,13 +141,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DataBase\Store.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\DataBase\Store_log.ldf">
-      <DependentUpon>Store.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Global.asax" />
     <Content Include="img\BG.jpg" />
     <Content Include="img\Standart\Avatar.jpg" />
@@ -161,7 +154,9 @@
     <Content Include="scripts\jquery.validate.min.js" />
     <Content Include="scripts\jquery.validate.unobtrusive.js" />
     <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
@@ -203,7 +198,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\DataBase\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChudoPechkaLib.Models\ChudoPechkaLibModels.csproj">
       <Project>{1eccd275-51a1-40f4-9a92-dd40081cc567}</Project>

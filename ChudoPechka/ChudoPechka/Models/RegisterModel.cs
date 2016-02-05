@@ -46,6 +46,7 @@ namespace ChudoPechka.Models
             usr.SecondName = model.SecondName;
             usr.SecretQuestion = model.SecretQuestion;
             usr.BirthDay = model.BirthDay;
+            usr.ResponseQuestion = model.ResponseQuestion;
             usr.AvatarPath = string.Empty;
 
             return usr;

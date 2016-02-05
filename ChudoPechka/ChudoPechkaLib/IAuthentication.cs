@@ -15,7 +15,7 @@ namespace ChudoPechkaLib
         void Start(HttpContext context);
         bool LoginIn(string login, string password);
         void LoginOut();
-        void RegisterUser(string login, string password, string firstName, string secondName, string secretQuestion, string responseQuestion, DateTime birthDay);
+        void RegisterUser(User newUser);
         void RegisterGroup(string Name);
         bool UpdatePassword(string login, string newPass, string responseQuestion);
     }

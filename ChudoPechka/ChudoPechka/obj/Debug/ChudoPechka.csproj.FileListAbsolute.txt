@@ -122,8 +122,6 @@ E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\obj\Debug\ChudoPechka.dll
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\obj\Debug\ChudoPechka.pdb
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\UserStore.mdf
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\UserStore_log.ldf
-D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\Store.mdf
-D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\App_Data\DataBase\Store_log.ldf
 D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\ApplicationInsights.config
 D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\roslyn\csc.exe
 D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -193,3 +191,9 @@ D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\ru\System.We
 D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\obj\Debug\ChudoPechka.csprojResolveAssemblyReference.cache
 D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\obj\Debug\ChudoPechka.dll
 D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\obj\Debug\ChudoPechka.pdb
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\ChudoPechkaLib.Models.dll
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\EntityFramework.dll
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\EntityFramework.SqlServer.dll
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\ChudoPechkaLib.Models.pdb
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\EntityFramework.xml
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechka\bin\EntityFramework.SqlServer.xml

@@ -11,3 +11,10 @@ D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaL
 D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.csprojResolveAssemblyReference.cache
 D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.dll
 D:\Новая папка\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\obj\Debug\ChudoPechkaLib.pdb
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaLib.dll.config
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaLib.Models.dll
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\EntityFramework.dll
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\EntityFramework.SqlServer.dll
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\ChudoPechkaLib.Models.pdb
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\EntityFramework.xml
+D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\EntityFramework.SqlServer.xml
