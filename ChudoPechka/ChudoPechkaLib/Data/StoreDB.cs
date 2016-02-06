@@ -14,11 +14,6 @@ namespace ChudoPechkaLib.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<Order> Orders { get; set; }
 
-        public bool HasUser(string login)
-        {
-            return this.Users.FirstOrDefault((usr) => usr.Login == login) != null ? true : false;
-        }
-
         public User GetUser(string login)
         {
             return this.Users.FirstOrDefault((usr) => usr.Login == login);

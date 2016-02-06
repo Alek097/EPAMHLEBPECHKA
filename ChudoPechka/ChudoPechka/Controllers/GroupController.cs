@@ -22,7 +22,7 @@ namespace ChudoPechka.Controllers
         [HttpPost]
         public ActionResult Create(string gName)
         {
-            if(Auth.IsAuthentication)
+            if(!Auth.IsAuthentication)
                 return Redirect(Url.Action("Index", "Home"));
             if (string.IsNullOrEmpty(gName))
             {

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 using ChudoPechka.Models;
 using ChudoPechkaLib.Data;
-using ChudoPechkaLib;
+using ChudoPechkaLib.Models;
 
 namespace ChudoPechka.Controllers
 {
@@ -79,14 +79,14 @@ namespace ChudoPechka.Controllers
             }
             return View();
         }
-/*        [HttpGet]
+       [HttpGet]
         public ActionResult GetUser(string login)
         {
-            using (UsersStoreDB db = new UsersStoreDB())
+            using (StoreDB db = new StoreDB())
             {
-                if (db.HasUser(login))
+                if (db.IsContainUser(login))
                 {
-                    User usr = db.Get_User(login);
+                    User usr = db.GetUser(login);
                     return View(usr);
                 }
 
@@ -94,6 +94,6 @@ namespace ChudoPechka.Controllers
                     return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
             }
 
-        }*///TODO: Отдать юзера
+        }
     }
 }
