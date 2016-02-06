@@ -10,17 +10,15 @@ namespace ChudoPechkaLib.Models
 {
     public class Order
     {
-         /*[Key]
+         [Key]
        public Guid Id { get; set; }
         [Required]
         public int Type { get; set; }
         [Required]
         public int Day { get; set; }
-        [ForeignKey("Group")]
         public Guid? GroupId { get; set; }
         public Group Group { get; set; }
-        [ForeignKey("User")]
         public Guid? UserId{ get; set; }
-        public User User { get; set; }*/
+        public User User { get; set; }
     }
 }

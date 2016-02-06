@@ -9,7 +9,7 @@ namespace ChudoPechkaLib.Models
 {
     public class Group
     {
- /*       public Group()
+       public Group()
         {
             this.Users = new List<User>();
         }
@@ -17,13 +17,13 @@ namespace ChudoPechkaLib.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid? AuthorId{ get; set; }
-        public virtual User Author { get; set; }//Автор группы
+        public virtual Author Author { get; set; }//Автор группы
         public virtual ICollection<User> Users { get; set; }
 
-        public Group(string name, User author)
+        public Group(string name, Author author)
         {
             this.Name = name;
             this.Author = author;
-        }*/
+        }
     }
 }

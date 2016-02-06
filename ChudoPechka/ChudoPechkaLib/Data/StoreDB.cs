@@ -10,9 +10,17 @@ namespace ChudoPechkaLib.Data
 {
     public class StoreDB : DbContext
     {
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOptional<Author>(a => a.Author)
+                .WithRequired(a => a.User);
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         public User GetUser(string login)
         {
