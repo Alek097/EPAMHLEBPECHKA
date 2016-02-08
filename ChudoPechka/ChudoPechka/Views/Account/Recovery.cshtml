@@ -72,7 +72,7 @@
         function SendVal(val) {
             $.ajax({
                 method: "Get",
-                url: "@Url.Action("GetUser","Account")?login=" + val,
+                url: "@Url.Action("GetUserToRecovery", "Account")?login=" + val,
                 contentType: "html",
                 success: function (ResHtml) {
                     if (ResHtml === "Пользователь с логином не найден") {

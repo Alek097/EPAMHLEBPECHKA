@@ -80,7 +80,7 @@ namespace ChudoPechka.Controllers
             return View();
         }
        [HttpGet]
-        public ActionResult GetUser(string login)
+        public ActionResult GetUserToRecovery(string login)
         {
             User usr;
             if (Auth.GetUser(login, out usr))
