@@ -24,7 +24,19 @@ namespace ChudoPechkaLib.Data
 
         public User GetUser(string login)
         {
-            return this.Users.FirstOrDefault((usr) => usr.Login == login);
+            return this.Users
+                .Include(u => u.Author)
+                .Include(u => u.Author.Groups)
+                .Include(u => u.Groups)
+                .FirstOrDefault((usr) => usr.Login == login);
+        }
+        public Group GetGroup(Guid group_id)
+        {
+            return this.Groups
+                .Include(g => g.Author)
+                .Include(g => g.Author.User)
+                .Include(g => g.Users)
+                .First(g => g.Id == group_id);
         }
         public void AddUser(User usr)
         {
@@ -35,6 +47,18 @@ namespace ChudoPechkaLib.Data
         {
             this.Groups.Add(grp);
             this.SaveChanges();
+        }
+        public bool IsContainGroup(Guid group_id)
+        {
+            try
+            {
+                this.Groups.First((u) => u.Id == group_id);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
         public bool IsContainUser(string login, string pass)
         {

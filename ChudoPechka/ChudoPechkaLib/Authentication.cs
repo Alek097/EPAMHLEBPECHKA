@@ -115,5 +115,32 @@ namespace ChudoPechkaLib
 
             this._httpContext.Response.Cookies.Set(cookie);
         }
+        public bool GetUser(string login, out User usr)
+        {
+            usr = null;
+            using (StoreDB db = new StoreDB())
+            {
+                if (db.IsContainUser(login))
+                {
+                    usr = db.GetUser(login);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool GetGroup(Guid id, out Group grp)
+        {
+            grp = null;
+            using (StoreDB db = new StoreDB())
+            {
+                if (db.IsContainGroup(id))
+                {
+                    grp = db.GetGroup(id);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

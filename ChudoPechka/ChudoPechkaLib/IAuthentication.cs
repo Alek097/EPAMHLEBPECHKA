@@ -18,5 +18,7 @@ namespace ChudoPechkaLib
         void RegisterUser(User newUser);
         void RegisterGroup(string Name);
         bool UpdatePassword(string login, string newPass, string responseQuestion);
+        bool GetUser(string login, out User usr);
+        bool GetGroup(Guid id, out Group grp);
     }
 }
