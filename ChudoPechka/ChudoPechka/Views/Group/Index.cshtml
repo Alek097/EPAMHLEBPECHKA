@@ -5,25 +5,32 @@
 @using ChudoPechkaLib.Models;
 @model ChudoPechkaLib.Models.Group
 @section ScriptAndStyle{
+    <style>
+        .line {
+            width: 30%;
+        }
+    </style>
 }
 <div>
-    <div>
-        <hr />
-        <span>Автор</span>
-        <hr />
+    <div style="text-align:center;">
+        <hr size="5" color="black" class="line" />
+        <span style="font-family:'Segoe Print'; font-size:16pt">Автор</span>
+        <hr size="5" color="black" class="line" />
     </div>
-    <div id="=AuthorSection">
+    <div>
         @{Html.RenderAction("GetUser", "Account", new { login = Model.Author.User.Login });}
     </div>
 </div>
 <div>
-    <div>
-        <hr />
-        <span>Участники</span>
-        <hr />
+    <div style="text-align:center;">
+        <hr size="5" color="black" class="line" />
+        <span style="font-family:'Segoe Print'; font-size:16pt">Участники</span>
+        <hr size="5" color="black" class="line" />
     </div>
     <div>
-
+        @foreach (User item in Model.Users)
+        {
+            Html.RenderAction("GetUser", "Account", new { login = item.Login });
+        }
     </div>
 </div>
-
