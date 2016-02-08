@@ -14,6 +14,11 @@ namespace ChudoPechka.Controllers
     {
         // GET: Account
         [HttpGet]
+        public ActionResult Index()
+        {
+            return View();//TODO: Написать представление описания юзера
+        }
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
