@@ -39,12 +39,17 @@ namespace ChudoPechka.Controllers
         [HttpPost]
         public ActionResult LoginIn(LoginModel model)
         {
-            if (ModelState.IsValid && Auth.LoginIn(model.Login, model.Password))
+            if (!Auth.IsAuthentication)
+            {
+                if (ModelState.IsValid && Auth.LoginIn(model.Login, model.Password))
+                    return Redirect(Url.Action("Index", "Home"));
+
+                ModelState.AddModelError("Login", "Неверный логин или пароль");
+
+                return View(model);
+            }
+            else
                 return Redirect(Url.Action("Index", "Home"));
-
-            ModelState.AddModelError("Login", "Неверный логин или пароль");
-
-            return View(model);
         }
         public ActionResult LoginOut()
         {
@@ -79,7 +84,7 @@ namespace ChudoPechka.Controllers
             }
             return View();
         }
-       [HttpGet]
+        [HttpGet]
         public ActionResult GetUserToRecovery(string login)
         {
             User usr;
