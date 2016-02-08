@@ -94,5 +94,13 @@ namespace ChudoPechka.Controllers
                 return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
 
         }
+        public ActionResult GetUser(string login)
+        {
+            User usr;
+            if (Auth.GetUser(login, out usr))
+                return View(usr);
+            else
+                return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
+        }
     }
 }
