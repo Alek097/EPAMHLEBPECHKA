@@ -78,10 +78,13 @@ namespace ChudoPechkaLib
             using (StoreDB db = new StoreDB())
                 db.AddUser(newUser);
         }
-        public void RegisterGroup(string name)
+        public Guid RegisterGroup(string name)
         {
+            Group newGroup = new Group(name, this.User.Author);
             using (StoreDB db = new StoreDB())
-                db.AddGroup(new Group(name, this.User));
+                db.AddGroup(newGroup);
+
+            return newGroup.Id;
         }
 
         public bool UpdatePassword(string login, string newPass, string responseQuestion)
