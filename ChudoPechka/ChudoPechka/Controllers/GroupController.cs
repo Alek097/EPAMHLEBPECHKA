@@ -4,13 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using ChudoPechkaLib.Models;
+
 namespace ChudoPechka.Controllers
 {
     public class GroupController : ChudoPechka.Controllers.Base.BaseController
     {
         public ActionResult Index(Guid Group_id)
         {
-            return View();
+            Group grp;
+            if (Auth.GetGroup(Group_id, out grp))
+                return View(grp);
+            throw new HttpException(404, "Группа не найдена");
         }
         [HttpGet]
         public ActionResult Create()

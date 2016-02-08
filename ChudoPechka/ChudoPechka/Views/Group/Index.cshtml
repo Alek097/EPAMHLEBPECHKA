@@ -2,6 +2,28 @@
 @{
     ViewBag.Title = "Index";
 }
+@using ChudoPechkaLib.Models;
+@model ChudoPechkaLib.Models.Group
+@section ScriptAndStyle{
+}
+<div>
+    <div>
+        <hr />
+        <span>Автор</span>
+        <hr />
+    </div>
+    <div id="=AuthorSection">
+        @{Html.RenderAction("GetUser", "Account", new { login = Model.Author.User.Login });}
+    </div>
+</div>
+<div>
+    <div>
+        <hr />
+        <span>Участники</span>
+        <hr />
+    </div>
+    <div>
 
-<h2>Index</h2>
+    </div>
+</div>
 
