@@ -82,17 +82,11 @@ namespace ChudoPechka.Controllers
        [HttpGet]
         public ActionResult GetUser(string login)
         {
-            using (StoreDB db = new StoreDB())
-            {
-                if (db.IsContainUser(login))
-                {
-                    User usr = db.GetUser(login);
-                    return View(usr);
-                }
-
-                else
-                    return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
-            }
+            User usr;
+            if (Auth.GetUser(login, out usr))
+                return View(usr);
+            else
+                return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
 
         }
     }
