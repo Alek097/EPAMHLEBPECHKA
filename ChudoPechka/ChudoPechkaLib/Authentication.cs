@@ -145,5 +145,11 @@ namespace ChudoPechkaLib
             }
             return false;
         }
+
+        public void SendAnnounced(Announced ann)
+        {
+            using (StoreDB db = new StoreDB())
+                db.SendAnnounced(ann);
+        }
     }
 }

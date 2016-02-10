@@ -105,5 +105,10 @@ namespace ChudoPechkaLib.Data
             this.Entry<User>(updateUsr).State = EntityState.Modified;
             this.SaveChanges();
         }
+        public void SendAnnounced(Announced ann)
+        {
+            this.Announceds.Add(ann);
+            this.SaveChanges();
+        }
     }
 }
