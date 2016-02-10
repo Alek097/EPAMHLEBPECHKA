@@ -31,7 +31,7 @@ namespace ChudoPechka.Controllers
             else
             {
                 Auth.RegisterUser(model);
-                return Redirect(Url.Action("Index", "Home"));
+                return Redirect(Url.Action("LoginIn"));
             }
         }
         [HttpGet]
