@@ -29,6 +29,7 @@ namespace ChudoPechkaLib.Data
                 .Include(u => u.Author)
                 .Include(u => u.Author.Groups)
                 .Include(u => u.Groups)
+                .Include(u=>u.Announceds)
                 .FirstOrDefault((usr) => usr.Login == login);
         }
         public Group GetGroup(Guid group_id)
