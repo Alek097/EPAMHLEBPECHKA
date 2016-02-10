@@ -20,6 +20,7 @@ namespace ChudoPechkaLib.Models
         public Guid? AuthorId { get; set; }
         public virtual Author Author { get; set; }//Автор группы
         public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
         public Group(string name, Author author)
         {

@@ -25,6 +25,7 @@ namespace ChudoPechkaLib.Models
         public string SecretQuestion { get; set; }
         public DateTime BirthDay { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
         public virtual Author Author { get; set; }
 
         public static explicit operator Author(User usr)
