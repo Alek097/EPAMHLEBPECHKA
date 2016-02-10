@@ -39,5 +39,9 @@ namespace ChudoPechka.Controllers
 
             return Redirect(Url.Action("Index"));
         }
+        public void SendAnnounced(Guid from, string LoginTo)
+        {
+
+        }
     }
 }
