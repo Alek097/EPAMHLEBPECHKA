@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 using System.ComponentModel.DataAnnotations;
 
-
 namespace ChudoPechkaLib.Data.DataAnnotations
 {
-    public class DuplicateLoginAttribute : ValidationAttribute
+    public class ContainLoginAttribute : ValidationAttribute
     {
+        public ContainLoginAttribute()
+        {
+            ErrorMessage = "Пользователь не найден";
+        }
         public override bool IsValid(object value)
         {
             string login = (string)value;
-
             using (StoreDB db = new StoreDB())
-                return !db.IsContainUser(login);
-
+                return db.IsContainUser(login);
         }
     }
 }
