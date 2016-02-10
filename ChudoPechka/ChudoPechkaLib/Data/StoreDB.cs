@@ -21,6 +21,7 @@ namespace ChudoPechkaLib.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Announced> Announceds { get; set; }
 
         public User GetUser(string login)
         {

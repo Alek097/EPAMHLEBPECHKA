@@ -12,6 +12,8 @@ namespace ChudoPechkaLib.Models
         {
             this.Id = Guid.NewGuid();
             this.Groups = new List<Group>();
+            this.Orders = new List<Order>();
+            this.Announceds = new List<Announced>();
         }
         [Key]
         [ForeignKey("Author")]
@@ -26,6 +28,7 @@ namespace ChudoPechkaLib.Models
         public DateTime BirthDay { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Announced> Announceds { get; set; }
         public virtual Author Author { get; set; }
 
         public static explicit operator Author(User usr)
