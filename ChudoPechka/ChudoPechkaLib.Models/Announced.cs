@@ -10,6 +10,10 @@ namespace ChudoPechkaLib.Models
 {
     public class Announced
     {
+        public Announced()
+        {
+            this.Id = Guid.NewGuid();
+        }
         [Key]
         public Guid? Id { get; set; }
         public Guid? UserId { get; set; }
