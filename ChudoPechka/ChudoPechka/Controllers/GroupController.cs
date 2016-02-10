@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 using ChudoPechkaLib.Models;
 
+using ChudoPechka.Models;
+
 namespace ChudoPechka.Controllers
 {
     public class GroupController : ChudoPechka.Controllers.Base.BaseController
@@ -39,9 +41,10 @@ namespace ChudoPechka.Controllers
 
             return Redirect(Url.Action("Index"));
         }
-        public void SendAnnounced(Guid from, string LoginTo)
+        public void SendAnnounced(AnnouncedModel model)
         {
-
+            if(Auth.IsAuthentication)
+                Auth.SendAnnounced(model);
         }
     }
 }

@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication.cs" />
+    <Compile Include="Data\DataAnnotations\ContainLoginAttribute.cs" />
     <Compile Include="Data\DataAnnotations\DuplicateLoginAttribute.cs" />
     <Compile Include="Data\StoreDB.cs" />
     <Compile Include="IAuthentication.cs" />
