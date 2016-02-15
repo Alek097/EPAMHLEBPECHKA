@@ -14,6 +14,7 @@ namespace ChudoPechkaLib.Models
             this.Groups = new List<Group>();
             this.Orders = new List<Order>();
             this.Announceds = new List<Announced>();
+            this.AvatarPath = "~/img/Standart/Avatar.jpg";
         }
         [Key]
         [ForeignKey("Author")]
