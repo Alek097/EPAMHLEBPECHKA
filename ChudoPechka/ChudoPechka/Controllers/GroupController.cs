@@ -37,9 +37,9 @@ namespace ChudoPechka.Controllers
                 return View();
             }
 
-            Auth.RegisterGroup(gName);
+            Guid grp_id = Auth.RegisterGroup(gName);
 
-            return Redirect(Url.Action("Index"));
+            return Redirect(Url.Action("Index",new {Group_id = grp_id }));
         }
         public void SendAnnounced(AnnouncedModel model)
         {

@@ -43,6 +43,7 @@ namespace ChudoPechkaLib.Data
         public void AddUser(User usr)
         {
             this.Users.Add(usr);
+            this.Authors.Add((Author)usr);
             this.SaveChanges();
         }
         public void AddGroup(Group grp)
