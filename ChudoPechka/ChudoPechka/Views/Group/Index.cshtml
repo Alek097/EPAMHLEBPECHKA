@@ -13,10 +13,14 @@
 }
 <div>
     <div style="text-align:center;">
-        <span style="font-size:16pt">@Model.Name</span>
-        <hr size="5" color="black" class="line" />
-        <span style="font-family:'Segoe Print'; font-size:16pt">Автор</span>
-        <hr size="5" color="black" class="line" />
+        <div>
+            <span style="font-size:16pt; margin: 10px;">@Model.Name</span>
+        </div>
+        <div>
+            <hr size="5" color="black" class="line" style="margin-top:15px;" />
+            <span style="font-family:'Segoe Print'; font-size:16pt">Автор</span>
+            <hr size="5" color="black" class="line" />
+        </div>
     </div>
     <div>
         @{Html.RenderAction("GetUser", "Account", new { login = Model.Author.User.Login });}
