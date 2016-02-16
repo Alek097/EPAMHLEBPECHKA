@@ -15,7 +15,7 @@ namespace ChudoPechkaLib.Models
             this.Id = Guid.NewGuid();
         }
         [Key]
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
         public Guid? UserId { get; set; }
         public User To { get; set; }
         public Guid From { get; set; }
