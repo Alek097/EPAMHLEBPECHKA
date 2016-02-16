@@ -15,6 +15,17 @@
             margin-right: 1%;
         }
     </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        function send()
+        {
+            var login = $("#login").val();
+            $.ajax({
+                method: "Get",
+                url: "@Url.Action("SendAnnounced")?From=@Model.Id&To=" + login + "&Type=0",  
+        });
+        }
+    </script>
 }
 <div>
     <div style="text-align:center;">
@@ -22,7 +33,7 @@
             <span style="font-size:16pt; margin: 10px;">@Model.Name</span>
         </div>
         <div style="margin-top:10px;">
-            <input type="text" class="text-box" id="login" /><button class="button">Отправить</button>
+            <input type="text" class="text-box" id="login" /><button class="button" onclick="send()">Отправить</button>
         </div>
         <div>
             <hr size="5" color="black" class="line" style="margin-top:15px;" />
