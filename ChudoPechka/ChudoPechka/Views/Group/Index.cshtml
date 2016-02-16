@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Model.Name;
 }
 @using ChudoPechkaLib.Models;
 @model ChudoPechkaLib.Models.Group
@@ -9,9 +9,10 @@
         .line {
             width: 30%;
         }
-        #login{
+
+        #login {
             width: 30%;
-            margin-right:1%;
+            margin-right: 1%;
         }
     </style>
 }
@@ -20,7 +21,7 @@
         <div>
             <span style="font-size:16pt; margin: 10px;">@Model.Name</span>
         </div>
-        <div>
+        <div style="margin-top:10px;">
             <input type="text" class="text-box" id="login" /><button class="button">Отправить</button>
         </div>
         <div>
@@ -33,16 +34,19 @@
         @{Html.RenderAction("GetUser", "Account", new { login = Model.Author.User.Login });}
     </div>
 </div>
-<div>
-    <div style="text-align:center;">
-        <hr size="5" color="black" class="line" />
-        <span style="font-family:'Segoe Print'; font-size:16pt">Участники</span>
-        <hr size="5" color="black" class="line" />
-    </div>
+@if (Model.Users.Count > 0)
+{
     <div>
-        @foreach (User item in Model.Users)
-        {
-            Html.RenderAction("GetUser", "Account", new { login = item.Login });
-        }
+        <div style="text-align:center;">
+            <hr size="5" color="black" class="line" />
+            <span style="font-family:'Segoe Print'; font-size:16pt">Участники</span>
+            <hr size="5" color="black" class="line" />
+        </div>
+        <div>
+            @foreach (User item in Model.Users)
+            {
+                Html.RenderAction("GetUser", "Account", new { login = item.Login });
+            }
+        </div>
     </div>
-</div>
+}
