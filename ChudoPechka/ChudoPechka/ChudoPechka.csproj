@@ -195,6 +195,7 @@
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Account\GetUser.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Announced\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
