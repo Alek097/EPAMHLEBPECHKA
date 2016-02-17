@@ -84,7 +84,6 @@
         /*Начина от сюда пользовательское меню*/
         .User-menu, .User-menu:hover, .User-menu:visited {
             color: white;
-            text-decoration: none;
         }
 
         .HeadMenuItem {
@@ -118,6 +117,7 @@
 
         #Group-context-menu {
             /*TODO:Разметка для контекстного меню.*/
+            margin-right: 7%;
         }
 
         .context-menu:hover {
@@ -205,14 +205,14 @@
                                 </li>
                                 @if(auth.User.IsNewAnnouced())
                                 {
-                                    <li class="Menu" style="background-color: red;">
-                                        <span class="User-menu">Оповещания</span>
+                                    <li class="HeadMenuItem" style="background-color: red;" onclick="Riderict('@Url.Action("Create", "Group")')">
+                                        <a class="User-menu">Оповещания</a>
                                     </li>
                                 }
                                 else
                                 {
-                                    <li class="Menu" style="background-color: red;">
-                                        <span class="User-menu">Оповещания</span>
+                                    <li class="HeadMenuItem" onclick="Riderict('@Url.Action("Create", "Group")')">
+                                        <a class="User-menu">Оповещания</a>
                                     </li>
                                 }
                             </ul>
