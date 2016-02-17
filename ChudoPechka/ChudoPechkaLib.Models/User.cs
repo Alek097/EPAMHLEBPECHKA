@@ -32,6 +32,19 @@ namespace ChudoPechkaLib.Models
         public virtual ICollection<Announced> Announceds { get; set; }
         public virtual Author Author { get; set; }
 
+        public bool IsNewAnnouced()
+        {
+            try
+            {
+                this.Announceds.First((a) => a.IsRead == true);
+                return true;
+            }
+            catch(InvalidOperationException)
+            {
+                return false;
+            }
+        }
+
         public static explicit operator Author(User usr)
         {
             return new Author()
