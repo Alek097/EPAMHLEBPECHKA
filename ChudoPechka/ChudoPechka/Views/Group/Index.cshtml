@@ -22,7 +22,7 @@
             var login = $("#login").val();
             $.ajax({
                 method: "Get",
-                url: "@Url.Action("SendAnnounced")?From=@Model.Id&To=" + login + "&Type=0",  
+                url: "@Url.Action("SendAnnounced", "Announced")?From=@Model.Id&To=" + login + "&Type=0",  
         });
         }
     </script>

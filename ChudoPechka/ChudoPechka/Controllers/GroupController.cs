@@ -41,10 +41,5 @@ namespace ChudoPechka.Controllers
 
             return Redirect(Url.Action("Index",new {Group_id = grp_id }));
         }
-        public void SendAnnounced(AnnouncedModel model)
-        {
-            if(Auth.IsAuthentication)
-                Auth.SendAnnounced(model);
-        }
     }
 }
