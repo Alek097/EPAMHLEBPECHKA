@@ -1,8 +1,10 @@
 ﻿
 @{
     ViewBag.Title = Model.Name;
+    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
 }
 @using ChudoPechkaLib.Models;
+@using ChudoPechkaLib;
 @model ChudoPechkaLib.Models.Group
 @section ScriptAndStyle{
     <style>
@@ -32,9 +34,12 @@
         <div>
             <span style="font-size:16pt; margin: 10px;">@Model.Name</span>
         </div>
+        @if (auth.IsAuthentication && Model.Users.Contains(auth.User))
+        {
         <div style="margin-top:10px;">
             <input type="text" class="text-box" id="login" /><button class="button" onclick="send()">Отправить</button>
         </div>
+        }
         <div>
             <hr size="5" color="black" class="line" style="margin-top:15px;" />
             <span style="font-family:'Segoe Print'; font-size:16pt">Автор</span>
