@@ -206,7 +206,7 @@
                                 @if(auth.User.IsNewAnnouced())
                                 {
                                     <li class="HeadMenuItem" style="background-color: red;" onclick="Riderict('@Url.Action("Create", "Group")')">
-                                        <a class="User-menu">Оповещания</a>
+                                        <a class="User-menu">Оповещания</a><!--Не знаю почему но тоже самое со span не работает-->
                                     </li>
                                 }
                                 else
