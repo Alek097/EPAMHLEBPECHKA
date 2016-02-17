@@ -20,5 +20,6 @@ namespace ChudoPechkaLib.Models
         public User To { get; set; }
         public Guid From { get; set; }
         public int Type { get; set; }
+        public bool IsRead { get; set; }
     }
 }
