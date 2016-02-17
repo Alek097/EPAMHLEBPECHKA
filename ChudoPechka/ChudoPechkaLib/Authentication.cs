@@ -26,19 +26,6 @@ namespace ChudoPechkaLib
             }
         }
         public bool IsAuthentication { get; set; }
-
-        User IAuthentication.User
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
         private User _user;
         private HttpContext _httpContext;
 

@@ -203,6 +203,18 @@
                                 <li class="HeadMenuItem" onclick="Riderict('@Url.Action("Create", "Group")')">
                                     <a class="User-menu">Создать</a>
                                 </li>
+                                @if(auth.User.IsNewAnnouced())
+                                {
+                                    <li class="Menu" style="background-color: red;">
+                                        <span class="User-menu">Оповещания</span>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="Menu" style="background-color: red;">
+                                        <span class="User-menu">Оповещания</span>
+                                    </li>
+                                }
                             </ul>
                         </li>
                         <li class="account-element" style="float:none;">
