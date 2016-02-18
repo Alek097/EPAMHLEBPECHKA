@@ -1,0 +1,31 @@
+﻿@{
+    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+    Group grp;
+    Layout = null;
+}
+@using System.Collections.Generic
+@using ChudoPechkaLib.Models
+@using ChudoPechkaLib;
+
+@model List<Announced>
+@foreach (Announced item in Model)
+{
+    if (item.Type == (byte)AnnouncedType.InvitationToGroup && auth.GetGroup(item.From, out grp))
+    {
+        <div class="announced">
+
+            <div>
+                <div style="float:right">
+                    <span>
+                        @string.Format("Группа {0} предлагает стать её участником.", grp.Name)
+                    </span>
+                </div>
+                <div>
+
+                </div>
+            </div>
+
+        </div>
+    }
+
+}
