@@ -13,13 +13,16 @@ namespace ChudoPechka.Controllers
     {
         public ActionResult Index()
         {
-
+            return View();
+        }
+        public ActionResult GetAnnounced()
+        {
             /*
-                ----------ПАМЯТКА---------
-                если page = 50, тогда вернуть первые 50
-                если page = 100, вернуть следующие 50
-                если page = 150, вернуть вторые следующие 50
-                и т.д.
+            ----------ПАМЯТКА---------
+            если page = 50, тогда вернуть первые 50
+            если page = 100, вернуть следующие 50
+            если page = 150, вернуть вторые следующие 50
+            и т.д.
             */
             if (!Auth.IsAuthentication)
                 return Redirect(Url.Action("Index", "Home"));
