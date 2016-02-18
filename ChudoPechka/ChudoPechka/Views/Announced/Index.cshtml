@@ -15,6 +15,24 @@
             border-bottom: 1px solid black;
         }
     </style>
-}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        var maxPage = '@ViewBag.MaxPage';
+        var nextPage = 100;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height() && nextPage <= numPages && maxPage > nowPage) {
+                $.ajax({
+                    method: "Get",
+                    url: "@Url.Action("GetAnnounced", "Announced")?page=" + nextPage,
+                    contentType: "html",
+                    success: function (ResHtml) {
+                        
+                    }
+                });
+            }
+        });
 
+    </script>
+}
+@{Html.RenderAction("GetAnnounced", "Announced", new { page = 50 });}
 
