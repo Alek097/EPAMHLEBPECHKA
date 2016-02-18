@@ -23,7 +23,7 @@ namespace ChudoPechka.Models
 
             return new Announced
             {
-                To = usr,
+                UserId = usr.Id,
                 From = model.From,
                 Type = model.Type
             };

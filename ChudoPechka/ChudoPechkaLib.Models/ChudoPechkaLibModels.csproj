@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Announced.cs" />
+    <Compile Include="AnnouncedType.cs" />
     <Compile Include="Author.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Order.cs" />

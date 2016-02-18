@@ -16,8 +16,8 @@ namespace ChudoPechkaLib.Models
         }
         [Key]
         public Guid Id { get; set; }
-        public Guid? UserId { get; set; }
-        public User To { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; }
         public Guid From { get; set; }
         public int Type { get; set; }
         public bool IsRead { get; set; }

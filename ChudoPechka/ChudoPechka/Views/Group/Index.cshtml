@@ -34,7 +34,7 @@
         <div>
             <span style="font-size:16pt; margin: 10px;">@Model.Name</span>
         </div>
-        @if (auth.IsAuthentication && Model.Users.Contains(auth.User))
+        @if (auth.IsAuthentication && (Model.Users.Contains(auth.User) || Model.Author.User.Login == auth.User.Login))
         {
         <div style="margin-top:10px;">
             <input type="text" class="text-box" id="login" /><button class="button" onclick="send()">Отправить</button>
