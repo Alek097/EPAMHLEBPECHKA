@@ -8,7 +8,7 @@ using ChudoPechkaLib.Models;
 
 namespace ChudoPechkaLib.Data
 {
-    public class StoreDB : DbContext, IStoreDB
+    public class StoreDB : DbContext
     {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
