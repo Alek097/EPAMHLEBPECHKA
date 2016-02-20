@@ -46,7 +46,12 @@
 
             </div>
         }
-
     }
 
+}
+@{ 
+    foreach (Announced item in Model)
+    {
+        auth.SetReadAnnouncedAsync(item);
+    }
 }
