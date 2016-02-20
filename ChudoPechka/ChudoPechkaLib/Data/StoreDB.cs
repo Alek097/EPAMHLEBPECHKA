@@ -55,6 +55,14 @@ namespace ChudoPechkaLib.Data
             this.Groups.Add(grp);
             this._IsSavedOrModified = true;
         }
+        public void AddMemberInGroup(Guid group_id, User usr)
+        {
+            Group updateGrp = this.GetGroup(group_id);
+            updateGrp.Users.Add(usr);
+            this.Entry<Group>(updateGrp).State = EntityState.Modified;
+
+            this._IsSavedOrModified = true;
+        }
         public bool IsContainGroup(Guid group_id)
         {
             try
@@ -62,7 +70,7 @@ namespace ChudoPechkaLib.Data
                 this.Groups.First((u) => u.Id.Equals(group_id));
                 return true;
             }
-            catch
+            catch(InvalidOperationException)
             {
                 return false;
             }
@@ -76,7 +84,7 @@ namespace ChudoPechkaLib.Data
                 this.Users.First((u) => u.Login.Equals(login) && u.Password.Equals(encryptPass));
                 return true;
             }
-            catch
+            catch(InvalidOperationException)
             {
                 return false;
             }
@@ -88,7 +96,19 @@ namespace ChudoPechkaLib.Data
                 this.Users.First((u) => u.Login.Equals(login));
                 return true;
             }
-            catch
+            catch(InvalidOperationException)
+            {
+                return false;
+            }
+        }
+        public bool IsContainAnnounced(Guid From_id)
+        {
+            try
+            {
+                this.Announceds.First(a => a.From.Equals(From_id));
+                return true;
+            }
+            catch(InvalidOperationException)
             {
                 return false;
             }

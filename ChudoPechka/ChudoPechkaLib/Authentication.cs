@@ -123,5 +123,13 @@ namespace ChudoPechkaLib
         {
             _db.SendAnnounced(ann);
         }
+
+        public void AddMemberInGroup(Guid Group_id, User usr)
+        {
+            if(_db.IsContainGroup(Group_id) && _db.IsContainAnnounced(Group_id))
+            {
+
+            }
+        }
     }
 }

@@ -41,5 +41,12 @@ namespace ChudoPechka.Controllers
 
             return Redirect(Url.Action("Index",new {Group_id = grp_id }));
         }
+        public void AddUser(Guid Group_Id)
+        {
+            if (Auth.IsAuthentication)
+            {
+
+            }
+        }
     }
 }
