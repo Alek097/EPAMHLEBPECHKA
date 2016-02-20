@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ChudoPechkaLib.Models
 {
-    class Salt
+    public class Salt
     {
         [Key]
         public Guid Id { get; set; }

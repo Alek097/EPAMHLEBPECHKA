@@ -62,6 +62,7 @@
     <Compile Include="Data\DataAnnotations\ContainLoginAttribute.cs" />
     <Compile Include="Data\DataAnnotations\DuplicateLoginAttribute.cs" />
     <Compile Include="Data\IStoreDB.cs" />
+    <Compile Include="Data\SaltDB.cs" />
     <Compile Include="Data\StoreDB.cs" />
     <Compile Include="IAuthentication.cs" />
     <Compile Include="Menu\IMenu.cs" />
