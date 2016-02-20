@@ -32,7 +32,7 @@ namespace ChudoPechkaLib.Data
                 .Include(u => u.Author.Groups)
                 .Include(u => u.Groups)
                 .Include(u => u.Announceds)
-                .FirstOrDefault((usr) => usr.Login == login);
+                .FirstOrDefault((usr) => usr.Login.Equals(login));
         }
         public Group GetGroup(Guid group_id)
         {
@@ -40,7 +40,7 @@ namespace ChudoPechkaLib.Data
                 .Include(g => g.Author)
                 .Include(g => g.Author.User)
                 .Include(g => g.Users)
-                .First(g => g.Id == group_id);
+                .First(g => g.Id.Equals(group_id));
         }
         public void AddUser(User usr)
         {
@@ -59,7 +59,7 @@ namespace ChudoPechkaLib.Data
         {
             try
             {
-                this.Groups.First((u) => u.Id == group_id);
+                this.Groups.First((u) => u.Id.Equals(group_id));
                 return true;
             }
             catch
@@ -85,7 +85,7 @@ namespace ChudoPechkaLib.Data
         {
             try
             {
-                this.Users.First((u) => u.Login == login);
+                this.Users.First((u) => u.Login.Equals(login));
                 return true;
             }
             catch
@@ -97,7 +97,7 @@ namespace ChudoPechkaLib.Data
         {
             try
             {
-                this.Users.First(u => u.Login == login && u.ResponseQuestion == response);
+                this.Users.First(u => u.Login.Equals(login) && u.ResponseQuestion.Equals(response));
                 return true;
             }
             catch
@@ -107,7 +107,7 @@ namespace ChudoPechkaLib.Data
         }
         public void UpdatePassword(string login, string newPassword)
         {
-            User updateUsr = this.Users.First(u => u.Login == login);
+            User updateUsr = this.Users.First(u => u.Login.Equals(login));
             updateUsr.Password = this._saltDB.UpdateSalt(updateUsr.Id);
             this.Entry<User>(updateUsr).State = EntityState.Modified;
             this._IsSavedOrModified = true;
