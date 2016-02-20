@@ -19,5 +19,6 @@ namespace ChudoPechkaLib.Data
         bool ResponceOnQuestion(string login, string response);
         void UpdatePassword(string login, string newPassword);
         void SendAnnounced(Announced ann);
+        int SaveChanges();
     }
 }

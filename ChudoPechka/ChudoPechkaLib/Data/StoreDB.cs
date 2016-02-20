@@ -10,6 +10,7 @@ namespace ChudoPechkaLib.Data
 {
     public class StoreDB : DbContext, IStoreDB
     {
+        private bool _IsSavedOrModified;
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -29,7 +30,7 @@ namespace ChudoPechkaLib.Data
                 .Include(u => u.Author)
                 .Include(u => u.Author.Groups)
                 .Include(u => u.Groups)
-                .Include(u=>u.Announceds)
+                .Include(u => u.Announceds)
                 .FirstOrDefault((usr) => usr.Login == login);
         }
         public Group GetGroup(Guid group_id)
@@ -44,12 +45,12 @@ namespace ChudoPechkaLib.Data
         {
             this.Users.Add(usr);
             this.Authors.Add((Author)usr);
-            this.SaveChanges();
+            this._IsSavedOrModified = true;
         }
         public void AddGroup(Group grp)
         {
             this.Groups.Add(grp);
-            this.SaveChanges();
+            this._IsSavedOrModified = true;
         }
         public bool IsContainGroup(Guid group_id)
         {
@@ -104,12 +105,19 @@ namespace ChudoPechkaLib.Data
             User updateUsr = this.Users.First(u => u.Login == login);
             updateUsr.Password = newPassword;
             this.Entry<User>(updateUsr).State = EntityState.Modified;
-            this.SaveChanges();
+            this._IsSavedOrModified = true;
         }
         public void SendAnnounced(Announced ann)
         {
             this.Announceds.Add(ann);
-            this.SaveChanges();
+            this._IsSavedOrModified = true;
+        }
+        public override int SaveChanges()
+        {
+            if (_IsSavedOrModified)
+                return base.SaveChanges();
+            else
+                return 0;
         }
     }
 }
