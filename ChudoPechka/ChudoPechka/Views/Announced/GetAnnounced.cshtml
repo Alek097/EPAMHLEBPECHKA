@@ -12,20 +12,41 @@
 {
     if (item.Type == (byte)AnnouncedType.InvitationToGroup && auth.GetGroup(item.From, out grp))
     {
-        <div class="announced">
+        if (item.IsRead)
+        {
+            <div class="announced" style="opacity:9">
 
-            <div>
-                <div style="float:right; padding-right:20%;padding-top:1%">
-                    <span>
-                        @string.Format("Группа {0} предлагает стать её участником.", grp.Name)
-                    </span>
-                </div>
                 <div>
-                    <button class="button">Принять</button>
+                    <div style="float:right; padding-right:20%;padding-top:1%">
+                        <span>
+                            @string.Format("Группа {0} предлагает стать её участником.", grp.Name)
+                        </span>
+                    </div>
+                    <div>
+                        <button class="button" onclick="AcceptInvation('@item.From')">Принять</button>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
+        }
+        else
+        {
+            <div class="announced">
+
+                <div>
+                    <div style="float:right; padding-right:20%;padding-top:1%">
+                        <span>
+                            @string.Format("Группа {0} предлагает стать её участником.", grp.Name)
+                        </span>
+                    </div>
+                    <div>
+                        <button class="button" onclick="AcceptInvation('@item.From')">Принять</button>
+                    </div>
+                </div>
+
+            </div>
+        }
+
     }
 
 }
