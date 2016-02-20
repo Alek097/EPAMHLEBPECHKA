@@ -95,6 +95,7 @@ namespace ChudoPechka.App_Start
             {
                 this.kernel.Bind<IMenu>().To<Menu>().InSingletonScope();
                 this.kernel.Bind<IAuthentication>().To<Authentication>().InRequestScope();
+                this.kernel.Bind<IStoreDB>().To<StoreDB>().InRequestScope();
             }
         }
     }
