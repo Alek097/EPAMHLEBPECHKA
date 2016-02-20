@@ -14,7 +14,7 @@
     {
         if (item.IsRead)
         {
-            <div class="announced" style="opacity:9">
+            <div class="announced" style="opacity:0.5">
 
                 <div>
                     <div style="float:right; padding-right:20%;padding-top:1%">
@@ -52,6 +52,6 @@
 @{ 
     foreach (Announced item in Model)
     {
-        auth.SetReadAnnouncedAsync(item);
+        auth.SetReadAnnounced(item);
     }
 }
