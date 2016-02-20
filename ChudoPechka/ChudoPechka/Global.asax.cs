@@ -18,8 +18,9 @@ namespace ChudoPechka
 
         }
 
-        protected void Application_End()
+       protected void ApplicationEndRequest()
         {
+            DependencyResolver.Current.GetService<IStoreDB>().Dispose();
         }
     }
 }
