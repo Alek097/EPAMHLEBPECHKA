@@ -45,7 +45,7 @@ namespace ChudoPechka.Controllers
         {
             if (Auth.IsAuthentication)
             {
-
+                Auth.AddMemberInGroup(Group_Id, Auth.User);
             }
         }
     }

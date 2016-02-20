@@ -58,10 +58,13 @@ namespace ChudoPechkaLib.Data
         public void AddMemberInGroup(Guid group_id, User usr)
         {
             Group updateGrp = this.GetGroup(group_id);
-            updateGrp.Users.Add(usr);
-            this.Entry<Group>(updateGrp).State = EntityState.Modified;
+            if (!updateGrp.Users.Contains(usr))
+            {
+                updateGrp.Users.Add(usr);
+                this.Entry<Group>(updateGrp).State = EntityState.Modified;
 
-            this._IsSavedOrModified = true;
+                this._IsSavedOrModified = true;
+            }
         }
         public bool IsContainGroup(Guid group_id)
         {
@@ -166,6 +169,16 @@ namespace ChudoPechkaLib.Data
 
             return passWithSalt;
 
+        }
+
+        public void SetReadAnnounced(Announced ann)
+        {
+            if(!ann.IsRead)
+            {
+                ann.IsRead = true;
+                this.Entry<Announced>(ann).State = EntityState.Modified;
+                this._IsSavedOrModified = true;
+            }
         }
     }
 }

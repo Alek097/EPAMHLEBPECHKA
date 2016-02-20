@@ -23,5 +23,6 @@ namespace ChudoPechkaLib
         bool GetGroup(Guid id, out Group grp);
         void SendAnnounced(Announced ann);
         void AddMemberInGroup(Guid Group_id, User usr);
+        void SetReadAnnounced(Announced ann);
     }
 }

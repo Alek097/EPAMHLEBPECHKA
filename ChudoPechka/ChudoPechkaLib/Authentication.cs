@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using System.Data;
 using System.Web;
 using System.Web.Security;
@@ -127,9 +127,12 @@ namespace ChudoPechkaLib
         public void AddMemberInGroup(Guid Group_id, User usr)
         {
             if(_db.IsContainGroup(Group_id) && _db.IsContainAnnounced(Group_id))
-            {
+                _db.AddMemberInGroup(Group_id, usr);
+        }
 
-            }
+        public void SetReadAnnounced(Announced ann)
+        {
+                _db.SetReadAnnounced(ann);
         }
     }
 }
