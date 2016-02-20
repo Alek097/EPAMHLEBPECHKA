@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 
 using ChudoPechkaLib.Models;
+using ChudoPechkaLib.Data;
 
 namespace ChudoPechkaLib
 {
@@ -12,7 +13,7 @@ namespace ChudoPechkaLib
     {
         User User { get; set; }
         bool IsAuthentication { get; set; }
-        void Start(HttpContext context);
+        void Start(HttpContext context, IStoreDB db);
         bool LoginIn(string login, string password);
         void LoginOut();
         void RegisterUser(User newUser);

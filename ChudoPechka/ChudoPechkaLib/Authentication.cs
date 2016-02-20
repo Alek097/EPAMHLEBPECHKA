@@ -13,7 +13,7 @@ namespace ChudoPechkaLib
     public class Authentication : IAuthentication
     {
         private const string COOKIE_NAME = "_TEST_COOKIE";//TODO: По завершению дать нормальное название
-
+        private IStoreDB _db;
         public User User
         {
             get
@@ -29,30 +29,25 @@ namespace ChudoPechkaLib
         private User _user;
         private HttpContext _httpContext;
 
-        public void Start(HttpContext context)
+        public void Start(HttpContext context, IStoreDB db)
         {
+            this._db = db;
             this._httpContext = context;
             HttpCookie cookie = context.Request.Cookies[COOKIE_NAME];
 
             if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
-                using (StoreDB db = new StoreDB())
-                {
-                    this._user = db.GetUser(ticket.Name);
-                    this.IsAuthentication = this.User != null ? true : false;
-                }
+                this._user = db.GetUser(ticket.Name);
+                this.IsAuthentication = this.User != null ? true : false;
             }
         }
         public bool LoginIn(string login, string password)
         {
-            using (StoreDB db = new StoreDB())
+            if (_db.IsContainUser(login, password))
             {
-                if (db.IsContainUser(login, password))
-                {
-                    this.CreateCookie(login);
-                    return true;
-                }
+                this.CreateCookie(login);
+                return true;
             }
             return false;
         }
@@ -62,14 +57,12 @@ namespace ChudoPechkaLib
         }
         public void RegisterUser(User newUser)
         {
-            using (StoreDB db = new StoreDB())
-                db.AddUser(newUser);
+            _db.AddUser(newUser);
         }
         public Guid RegisterGroup(string name)
         {
             Group newGroup = new Group(name, this.User.Author);
-            using (StoreDB db = new StoreDB())
-                db.AddGroup(newGroup);
+            _db.AddGroup(newGroup);
 
             return newGroup.Id;
         }
@@ -77,13 +70,10 @@ namespace ChudoPechkaLib
         public bool UpdatePassword(string login, string newPass, string responseQuestion)
         {
 
-            using (StoreDB db = new StoreDB())
+            if (_db.IsContainUser(login) && _db.ResponceOnQuestion(login, responseQuestion))
             {
-                if (db.IsContainUser(login) && db.ResponceOnQuestion(login, responseQuestion))
-                {
-                    db.UpdatePassword(login, newPass);
-                    return true;
-                }
+                _db.UpdatePassword(login, newPass);
+                return true;
             }
             return false;
         }
@@ -108,13 +98,11 @@ namespace ChudoPechkaLib
         public bool GetUser(string login, out User usr)
         {
             usr = null;
-            using (StoreDB db = new StoreDB())
+
+            if (_db.IsContainUser(login))
             {
-                if (db.IsContainUser(login))
-                {
-                    usr = db.GetUser(login);
-                    return true;
-                }
+                usr = _db.GetUser(login);
+                return true;
             }
             return false;
         }
@@ -122,21 +110,18 @@ namespace ChudoPechkaLib
         public bool GetGroup(Guid id, out Group grp)
         {
             grp = null;
-            using (StoreDB db = new StoreDB())
+
+            if (_db.IsContainGroup(id))
             {
-                if (db.IsContainGroup(id))
-                {
-                    grp = db.GetGroup(id);
-                    return true;
-                }
+                grp = _db.GetGroup(id);
+                return true;
             }
             return false;
         }
 
         public void SendAnnounced(Announced ann)
         {
-            using (StoreDB db = new StoreDB())
-                db.SendAnnounced(ann);
+            _db.SendAnnounced(ann);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 
 using ChudoPechkaLib;
+using ChudoPechkaLib.Data;
 
 namespace ChudoPechka.Modules
 {
@@ -25,7 +26,8 @@ namespace ChudoPechka.Modules
         {
             HttpContext context = (source as HttpApplication).Context;
             IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
-            auth.Start(context);
+            auth.Start(context,
+                DependencyResolver.Current.GetService<IStoreDB>());
         }
     }
 }
