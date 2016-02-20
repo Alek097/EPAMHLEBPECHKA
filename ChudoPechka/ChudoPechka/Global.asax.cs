@@ -18,7 +18,7 @@ namespace ChudoPechka
 
         }
 
-       protected void ApplicationEndRequest()
+        protected void Application_EndRequest(Object sender, EventArgs e)
         {
            IStoreDB db = DependencyResolver.Current.GetService<IStoreDB>();
             db.SaveChanges();
