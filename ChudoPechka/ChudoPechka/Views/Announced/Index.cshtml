@@ -33,6 +33,14 @@
         });
 
     </script>
+    <script>
+        function AcceptInvation(id) {
+            $.ajax({
+                method: "Get",
+                url: "@Url.Action("AddUser", "Group")?Group_id=" + id,
+            });
+        }
+    </script>
 }
 @{Html.RenderAction("GetAnnounced", "Announced", new { page = 50 });}
 
