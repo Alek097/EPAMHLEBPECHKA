@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Data.Entity;
 
 using ChudoPechkaLib.Models;
@@ -11,6 +11,7 @@ namespace ChudoPechkaLib.Data
     public class StoreDB : DbContext, IStoreDB
     {
         private bool _IsSavedOrModified;
+        private SaltDB _saltDB = new SaltDB();
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -43,6 +44,8 @@ namespace ChudoPechkaLib.Data
         }
         public void AddUser(User usr)
         {
+            usr.Password = this.EncryptPass(usr.Password, _saltDB.GetSalts(usr.Id));
+
             this.Users.Add(usr);
             this.Authors.Add((Author)usr);
             this._IsSavedOrModified = true;
@@ -66,9 +69,11 @@ namespace ChudoPechkaLib.Data
         }
         public bool IsContainUser(string login, string pass)
         {
+            User usr = this.GetUser(login);
+            string encryptPass = this.EncryptPass(pass, _saltDB.GetSalts(usr.Id));
             try
             {
-                this.Users.First((u) => u.Login == login && u.Password == pass);
+                this.Users.First((u) => u.Login.Equals(login) && u.Password.Equals(encryptPass));
                 return true;
             }
             catch
@@ -103,7 +108,7 @@ namespace ChudoPechkaLib.Data
         public void UpdatePassword(string login, string newPassword)
         {
             User updateUsr = this.Users.First(u => u.Login == login);
-            updateUsr.Password = newPassword;
+            updateUsr.Password = this._saltDB.UpdateSalt(updateUsr.Id);
             this.Entry<User>(updateUsr).State = EntityState.Modified;
             this._IsSavedOrModified = true;
         }
@@ -114,10 +119,33 @@ namespace ChudoPechkaLib.Data
         }
         public override int SaveChanges()
         {
+            _saltDB.SaveChanges();
             if (_IsSavedOrModified)
                 return base.SaveChanges();
             else
                 return 0;
+        }
+        public new void Dispose()
+        {
+            _saltDB.Dispose();
+            base.Dispose();
+        }
+
+        private string EncryptPass(string pass,string salt)
+        {
+            SHA1 sha1 = new SHA1CryptoServiceProvider();
+
+            byte[] passBytes = Encoding.Default.GetBytes(pass);
+            passBytes = sha1.ComputeHash(passBytes);//Хэш пароля
+            pass = Encoding.Default.GetString(passBytes);
+
+            string passWithSalt = pass + salt;
+            byte[] passWithSaltBytes = Encoding.Default.GetBytes(passWithSalt);
+            passWithSaltBytes = sha1.ComputeHash(passWithSaltBytes);//Хэш пароля с солью
+            passWithSalt = Encoding.Default.GetString(passWithSaltBytes);
+
+            return passWithSalt;
+
         }
     }
 }

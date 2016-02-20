@@ -21,20 +21,25 @@ namespace ChudoPechkaLib.Data
             }
             else
             {
-                Salt newSalt = new Salt();
-                StringBuilder salt = new StringBuilder(_rnd.Next(20, 100));
-                for (int i = 0; i < salt.Capacity; i++)
-                    salt.Append((char)_rnd.Next(0, 255));
+                return this.AddSalt(usr_id);
+            }
 
-                newSalt.Id = usr_id;
-                newSalt.SaltString = salt.ToString();
-
-                this.Salts.Add(newSalt);
+        }
+        public string UpdateSalt(Guid id)
+        {
+            if (this.IsContainSalt(id))
+            {
+                Salt upSalt = this.Salts.First(s => s.Id == id);
+                upSalt.SaltString = this.GenerateSalt();
+                this.Entry<Salt>(upSalt).State = EntityState.Modified;
                 this._IsSavedOrModified = true;
 
-                return newSalt.SaltString;
+                return upSalt.SaltString;
             }
-            
+            else
+            {
+                return this.AddSalt(id);
+            }
         }
 
         private bool IsContainSalt(Guid id)
@@ -44,12 +49,29 @@ namespace ChudoPechkaLib.Data
                 this.Salts.First(s => s.Id == id);
                 return true;
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return false;
             }
         }
+        private string GenerateSalt()
+        {
+            StringBuilder salt = new StringBuilder(_rnd.Next(20, 100));
+            for (int i = 0; i < salt.Capacity; i++)
+                salt.Append((char)_rnd.Next(-128, 127));
+            return salt.ToString();
+        }
+        private string AddSalt(Guid id)
+        {
+            Salt newSalt = new Salt();
+            newSalt.Id = id;
+            newSalt.SaltString = this.GenerateSalt();
 
+            this.Salts.Add(newSalt);
+            this._IsSavedOrModified = true;
+
+            return newSalt.SaltString;
+        }
         public override int SaveChanges()
         {
             if (_IsSavedOrModified)
