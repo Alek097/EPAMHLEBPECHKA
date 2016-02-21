@@ -39,6 +39,7 @@
 }
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
     @Html.EditorForModel()
     <input class="button" type="submit" value="Регистрация" />
 }

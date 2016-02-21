@@ -15,6 +15,7 @@
 
     @using (Html.BeginForm("Recovery", "Account", FormMethod.Post))
     {
+        @Html.AntiForgeryToken();
         <label>@Model.SecretQuestion ?</label><br />
         <input type="hidden" value="@Model.Login" name="login" />
         <input class="text-box" type="text" name="responseQuestion" /><br />

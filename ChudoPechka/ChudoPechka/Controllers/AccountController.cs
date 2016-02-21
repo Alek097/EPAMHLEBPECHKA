@@ -24,6 +24,7 @@ namespace ChudoPechka.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(RegisterModel model)
         {
             if (!ModelState.IsValid)
@@ -42,6 +43,7 @@ namespace ChudoPechka.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult LoginIn(LoginModel model)
         {
             if (!Auth.IsAuthentication)
@@ -69,6 +71,7 @@ namespace ChudoPechka.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Recovery(RecoveryModel model)
         {
             if (Auth.IsAuthentication)
