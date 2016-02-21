@@ -36,7 +36,7 @@ namespace ChudoPechkaLib.Models
         {
             try
             {
-                this.Announceds.First((a) => a.IsRead == true);
+                this.Announceds.First((a) => a.IsRead == false);
                 return true;
             }
             catch(InvalidOperationException)
