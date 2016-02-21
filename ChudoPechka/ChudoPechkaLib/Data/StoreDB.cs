@@ -33,7 +33,16 @@ namespace ChudoPechkaLib.Data
                 .Include(u => u.Author.Groups)
                 .Include(u => u.Groups)
                 .Include(u => u.Announceds)
-                .FirstOrDefault((usr) => usr.Login.Equals(login));
+                .First((usr) => usr.Login.Equals(login));
+        }
+        public User GetUser(Guid usr_id)
+        {
+            return this.Users
+                .Include(u => u.Author)
+                .Include(u => u.Author.Groups)
+                .Include(u => u.Groups)
+                .Include(u => u.Announceds)
+                .First((usr) => usr.Id.Equals(usr_id));
         }
         public Group GetGroup(Guid group_id)
         {
@@ -66,9 +75,10 @@ namespace ChudoPechkaLib.Data
                 this._IsSavedOrModified = true;
             }
         }
-        public void AddAuthorInGroup(Guid group_id, User usr)
+        public void AddAuthorInGroup(Guid group_id, Guid usr_id)
         {
             Group updateGrp = this.GetGroup(group_id);
+            User usr = this.GetUser(usr_id);
             if (updateGrp.Users.Contains(usr))
             {
                 updateGrp.Users.Remove(usr);
@@ -109,6 +119,18 @@ namespace ChudoPechkaLib.Data
             try
             {
                 this.Users.First((u) => u.Login.Equals(login));
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
+        public bool IsContainUser(Guid usr_id)
+        {
+            try
+            {
+                this.Users.First((u) => u.Id.Equals(usr_id));
                 return true;
             }
             catch (InvalidOperationException)

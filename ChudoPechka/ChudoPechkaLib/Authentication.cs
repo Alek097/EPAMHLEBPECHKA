@@ -129,10 +129,10 @@ namespace ChudoPechkaLib
             if (_db.IsContainGroup(Group_id) && _db.IsContainAnnounced(Group_id))
                 _db.AddMemberInGroup(Group_id, usr);
         }
-        public void AddAuthorInGroup(Guid Group_id, User usr)
+        public void AddAuthorInGroup(Guid Group_id, Guid usr_id)
         {
-            if (_db.IsContainGroup(Group_id))
-                _db.AddAuthorInGroup(Group_id, usr);
+            if (_db.IsContainGroup(Group_id) && _db.IsContainUser(usr_id))
+                _db.AddAuthorInGroup(Group_id, usr_id);
         }
 
         public void SetReadAnnounced(Announced ann)
