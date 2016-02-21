@@ -25,11 +25,23 @@
             var login = $("#login").val();
             $.ajax({
                 method: "Get",
-                url: "@Url.Action("SendAnnounced", "Announced")?From=@Model.Id&To=" + login + "&Type=0",  
+                url: "@Url.Action("SendAnnounced", "Announced")?From=@Model.Id&To=" + login + "&Type=0",
+            });
+        }
+        function addAuthor(usr_id) {
+            $.ajax({
+                method: "Get",
+                url: "@Url.Action("AddAuthor", "Group")?Group_id=@Model.Id&User_id=" + usr_id,
+            });
+        }
+        @if(true) { }
+        $(window).load(function () {
+            $("#MembersContainer").find($(".UserLink")).find($(".User-info")).append("<div style=\"float:right;margin-right:3% \"><button class=\"button\" onclick=\"addAuthor('@Model.')\">Назначить</div>");
         });
         }
     </script>
 }
+@Html.AntiForgeryToken()
 <div>
     <div style="text-align:center;">
         <div>
@@ -37,9 +49,9 @@
         </div>
         @if (auth.IsAuthentication && (Model.Users.Contains(usr) || Model.Authors.FirstOrDefault((a) => a.User.Equals(usr)) != null))
         {
-        <div style="margin-top:10px;">
-            <input type="text" class="text-box" id="login" /><button class="button" onclick="send()">Отправить</button>
-        </div>
+            <div style="margin-top:10px;">
+                <input type="text" class="text-box" id="login" /><button class="button" onclick="send()">Отправить</button>
+            </div>
         }
         <div>
             <hr size="5" color="black" class="line" style="margin-top:15px;" />
@@ -62,7 +74,7 @@
             <span style="font-family:'Segoe Print'; font-size:16pt">Участники</span>
             <hr size="5" color="black" class="line" />
         </div>
-        <div>
+        <div id="MembersContainer">
             @foreach (User item in Model.Users)
             {
                 Html.RenderAction("GetUser", "Account", new { login = item.Login });
