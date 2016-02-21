@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = Model.Name;
     IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+    User usr = auth.User;
 }
 @using ChudoPechkaLib.Models;
 @using ChudoPechkaLib;
@@ -34,7 +35,7 @@
         <div>
             <span style="font-size:16pt; margin: 10px;">@Model.Name</span>
         </div>
-        @if (auth.IsAuthentication && (Model.Users.Contains(auth.User) || Model.Author.User.Login == auth.User.Login))
+        @if (auth.IsAuthentication && (Model.Users.Contains(auth.User) || Model.Authors.FirstOrDefault((a) => a.Equals(usr)) != null))
         {
         <div style="margin-top:10px;">
             <input type="text" class="text-box" id="login" /><button class="button" onclick="send()">Отправить</button>
@@ -47,7 +48,10 @@
         </div>
     </div>
     <div>
-        @{Html.RenderAction("GetUser", "Account", new { login = Model.Author.User.Login });}
+        @foreach (Author item in Model.Authors)
+        {
+            Html.RenderAction("GetUser", "Account", new { login = item.User.Login });
+        }
     </div>
 </div>
 @if (Model.Users.Count > 0)

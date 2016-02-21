@@ -3,6 +3,7 @@ using System.Text;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 using ChudoPechkaLib.Models;
 
@@ -36,11 +37,20 @@ namespace ChudoPechkaLib.Data
         }
         public Group GetGroup(Guid group_id)
         {
-            return this.Groups
-                .Include(g => g.Author)
-                .Include(g => g.Author.User)
+             Group grp = this.Groups
+                .Include(g => g.Authors)
                 .Include(g => g.Users)
                 .First(g => g.Id.Equals(group_id));
+
+            List<Author> tmpCollectionAuthors = new List<Author>(grp.Authors);
+
+            for (int i = 0; i < tmpCollectionAuthors.Count; i++)
+                tmpCollectionAuthors[i] = this.GetAthor(tmpCollectionAuthors[i]);
+            
+
+            grp.Authors = tmpCollectionAuthors;
+
+            return grp;
         }
         public void AddUser(User usr)
         {
@@ -179,6 +189,14 @@ namespace ChudoPechkaLib.Data
                 this.Entry<Announced>(ann).State = EntityState.Modified;
                 this._IsSavedOrModified = true;
             }
+        }
+
+        private Author GetAthor(Author author)
+        {
+            return this.Authors
+                .Include(a => a.User)
+                .Include(a => a.Id)
+                .First(a => a.Equals(author));
         }
     }
 }

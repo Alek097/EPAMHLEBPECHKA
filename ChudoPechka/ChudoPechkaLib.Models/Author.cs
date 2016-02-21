@@ -19,5 +19,9 @@ namespace ChudoPechkaLib.Models
         {
             Groups = new List<Group>();
         }
+        public override bool Equals(object obj)
+        {
+            return Id.Equals((obj as Author).Id);
+        }
     }
 }
