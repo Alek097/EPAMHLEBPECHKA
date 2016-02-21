@@ -52,5 +52,9 @@ namespace ChudoPechkaLib.Models
                 Id = usr.Id
             };
         }
+        public override bool Equals(object obj)
+        {
+            return this.Id.Equals((obj as User).Id);
+        }
     }
 }

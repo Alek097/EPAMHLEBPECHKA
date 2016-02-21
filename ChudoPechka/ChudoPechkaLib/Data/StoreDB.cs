@@ -37,20 +37,10 @@ namespace ChudoPechkaLib.Data
         }
         public Group GetGroup(Guid group_id)
         {
-             Group grp = this.Groups
-                .Include(g => g.Authors)
-                .Include(g => g.Users)
-                .First(g => g.Id.Equals(group_id));
-
-            List<Author> tmpCollectionAuthors = new List<Author>(grp.Authors);
-
-            for (int i = 0; i < tmpCollectionAuthors.Count; i++)
-                tmpCollectionAuthors[i] = this.GetAthor(tmpCollectionAuthors[i]);
-            
-
-            grp.Authors = tmpCollectionAuthors;
-
-            return grp;
+            return this.Groups
+               .Include(g => g.Authors)
+               .Include(g => g.Users)
+               .First(g => g.Id.Equals(group_id));
         }
         public void AddUser(User usr)
         {
@@ -76,6 +66,18 @@ namespace ChudoPechkaLib.Data
                 this._IsSavedOrModified = true;
             }
         }
+        public void AddAuthorInGroup(Guid group_id, User usr)
+        {
+            Group updateGrp = this.GetGroup(group_id);
+            if (updateGrp.Users.Contains(usr))
+            {
+                updateGrp.Users.Remove(usr);
+                updateGrp.Authors.Add(usr.Author);
+                this.Entry<Group>(updateGrp).State = EntityState.Modified;
+
+                this._IsSavedOrModified = true;
+            }
+        }
         public bool IsContainGroup(Guid group_id)
         {
             try
@@ -83,7 +85,7 @@ namespace ChudoPechkaLib.Data
                 this.Groups.First((u) => u.Id.Equals(group_id));
                 return true;
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return false;
             }
@@ -97,7 +99,7 @@ namespace ChudoPechkaLib.Data
                 this.Users.First((u) => u.Login.Equals(login) && u.Password.Equals(encryptPass));
                 return true;
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return false;
             }
@@ -109,7 +111,7 @@ namespace ChudoPechkaLib.Data
                 this.Users.First((u) => u.Login.Equals(login));
                 return true;
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return false;
             }
@@ -121,7 +123,7 @@ namespace ChudoPechkaLib.Data
                 this.Announceds.First(a => a.From.Equals(From_id));
                 return true;
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return false;
             }
@@ -164,7 +166,7 @@ namespace ChudoPechkaLib.Data
             base.Dispose();
         }
 
-        private string EncryptPass(string pass,string salt)
+        private string EncryptPass(string pass, string salt)
         {
             SHA1 sha1 = new SHA1CryptoServiceProvider();
 
@@ -183,7 +185,7 @@ namespace ChudoPechkaLib.Data
 
         public void SetReadAnnounced(Announced ann)
         {
-            if(!ann.IsRead)
+            if (!ann.IsRead)
             {
                 ann.IsRead = true;
                 this.Entry<Announced>(ann).State = EntityState.Modified;

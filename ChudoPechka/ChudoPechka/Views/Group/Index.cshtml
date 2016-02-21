@@ -35,7 +35,7 @@
         <div>
             <span style="font-size:16pt; margin: 10px;">@Model.Name</span>
         </div>
-        @if (auth.IsAuthentication && (Model.Users.Contains(auth.User) || Model.Authors.FirstOrDefault((a) => a.Equals(usr)) != null))
+        @if (auth.IsAuthentication && (Model.Users.Contains(usr) || Model.Authors.FirstOrDefault((a) => a.User.Equals(usr)) != null))
         {
         <div style="margin-top:10px;">
             <input type="text" class="text-box" id="login" /><button class="button" onclick="send()">Отправить</button>

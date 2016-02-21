@@ -48,5 +48,12 @@ namespace ChudoPechka.Controllers
                 Auth.AddMemberInGroup(Group_Id, Auth.User);
             }
         }
+        public void AddAuthor(Guid Group_Id)
+        {
+            if(Auth.IsAuthentication)
+            {
+                Auth.AddAuthorInGroup(Group_Id, Auth.User);
+            }
+        }
     }
 }
