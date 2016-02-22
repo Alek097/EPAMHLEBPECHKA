@@ -124,15 +124,15 @@ namespace ChudoPechkaLib
             _db.SendAnnounced(ann);
         }
 
-        public void AddMemberInGroup(Guid Group_id, User usr)
+        public void AddMemberInGroup(Guid group_id, User usr)
         {
-            if (_db.IsContainGroup(Group_id) && _db.IsContainAnnounced(Group_id))
-                _db.AddMemberInGroup(Group_id, usr);
+            if (_db.IsContainGroup(group_id) && _db.IsContainAnnounced(group_id))
+                _db.AddMemberInGroup(group_id, usr);
         }
-        public void AddAuthorInGroup(Guid Group_id, Guid usr_id)
+        public void AddAuthorInGroup(Guid group_id, string login)
         {
-            if (_db.IsContainGroup(Group_id) && _db.IsContainUser(usr_id))
-                _db.AddAuthorInGroup(Group_id, usr_id);
+            if (_db.IsContainGroup(group_id) && _db.IsContainUser(login))
+                _db.AddAuthorInGroup(group_id, login);
         }
 
         public void SetReadAnnounced(Announced ann)

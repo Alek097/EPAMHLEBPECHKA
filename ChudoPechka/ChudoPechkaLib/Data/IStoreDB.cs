@@ -13,7 +13,7 @@ namespace ChudoPechkaLib.Data
         Group GetGroup(Guid group_id);
         void AddUser(User usr);
         void AddMemberInGroup(Guid group_id, User usr);
-        void AddAuthorInGroup(Guid group_id, Guid usr_id);
+        void AddAuthorInGroup(Guid group_id, string login);
         void AddGroup(Group grp);
         bool IsContainGroup(Guid group_id);
         bool IsContainUser(string login, string pass);

@@ -75,10 +75,10 @@ namespace ChudoPechkaLib.Data
                 this._IsSavedOrModified = true;
             }
         }
-        public void AddAuthorInGroup(Guid group_id, Guid usr_id)
+        public void AddAuthorInGroup(Guid group_id, string login)
         {
             Group updateGrp = this.GetGroup(group_id);
-            User usr = this.GetUser(usr_id);
+            User usr = this.GetUser(login);
             if (updateGrp.Users.Contains(usr))
             {
                 updateGrp.Users.Remove(usr);
