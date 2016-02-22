@@ -22,9 +22,10 @@
     <script>
         function send() {
             var login = $("#login").val();
+            var token = $("#content").find("input").filter(':hidden').attr("name") + "=" + $("#content").find("input").filter(':hidden').val()
             $.ajax({
                 method: "Get",
-                url: "@Url.Action("SendAnnounced", "Announced")?From=@Model.Id&To=" + login + "&Type=0",
+                url: "@Url.Action("SendAnnounced", "Announced")?From=@Model.Id&To=" + login + "&Type=0&" + token,
             });
         }
         function addAuthor(login) {
@@ -52,6 +53,8 @@
                 for (var i = 0; i < ids.length; i++) {
                     $("#" + ids[i]).find($(".User-info")).append("<div style=\"float:right;margin-right:3% \"><button class=\"button\" onclick=\"addAuthor('" + ids[i] + "')\">Назначить</div>")
                 }
+
+                $("#content").find("input").filter(':hidden').val();
             });
         </script>
     }

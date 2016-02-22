@@ -41,6 +41,7 @@ namespace ChudoPechka.Controllers
 
             return Redirect(Url.Action("Index",new {Group_id = grp_id }));
         }
+        [ValidateAntiForgeryToken]
         public void AddUser(Guid Group_Id)
         {
             if (Auth.IsAuthentication)
@@ -48,6 +49,7 @@ namespace ChudoPechka.Controllers
                 Auth.AddMemberInGroup(Group_Id, Auth.User);
             }
         }
+        [ValidateAntiForgeryToken]
         public void AddAuthor(Guid Group_Id, string login)
         {
             if(Auth.IsAuthentication)

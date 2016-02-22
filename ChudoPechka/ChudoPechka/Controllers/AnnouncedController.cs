@@ -67,6 +67,7 @@ namespace ChudoPechka.Controllers
                     return View(Anns);
             }
         }
+        [ValidateAntiForgeryToken]
         public void SendAnnounced(AnnouncedModel model)
         {
             if (Auth.IsAuthentication)
