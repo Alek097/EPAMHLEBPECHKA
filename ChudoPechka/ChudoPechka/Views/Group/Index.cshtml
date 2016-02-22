@@ -34,12 +34,28 @@
                 url: "@Url.Action("AddAuthor", "Group")?Group_id=@Model.Id&User_id=" + usr_id,
             });
         }
-        @if(true) { }
-        $(window).load(function () {
-            $("#MembersContainer").find($(".UserLink")).find($(".User-info")).append("<div style=\"float:right;margin-right:3% \"><button class=\"button\" onclick=\"addAuthor('@Model.')\">Назначить</div>");
-        });
-        }
+        
     </script>
+    @if(true)
+    {
+        <script>
+            var ids = []; 
+        </script>
+        @foreach (User item in Model.Users)
+        {
+            <script>
+                ids[ids.length] = '@item.Login';  
+            </script>
+        }
+        <script>
+            $(window).load(function () {
+                //$("#MembersContainer").find($(".UserLink")).find($(".User-info")).append("<div style=\"float:right;margin-right:3% \"><button class=\"button\" onclick=\"addAuthor('@Model.')\">Назначить</div>");
+                for (var i in ids) {
+                    $("#" + i).find($(".User-info")).append("<div style=\"float:right;margin-right:3% \"><button class=\"button\" onclick=\"addAuthor(" + i +")\">Назначить</div>")
+                }
+            });
+        </script>
+    }
 }
 @Html.AntiForgeryToken()
 <div>

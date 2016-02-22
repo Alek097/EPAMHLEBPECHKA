@@ -39,3 +39,5 @@ E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\EntityFramew
 E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\EntityFramework.SqlServer.xml
 D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\Microsoft.Web.Infrastructure.dll
 D:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\WebActivatorEx.dll
+E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\Проект\EPAMHLEBPECHKA\ChudoPechka\ChudoPechkaLib\bin\Debug\WebActivatorEx.dll
