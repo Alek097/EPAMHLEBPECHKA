@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Мои Группы";
+}
+@using ChudoPechkaLib.Models
+@model User
+
+@section ScriptAndStyle{
+    <style>
+        .Groups {
+            display: inline-block;
+            font-size: 16pt;
+            border: 1px solid black;
+        }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        function out(group_id) {
+            var data = { 'Group_id': group_id, '__RequestVerificationToken': $('[name=__RequestVerificationToken]').val() };
+            $.post('@Url.Action("RemoveUser")', data);
+        }
+    </script>
+}
+@if (Model.Groups.Count > 0 || Model.Author.Groups.Count > 0)
+{
+    @Html.AntiForgeryToken()
+    <div style="padding: 10px;">
+        @if (Model.Author.Groups.Count > 0)
+        {
+            <div>
+                <div style="text-align:center;">
+                    <hr size="5" color="black" class="line" style="margin-top:15px;" />
+                    <span style="font-family:'Segoe Print'; font-size:16pt">Автор</span>
+                    <hr size="5" color="black" class="line" />
+                </div>
+                <div>
+                    @foreach (Group item in Model.Author.Groups)
+                    {
+                        <div class="Groups">
+                            <div style="display:inline; margin-right: 5px; margin-left: 5px;">
+                                <a href="@Url.Action("Index", "Group", new { Group_id = item.Id })">@item.Name</a>
+                            </div>
+                            <div style="display:inline">
+                                <button class="button" onclick="out('@item.Id')">Покинуть</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else if (Model.Groups.Count > 0)
+        {
+            <div>
+                <div style="text-align:center;">
+                    <hr size="5" color="black" class="line" style="margin-top:15px;" />
+                    <span style="font-family:'Segoe Print'; font-size:16pt">Участник</span>
+                    <hr size="5" color="black" class="line" />
+                </div>
+                <div>
+                    @foreach (Group item in Model.Groups)
+                    {
+                        <div class="Groups">
+                            <div style="display:inline; margin-right: 5px; margin-left: 5px;">
+                                <a href="@Url.Action("Index", "Group", new { Group_id = item.Id })">@item.Name</a>
+                            </div>
+                            <div style="display:inline">
+                                <button class="button" onclick="out('@item.Id')">Покинуть</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div>
+        <span>У вас пока нет групп</span>
+    </div>
+}
