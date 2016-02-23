@@ -67,6 +67,7 @@ namespace ChudoPechka.Controllers
                 Auth.AddAuthorInGroup(Group_Id, login);
             }
         }
+        [ValidateAntiForgeryToken]
         public void RemoveUser(Guid group_id)
         {
             if(Auth.IsAuthentication)
