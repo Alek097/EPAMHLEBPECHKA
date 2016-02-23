@@ -124,8 +124,9 @@ namespace ChudoPechkaLib
             _db.SendAnnounced(ann);
         }
 
-        public void AddMemberInGroup(Guid group_id, User usr)
+        public void AddMemberInGroup(Guid group_id)
         {
+            User usr = this.User;
             if (_db.IsContainGroup(group_id) && _db.IsContainAnnounced(group_id))
                 _db.AddMemberInGroup(group_id, usr);
         }
@@ -138,6 +139,11 @@ namespace ChudoPechkaLib
         public void SetReadAnnounced(Announced ann)
         {
             _db.SetReadAnnounced(ann);
+        }
+
+        public void RemoveUser(Guid group_id)
+        {
+            _db.RemoveUser(group_id, this.User);
         }
     }
 }

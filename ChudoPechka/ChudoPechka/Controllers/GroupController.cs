@@ -44,12 +44,19 @@ namespace ChudoPechka.Controllers
                 return Redirect(Url.Action("Index", new { Group_id = grp_id }));
             }
         }
+        public ActionResult My()
+        {
+            if (Auth.IsAuthentication)
+                return View(Auth.User);
+            else
+                return Redirect(Url.Action("Index", "Home"));
+        }
         [ValidateAntiForgeryToken]
         public void AddUser(Guid Group_Id)
         {
             if (Auth.IsAuthentication)
             {
-                Auth.AddMemberInGroup(Group_Id, Auth.User);
+                Auth.AddMemberInGroup(Group_Id);
             }
         }
         [ValidateAntiForgeryToken]
@@ -58,6 +65,13 @@ namespace ChudoPechka.Controllers
             if(Auth.IsAuthentication)
             {
                 Auth.AddAuthorInGroup(Group_Id, login);
+            }
+        }
+        public void RemoveUser(Guid group_id)
+        {
+            if(Auth.IsAuthentication)
+            {
+                Auth.RemoveUser(group_id);
             }
         }
     }

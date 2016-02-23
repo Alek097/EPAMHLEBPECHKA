@@ -165,7 +165,7 @@ namespace ChudoPechkaLib.Data
         public void UpdatePassword(string login, string newPassword)
         {
             User updateUsr = this.Users.First(u => u.Login.Equals(login));
-            updateUsr.Password = this._saltDB.UpdateSalt(updateUsr.Id);
+            updateUsr.Password = this._saltDB.UpdateSalt(updateUsr.Id);////////////////////////
             this.Entry<User>(updateUsr).State = EntityState.Modified;
             this._IsSavedOrModified = true;
         }
@@ -221,6 +221,23 @@ namespace ChudoPechkaLib.Data
                 .Include(a => a.User)
                 .Include(a => a.Id)
                 .First(a => a.Equals(author));
+        }
+
+        public void RemoveUser(Guid group_id, User removeUser)
+        {
+            Group grp = this.GetGroup(group_id);
+            if(grp.Users.Contains(removeUser))
+            {
+                grp.Users.Remove(removeUser);
+                this.Entry<Group>(grp).State = EntityState.Modified;
+                _IsSavedOrModified = true;
+            }
+            else if(grp.Authors.Contains(removeUser.Author))
+            {
+                grp.Authors.Remove(removeUser.Author);
+                this.Entry<Group>(grp).State = EntityState.Modified;
+                _IsSavedOrModified = true;
+            }
         }
     }
 }

@@ -24,6 +24,7 @@ namespace ChudoPechkaLib.Data
         void UpdatePassword(string login, string newPassword);
         void SendAnnounced(Announced ann);
         void SetReadAnnounced(Announced ann);
+        void RemoveUser(Guid group_id, User removeUser);
         int SaveChanges();
     }
 }
