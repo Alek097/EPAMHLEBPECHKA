@@ -21,37 +21,31 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
         function send() {
-            var login = $("#login").val();
-            var token = $("#content").find("input").filter(':hidden').attr("name") + "=" + $("#content").find("input").filter(':hidden').val()
-            $.ajax({
-                method: "Get",
-                url: "@Url.Action("SendAnnounced", "Announced")?From=@Model.Id&To=" + login + "&Type=0&" + token,
-            });
+            var data = { 'To': $('#login').val(), 'From': '@Model.Id', 'Type': 0  ,'__RequestVerificationToken': $('[name=__RequestVerificationToken]').val()};
+    $.post('@Url.Action("SendAnnounced", "Announced")', data);
         }
         function addAuthor(login) {
-            $.ajax({
-                method: "Get",
-                url: "@Url.Action("AddAuthor", "Group")?Group_id=@Model.Id&Login=" + login,
-            });
+            var data = { 'login': login, 'Group_id': '@Model.Id', '__RequestVerificationToken': $('[name=__RequestVerificationToken]').val() };
+            $.post('"@Url.Action("AddAuthor", "Group")');
+        
         }
 
     </script>
     @if(Model.Authors.Contains(usr.Author))
     {
         <script>
-            var ids = [];
+            var logins = [];
         </script>
         foreach (User item in Model.Users)
         {
             <script>
-                ids[ids.length] = '@item.Login';
+                logins[ids.length] = '@item.Login';
             </script>
         }
         <script>
             $(window).load(function () {
-                //$("#MembersContainer").find($(".UserLink")).find($(".User-info")).append("<div style=\"float:right;margin-right:3% \"><button class=\"button\" onclick=\"addAuthor('@Model.')\">Назначить</div>");
-                for (var i = 0; i < ids.length; i++) {
-                    $("#" + ids[i]).find($(".User-info")).append("<div style=\"float:right;margin-right:3% \"><button class=\"button\" onclick=\"addAuthor('" + ids[i] + "')\">Назначить</div>")
+                for (var i = 0; i < logins.length; i++) {
+                    $("#" + logins[i]).find($(".User-info")).append("<div style=\"float:right;margin-right:3% \"><button class=\"button\" onclick=\"addAuthor('" + logins[i] + "')\">Назначить</div>")
                 }
             });
         </script>

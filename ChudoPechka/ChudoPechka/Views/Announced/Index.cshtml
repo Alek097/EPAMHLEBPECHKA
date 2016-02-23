@@ -20,9 +20,9 @@
         var maxPage = '@ViewBag.MaxPage';
         var nextPage = 100;
         $(window).scroll(function () {
-            if ($(window).scrollTop() == $(document).height() - $(window).height() && nextPage <= numPages && maxPage > nowPage) {
+            if ($(window).scrollTop() == $(document).height() - $(window).height() && maxPage > nowPage) {
                 $.ajax({
-                    method: "Get",
+                    method: "Post",
                     url: "@Url.Action("GetAnnounced", "Announced")?page=" + nextPage,
                     contentType: "html",
                     success: function (ResHtml) {
@@ -34,13 +34,12 @@
 
     </script>
     <script>
-        function AcceptInvation(id) {
-            $.ajax({
-                method: "Get",
-                url: "@Url.Action("AddUser", "Group")?Group_id=" + id,
-            });
+        function AcceptInvationToGroup(id) {
+            var data = { 'Group_id': id, '__RequestVerificationToken': $('[name=__RequestVerificationToken]').val() };
+            $.post("@Url.Action("AddUser", "Group")", data);
         }
     </script>
 }
+@Html.AntiForgeryToken()
 @{Html.RenderAction("GetAnnounced", "Announced", new { page = 50 });}
 

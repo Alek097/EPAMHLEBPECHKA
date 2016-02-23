@@ -19,6 +19,7 @@
 @Html.ValidationSummary()
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
     <label style="font-size: 14pt;font-family:Ariall">Имя:</label><br />
     <input type="text" class="text-box" name="gName" /><br />
     <input type="submit" class="button" value="Создать" />

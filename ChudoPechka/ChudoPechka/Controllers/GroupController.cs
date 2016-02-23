@@ -26,20 +26,23 @@ namespace ChudoPechka.Controllers
                 return View();
             return Redirect(Url.Action("Index", "Home"));
         }
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Create(string gName)
         {
-            if(!Auth.IsAuthentication)
+            if (!Auth.IsAuthentication)
                 return Redirect(Url.Action("Index", "Home"));
-            if (string.IsNullOrEmpty(gName))
+            else if (string.IsNullOrEmpty(gName))
             {
                 ModelState.AddModelError("", "Нулевая строка");
                 return View();
             }
+            else
+            {
+                Guid grp_id = Auth.RegisterGroup(gName);
 
-            Guid grp_id = Auth.RegisterGroup(gName);
-
-            return Redirect(Url.Action("Index",new {Group_id = grp_id }));
+                return Redirect(Url.Action("Index", new { Group_id = grp_id }));
+            }
         }
         [ValidateAntiForgeryToken]
         public void AddUser(Guid Group_Id)
