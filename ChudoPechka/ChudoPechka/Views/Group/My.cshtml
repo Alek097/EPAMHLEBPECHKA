@@ -18,6 +18,10 @@
         function out(group_id) {
             var data = { 'Group_id': group_id, '__RequestVerificationToken': $('[name=__RequestVerificationToken]').val() };
             $.post('@Url.Action("RemoveUser")', data);
+
+            setTimeout(function () {
+                location.reload();
+            }, 200);
         }
     </script>
 }
