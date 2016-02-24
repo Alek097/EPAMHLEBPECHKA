@@ -53,7 +53,10 @@ namespace ChudoPechkaLib.Data
         }
         public void AddUser(User usr)
         {
-            usr.Password = this.EncryptPass(usr.Password, _saltDB.GetSalts(usr.Id));
+            string salt = _saltDB.GetSalt(usr.Id);
+
+            usr.Password = this.Encrypt(usr.Password, salt);
+            usr.ResponseQuestion = this.Encrypt(usr.ResponseQuestion, salt);
 
             this.Users.Add(usr);
             this.Authors.Add((Author)usr);
@@ -107,7 +110,7 @@ namespace ChudoPechkaLib.Data
                 if (this.IsContainUser(login))
                 {
                     User usr = this.GetUser(login);
-                    string encryptPass = this.EncryptPass(pass, _saltDB.GetSalts(usr.Id));
+                    string encryptPass = this.Encrypt(pass, _saltDB.GetSalt(usr.Id));
                     this.Users.First((u) => u.Login.Equals(login) && u.Password.Equals(encryptPass));
                     return true;
                 }
@@ -157,9 +160,12 @@ namespace ChudoPechkaLib.Data
         }
         public bool ResponceOnQuestion(string login, string response)
         {
+
             try
             {
-                this.Users.First(u => u.Login.Equals(login) && u.ResponseQuestion.Equals(response));
+                User usr = this.GetUser(login);
+                string responseWithSalt = Encrypt(response, _saltDB.GetSalt(usr.Id));
+                this.Users.First(u => u.Login.Equals(login) && u.ResponseQuestion.Equals(responseWithSalt));
                 return true;
             }
             catch
@@ -167,10 +173,15 @@ namespace ChudoPechkaLib.Data
                 return false;
             }
         }
-        public void UpdatePassword(string login, string newPassword)
+        public void UpdatePassword(string login, string newPassword, string responseQuestion)
         {
             User updateUsr = this.Users.First(u => u.Login.Equals(login));
-            updateUsr.Password = this.EncryptPass(updateUsr.Password, this._saltDB.UpdateSalt(updateUsr.Id));
+
+            string salt = this._saltDB.UpdateSalt(updateUsr.Id);
+
+            updateUsr.Password = this.Encrypt(newPassword, salt);
+            updateUsr.ResponseQuestion = this.Encrypt(responseQuestion, salt);
+
             this.Entry<User>(updateUsr).State = EntityState.Modified;
             this._IsSavedOrModified = true;
         }
@@ -193,15 +204,15 @@ namespace ChudoPechkaLib.Data
             base.Dispose();
         }
 
-        private string EncryptPass(string pass, string salt)
+        private string Encrypt(string val, string salt)
         {
             SHA1 sha1 = new SHA1CryptoServiceProvider();
 
-            byte[] passBytes = Encoding.Default.GetBytes(pass);
+            byte[] passBytes = Encoding.Default.GetBytes(val);
             passBytes = sha1.ComputeHash(passBytes);//Хэш пароля
-            pass = Encoding.Default.GetString(passBytes);
+            val = Encoding.Default.GetString(passBytes);
 
-            string passWithSalt = pass + salt;
+            string passWithSalt = val + salt;
             byte[] passWithSaltBytes = Encoding.Default.GetBytes(passWithSalt);
             passWithSaltBytes = sha1.ComputeHash(passWithSaltBytes);//Хэш пароля с солью
             passWithSalt = Encoding.Default.GetString(passWithSaltBytes);

@@ -13,7 +13,7 @@ namespace ChudoPechkaLib.Data
         private bool _IsSavedOrModified;
         private static Random _rnd = new Random();
         public DbSet<Salt> Salts { get; set; }
-        public string GetSalts(Guid usr_id)
+        public string GetSalt(Guid usr_id)
         {
             if (this.IsContainSalt(usr_id))
             {

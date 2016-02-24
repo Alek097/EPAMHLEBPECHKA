@@ -21,7 +21,7 @@ namespace ChudoPechkaLib.Data
         bool IsContainUser(Guid usr_id);
         bool IsContainAnnounced(Guid From_id);
         bool ResponceOnQuestion(string login, string response);
-        void UpdatePassword(string login, string newPassword);
+        void UpdatePassword(string login, string newPassword,string responseQuestion);
         void SendAnnounced(Announced ann);
         void SetReadAnnounced(Announced ann);
         void RemoveUser(Guid group_id, User removeUser);
