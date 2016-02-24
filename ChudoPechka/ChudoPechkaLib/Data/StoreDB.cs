@@ -102,12 +102,17 @@ namespace ChudoPechkaLib.Data
         }
         public bool IsContainUser(string login, string pass)
         {
-            User usr = this.GetUser(login);
-            string encryptPass = this.EncryptPass(pass, _saltDB.GetSalts(usr.Id));
             try
             {
-                this.Users.First((u) => u.Login.Equals(login) && u.Password.Equals(encryptPass));
-                return true;
+                if (this.IsContainUser(login))
+                {
+                    User usr = this.GetUser(login);
+                    string encryptPass = this.EncryptPass(pass, _saltDB.GetSalts(usr.Id));
+                    this.Users.First((u) => u.Login.Equals(login) && u.Password.Equals(encryptPass));
+                    return true;
+                }
+                else
+                    return false;
             }
             catch (InvalidOperationException)
             {
