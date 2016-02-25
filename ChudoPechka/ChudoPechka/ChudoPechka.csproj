@@ -167,6 +167,7 @@
     <Compile Include="Controllers\Base\PartialViewResult.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -198,6 +199,8 @@
     <Content Include="Views\Announced\Index.cshtml" />
     <Content Include="Views\Announced\GetAnnounced.cshtml" />
     <Content Include="Views\Group\My.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\ToOrder.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
