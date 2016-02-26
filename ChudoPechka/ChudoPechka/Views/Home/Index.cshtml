@@ -1,8 +1,9 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-
+    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
 }
+@using ChudoPechkaLib
 @section ScriptAndStyle{
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
@@ -14,6 +15,7 @@
                 success: function (ResHtml) {
                     $("#content").html(ResHtml);
                     $(".menuItem > .imgConteiner > img").attr("class", "foodImg");
+                    SetButton();
                 }
             });
         })
@@ -50,4 +52,12 @@
             font-size: 14pt;
         }
     </style>
+    @if(auth.IsAuthentication)
+    {
+        <script>
+            function SetButton ()  {
+                $(".text").append("<div style=\"margin-left: 50px;margin-top: 15px\"><button class=\"button\" onclick=\"location.href = '@Url.Action("ToOrder", "Order")'\"> Заказать</button></div>");
+            }
+        </script>
+    }
 }

@@ -13,7 +13,7 @@ namespace ChudoPechka.Controllers
         {
             return View();
         }
-        public ActionResult ToOrder(int day)
+        public ActionResult ToOrder()
         {
             if (Auth.IsAuthentication)
             {
