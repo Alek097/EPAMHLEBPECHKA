@@ -13,24 +13,21 @@ namespace ChudoPechkaLib.Data
     {
         private bool _IsSavedOrModified;
         private SaltDB _saltDB = new SaltDB();
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-                .HasOptional<Author>(a => a.Author)
-                .WithRequired(a => a.User);
-        }
+                .HasOptional<Group>(g => g.Authors)
+                .WithRequired(a => a.Authors);
+        }*/
 
         public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Author> Authors { get; set; }
         public DbSet<Announced> Announceds { get; set; }
 
         public User GetUser(string login)
         {
             return this.Users
-                .Include(u => u.Author)
-                .Include(u => u.Author.Groups)
                 .Include(u => u.Groups)
                 .Include(u => u.Announceds)
                 .First((usr) => usr.Login.Equals(login));
@@ -38,8 +35,6 @@ namespace ChudoPechkaLib.Data
         public User GetUser(Guid usr_id)
         {
             return this.Users
-                .Include(u => u.Author)
-                .Include(u => u.Author.Groups)
                 .Include(u => u.Groups)
                 .Include(u => u.Announceds)
                 .First((usr) => usr.Id.Equals(usr_id));
@@ -47,7 +42,7 @@ namespace ChudoPechkaLib.Data
         public Group GetGroup(Guid group_id)
         {
             return this.Groups
-               .Include(g => g.Authors)
+               .Include(g => g.Administrations)
                .Include(g => g.Users)
                .First(g => g.Id.Equals(group_id));
         }
@@ -59,7 +54,6 @@ namespace ChudoPechkaLib.Data
             usr.ResponseQuestion = this.Encrypt(usr.ResponseQuestion, salt);
 
             this.Users.Add(usr);
-            this.Authors.Add((Author)usr);
             this._IsSavedOrModified = true;
         }
         public void AddGroup(Group grp)
@@ -85,7 +79,7 @@ namespace ChudoPechkaLib.Data
             if (updateGrp.Users.Contains(usr))
             {
                 updateGrp.Users.Remove(usr);
-                updateGrp.Authors.Add(usr.Author);
+                updateGrp.Administrations.Add(usr);
                 this.Entry<Group>(updateGrp).State = EntityState.Modified;
 
                 this._IsSavedOrModified = true;
@@ -231,14 +225,6 @@ namespace ChudoPechkaLib.Data
             }
         }
 
-        private Author GetAthor(Author author)
-        {
-            return this.Authors
-                .Include(a => a.User)
-                .Include(a => a.Id)
-                .First(a => a.Equals(author));
-        }
-
         public void RemoveUser(Guid group_id, User removeUser)
         {
             Group grp = this.GetGroup(group_id);
@@ -248,9 +234,9 @@ namespace ChudoPechkaLib.Data
                 this.Entry<Group>(grp).State = EntityState.Modified;
                 _IsSavedOrModified = true;
             }
-            else if (grp.Authors.Contains(removeUser.Author))
+            else if (grp.Administrations.Contains(removeUser))
             {
-                grp.Authors.Remove(removeUser.Author);
+                grp.Administrations.Remove(removeUser);
                 this.Entry<Group>(grp).State = EntityState.Modified;
                 _IsSavedOrModified = true;
             }

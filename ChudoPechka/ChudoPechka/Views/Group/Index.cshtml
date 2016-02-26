@@ -31,7 +31,7 @@
         }
 
     </script>
-    @if(Model.Authors.Contains(usr.Author))
+    @if(Model.Administrations.Contains(usr))
     {
         <script>
             var logins = [];
@@ -57,7 +57,7 @@
         <div>
             <span style="font-size:16pt; margin: 10px;">@Model.Name</span>
         </div>
-        @if (auth.IsAuthentication && (Model.Users.Contains(usr) || Model.Authors.FirstOrDefault((a) => a.User.Equals(usr)) != null))
+        @if (auth.IsAuthentication && (Model.Users.Contains(usr) || Model.Administrations.FirstOrDefault((a) => a.Equals(usr)) != null))
         {
             <div style="margin-top:10px;">
                 <input type="text" class="text-box" id="login" /><button class="button" onclick="send()">Отправить</button>
@@ -70,9 +70,9 @@
         </div>
     </div>
     <div>
-        @foreach (Author item in Model.Authors)
+        @foreach (User item in Model.Administrations)
         {
-            Html.RenderAction("GetUser", "Account", new { login = item.User.Login });
+            Html.RenderAction("GetUser", "Account", new { login = item.Login });
         }
     </div>
 </div>

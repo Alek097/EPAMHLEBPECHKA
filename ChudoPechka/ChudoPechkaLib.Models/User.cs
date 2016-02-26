@@ -17,7 +17,6 @@ namespace ChudoPechkaLib.Models
             this.AvatarPath = "~/img/Standart/Avatar.jpg";
         }
         [Key]
-        [ForeignKey("Author")]
         public Guid Id { get; set; }
         public string Login { get; set; }
         public string FirsName { get; set; }
@@ -30,7 +29,7 @@ namespace ChudoPechkaLib.Models
         public virtual ICollection<Group> Groups { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Announced> Announceds { get; set; }
-        public virtual Author Author { get; set; }
+        public virtual ICollection<Group> AdministartionGroups { get; set; }
 
         public bool IsNewAnnouced()
         {
@@ -43,14 +42,6 @@ namespace ChudoPechkaLib.Models
             {
                 return false;
             }
-        }
-
-        public static explicit operator Author(User usr)
-        {
-            return new Author()
-            {
-                Id = usr.Id
-            };
         }
         public override bool Equals(object obj)
         {

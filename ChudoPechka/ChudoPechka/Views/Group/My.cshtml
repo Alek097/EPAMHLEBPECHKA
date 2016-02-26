@@ -25,11 +25,11 @@
         }
     </script>
 }
-@if (Model.Groups.Count > 0 || Model.Author.Groups.Count > 0)
+@if (Model.Groups.Count > 0 || Model.AdministartionGroups.Count > 0)
 {
     @Html.AntiForgeryToken()
     <div style="padding: 10px;">
-        @if (Model.Author.Groups.Count > 0)
+        @if (Model.Groups.Count > 0)
         {
             <div>
                 <div style="text-align:center;">
@@ -38,7 +38,7 @@
                     <hr size="5" color="black" class="line" />
                 </div>
                 <div>
-                    @foreach (Group item in Model.Author.Groups)
+                    @foreach (Group item in Model.AdministartionGroups)
                     {
                         <div class="Groups">
                             <div style="display:inline; margin-right: 5px; margin-left: 5px;">

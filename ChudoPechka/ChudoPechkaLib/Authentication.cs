@@ -61,7 +61,7 @@ namespace ChudoPechkaLib
         }
         public Guid RegisterGroup(string name)
         {
-            Group newGroup = new Group(name, this.User.Author);
+            Group newGroup = new Group(name, this.User);
             _db.AddGroup(newGroup);
 
             return newGroup.Id;
