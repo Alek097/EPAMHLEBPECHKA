@@ -13,7 +13,11 @@ namespace ChudoPechka.Controllers
         {
             return View();
         }
+<<<<<<< HEAD
         public ActionResult ToOrder()
+=======
+        public ActionResult ToOrder(int day)
+>>>>>>> b3d1eb50117e9d498b36bb16779cde060ebcc83f
         {
             if (Auth.IsAuthentication)
             {
