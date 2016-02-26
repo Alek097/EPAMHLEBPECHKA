@@ -13,12 +13,18 @@ namespace ChudoPechkaLib.Data
     {
         private bool _IsSavedOrModified;
         private SaltDB _saltDB = new SaltDB();
-        /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-                .HasOptional<Group>(g => g.Authors)
-                .WithRequired(a => a.Authors);
-        }*/
+                .HasMany(u => u.AdministartionGroups)
+                .WithMany(g => g.Administrations)
+                .Map(m => m.ToTable("Admonistration"));
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Groups)
+                .WithMany(g => g.Users)
+                .Map(m => m.ToTable("UsersGroups"));
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
