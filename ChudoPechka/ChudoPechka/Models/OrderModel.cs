@@ -9,11 +9,7 @@ namespace ChudoPechka.Models
     public class OrderModel
     {
         public string Day { get; set; }
-        [Display(Name ="Полный")]
-        public bool Full { get; set; }
-        [Display(Name ="Только первое")]
-        public bool First { get; set; }
-        [Display(Name = "Только второе")]
-        public bool Second { get; set; }
+        public string Type { get; set; }
+        
     }
 }

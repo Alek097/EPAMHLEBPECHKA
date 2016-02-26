@@ -24,7 +24,7 @@ namespace ChudoPechka.Controllers
                 return Redirect(Url.Action("Index", "Home"));
         }
         [HttpPost]
-        public ActionResult ToOrder(OrderController model)
+        public ActionResult ToOrder(OrderModel model)
         {
             if(!Auth.IsAuthentication && !ModelState.IsValid)
                 return Redirect(Url.Action("Index", "Home"));

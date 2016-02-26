@@ -1,13 +1,53 @@
 ﻿
 @{
     ViewBag.Title = "ToOrder";
+    IMenu menu = DependencyResolver.Current.GetService<IMenu>();
 }
+@using ChudoPechkaLib.Menu
 @using ChudoPechka.Models
 @model OrderModel
 @section ScriptAndStyle{
-    }
+    <style>
+        .text {
+            width: 190px;
+            line-height: 20px;
+            padding: 5px;
+        }
 
-@using (Html.BeginForm())
-{
-    @Html.EditorForModel()
+        .line {
+            width: 30%;
+        }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(window).load(function () {
+            var a = $('[value=Полный]').attr("checked", "checked");
+
+            });
+    </script>
 }
+@foreach (MenuItem item in menu.MenuItems)
+{
+    <div style="margin-bottom:10px;padding-right:20px; ;padding-left:20px; border-bottom:1px solid black">
+        <div style="text-align:center">
+            <hr size="5" color="black" class="line" />
+            <span style="font-family:'Segoe Print'; font-size:16pt">@item.Day</span>
+            <hr size="5" color="black" class="line" />
+        </div>
+        <div style="width:200px;">
+            @Html.Raw(item.Menu)
+        </div>
+        <div style="margin:0px; margin-top:5%; margin-bottom: 2%">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <input id="Day" name="Day" type="hidden" value="@item.Day">
+                @Html.RadioButtonFor(m => m.Type, "Полный") <span class="Lable">Полный</span>
+                @Html.RadioButtonFor(m => m.Type, "Первое") <span class="Lable">Первое</span>
+                @Html.RadioButtonFor(m => m.Type, "Второе") <span class="Lable">Второе</span>
+                <input class="button" type="submit" value="Отправить" />
+            }
+        </div>
+    </div>
+}
+
