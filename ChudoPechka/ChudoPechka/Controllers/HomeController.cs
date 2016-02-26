@@ -17,7 +17,7 @@ namespace ChudoPechka.Controllers
         public ActionResult GetMenu()
         {
 
-            ChudoPechkaLib.Menu.Menu menu = (ChudoPechkaLib.Menu.Menu)System.Web.Mvc.DependencyResolver.Current.GetService<ChudoPechkaLib.Menu.IMenu>();
+            ChudoPechkaLib.Menu.IMenu menu = System.Web.Mvc.DependencyResolver.Current.GetService<ChudoPechkaLib.Menu.IMenu>();
             string HTML = null;
 
             foreach (ChudoPechkaLib.Menu.MenuItem item in menu.MenuItems)

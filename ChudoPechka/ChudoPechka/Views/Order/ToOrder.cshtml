@@ -2,6 +2,12 @@
 @{
     ViewBag.Title = "ToOrder";
 }
+@using ChudoPechka.Models
+@model OrderModel
+@section ScriptAndStyle{
+    }
 
-<h2>ToOrder</h2>
-
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+}

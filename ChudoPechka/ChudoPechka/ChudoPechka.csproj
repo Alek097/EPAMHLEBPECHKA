@@ -173,6 +173,7 @@
     </Compile>
     <Compile Include="Models\AnnouncedModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\RecoveryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Modules\AuthenticationModule.cs" />

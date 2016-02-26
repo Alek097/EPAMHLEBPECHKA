@@ -12,8 +12,8 @@ namespace ChudoPechkaLib.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public int Type { get; set; }
-        public int Day { get; set; }
+        public string Type { get; set; }
+        public string Day { get; set; }
         public Guid? GroupId { get; set; }
         public virtual Group Group { get; set; }
         public Guid? UserId { get; set; }

@@ -8,8 +8,10 @@ namespace ChudoPechkaLib.Menu
 {
     public struct MenuItem
     {
-        public string Day;
-        public string Img;
-        public string Menu;
+        public string Day { get; set; }
+        public string Img { get; set; }
+        public string Menu { get; set; }
+        public int FullPrice { get; set; }
+        public int WithoutFullPrice { get; set; }
     }
 }

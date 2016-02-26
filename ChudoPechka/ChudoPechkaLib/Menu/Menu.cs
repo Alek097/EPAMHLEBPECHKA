@@ -97,6 +97,11 @@ namespace ChudoPechkaLib.Menu
 
                 MenuItem itemMenu = new MenuItem();
 
+                Match FullPrice = Regex.Match(node.InnerText, @"[0-9]* [0-9]* руб.");
+                Match WithoutFullPrice = Regex.Match(node.InnerText, @"[0-9]* [0-9]* руб. без первого");
+
+                itemMenu.FullPrice = int.Parse(FullPrice.ToString().Replace("руб.", "").Replace(" ",""));
+                itemMenu.WithoutFullPrice = int.Parse(WithoutFullPrice.ToString().Replace("руб. без первого", "").Replace(" ", ""));
                 itemMenu.Day = node.Attributes["id"].InnerText;
                 itemMenu.Img = node.FirstChild.OuterXml;
                 itemMenu.Menu = node.LastChild.OuterXml
