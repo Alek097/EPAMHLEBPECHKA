@@ -18,7 +18,7 @@ namespace ChudoPechkaLib.Data
             modelBuilder.Entity<User>()
                 .HasMany(u => u.AdministartionGroups)
                 .WithMany(g => g.Administrations)
-                .Map(m => m.ToTable("Admonistration"));
+                .Map(m => m.ToTable("Administration"));
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Groups)
@@ -36,7 +36,7 @@ namespace ChudoPechkaLib.Data
             return this.Users
                 .Include(u => u.Groups)
                 .Include(u => u.Announceds)
-                .First((usr) => usr.Login.Equals(login));
+                .FirstOrDefault((usr) => usr.Login.Equals(login));
         }
         public User GetUser(Guid usr_id)
         {
@@ -58,6 +58,7 @@ namespace ChudoPechkaLib.Data
 
             usr.Password = this.Encrypt(usr.Password, salt);
             usr.ResponseQuestion = this.Encrypt(usr.ResponseQuestion, salt);
+            usr.AvatarPath = "~/img/Standart/Avatar.jpg"; 
 
             this.Users.Add(usr);
             this._IsSavedOrModified = true;

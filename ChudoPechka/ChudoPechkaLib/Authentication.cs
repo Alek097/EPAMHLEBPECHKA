@@ -39,7 +39,14 @@ namespace ChudoPechkaLib
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
                 this._user = db.GetUser(ticket.Name);
-                this.IsAuthentication = this.User != null ? true : false;
+
+                if (this.User != null)
+                    this.IsAuthentication = true;
+                else
+                {
+                    this.DeleteCookies();
+                    this.IsAuthentication = false;
+                }
             }
         }
         public bool LoginIn(string login, string password)

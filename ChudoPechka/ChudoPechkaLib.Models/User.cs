@@ -14,7 +14,6 @@ namespace ChudoPechkaLib.Models
             this.Groups = new List<Group>();
             this.Orders = new List<Order>();
             this.Announceds = new List<Announced>();
-            this.AvatarPath = "~/img/Standart/Avatar.jpg";
         }
         [Key]
         public Guid Id { get; set; }
@@ -46,6 +45,10 @@ namespace ChudoPechkaLib.Models
         public override bool Equals(object obj)
         {
             return this.Id.Equals((obj as User).Id);
+        }
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
         }
     }
 }
