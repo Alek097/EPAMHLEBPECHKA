@@ -26,5 +26,6 @@ namespace ChudoPechkaLib
         void AddAuthorInGroup(Guid Group_Id, string login);
         void RemoveUser(Guid group_id);
         void SetReadAnnounced(Announced ann);
+        void ToOrder(Order order);
     }
 }

@@ -13,7 +13,9 @@ namespace ChudoPechka.Models
     public class OrderModel
     {
         public string Day { get; set; }
+        [Required(ErrorMessage = "Укажите тип заказа")]
         public string Type { get; set; }
+        [Required(ErrorMessage ="Выберите группы")]
         public List<SlectedGroup> SelectedGroups { get; set; }
 
         public static implicit operator Order(OrderModel model)

@@ -152,5 +152,10 @@ namespace ChudoPechkaLib
         {
             _db.RemoveUser(group_id, this.User);
         }
+
+        public void ToOrder(Order order)
+        {
+            _db.ToOrder(order);
+        }
     }
 }
