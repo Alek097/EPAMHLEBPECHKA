@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChudoPechkaLib.Models
 {
-    public class Group
+    public class Group : IComparable<Group>
     {
         public Group()
         {
@@ -27,6 +27,11 @@ namespace ChudoPechkaLib.Models
         {
             this.Name = name;
             this.Administrations.Add(author);
+        }
+
+        public int CompareTo(Group other)
+        {
+            return this.Name.CompareTo(other.Name);
         }
     }
 }
