@@ -252,6 +252,7 @@ namespace ChudoPechkaLib.Data
         public void ToOrder(Order order)
         {
             this.Orders.Add(order);
+            _IsSavedOrModified = true;
         }
     }
 }

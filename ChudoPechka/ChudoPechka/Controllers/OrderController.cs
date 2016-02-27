@@ -36,6 +36,9 @@ namespace ChudoPechka.Controllers
                 return Redirect(Url.Action("Index", "Home"));
             else
             {
+                Auth.ToOrder(model);
+
+                model = new OrderModel();
 
                 return View(model);
             }

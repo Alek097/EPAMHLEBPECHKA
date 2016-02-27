@@ -26,10 +26,10 @@ namespace ChudoPechka.Models
 
             ord.Day = model.Day;
             ord.Type = model.Type;
-            ord.User = auth.User;
+            ord.UserId = auth.User.Id;
 
             foreach (SlectedGroup item in model.SelectedGroups)
-                if (db.IsContainGroup(item.GroupId))
+                if (db.IsContainGroup(item.GroupId) && item.Selected)
                 {
                     Group inGroup = db.GetGroup(item.GroupId);
                     ord.Groups.Add(inGroup);
