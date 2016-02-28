@@ -105,8 +105,9 @@ namespace ChudoPechkaLib.Menu
                 itemMenu.Day = node.Attributes["id"].InnerText;
                 itemMenu.Img = node.FirstChild.OuterXml;
                 itemMenu.Menu = node.LastChild.OuterXml
-                    .Replace("THIS_IS", "&nbsp")
-                    .Replace("<div class=\"but but-zakaz-menu\">Заказать обед</div>", "");
+                    .Replace("THIS_IS", "&nbsp");
+
+                itemMenu.Menu = Regex.Replace(itemMenu.Menu, "<div class=\"but but-zakaz-menu\"" + @"(.|\s)*?" + ">Заказать обед</div>", "");
 
                 MenuItems.Add(itemMenu);
             }
