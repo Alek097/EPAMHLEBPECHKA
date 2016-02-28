@@ -28,7 +28,22 @@
         }
 
         .line {
-            width: 30%;
+            width: 80%;
+        }
+
+        .head {
+            font-family: 'Segoe Print';
+            font-size: 14pt;
+            text-align: center;
+        }
+
+        #GroupContainer {
+            overflow-y: scroll;
+            overflow-x: auto;
+            height: 270px;
+            border-left: 1px solid black;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
         }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -38,45 +53,60 @@
         });
     </script>
 }
-@foreach (MenuItem item in menu.MenuItems)
-{
+
+<div style="margin-bottom:10px;padding-right:20px; padding-left:20px; border-bottom:1px solid black">
+    @Html.ValidationSummary()
     <div style="margin-bottom:10px;padding-right:20px; padding-left:20px; border-bottom:1px solid black">
-        <div style="text-align:center">
-            <hr size="5" color="black" class="line" />
-            <span style="font-family:'Segoe Print'; font-size:16pt">@item.Day</span>
-            <hr size="5" color="black" class="line" />
-        </div>
-        @Html.ValidationSummary()
         @using (Html.BeginForm())
         {
-            <div style="font-size:19pt; border-bottom: 1px solid black">
-                <span style="margin-left: 60px;">Меню</span>
-                <span style="margin-left: 330px;">Группы</span>
-            </div>
-            <div style="overflow-y: scroll; overflow-x:auto; height:270px; width:500px; float:right;border-left:1px solid black;">
-                @for (int i = 0; i < Model.SelectedGroups.Count; i++)
+            <div style="width:100%; text-align: center; vertical-align: top;">
+                <div class="head">
+                    <hr size="5" color="black" class="line" style="width: 80%;" />
+                    <span style="font-size:18pt;">Меню</span>
+                    <hr size="5" color="black" class="line" style="width: 80%;" />
+                </div>
+                @foreach (MenuItem item in menu.MenuItems)
                 {
-                    <div style="height:auto; border-bottom:1px solid black; padding: 3%;">
-                        @Html.CheckBoxFor(m => m.SelectedGroups[i].Selected) @Model.SelectedGroups[i].GroupName
-                        @Html.HiddenFor(m => m.SelectedGroups[i].GroupName)
-                        @Html.HiddenFor(m => m.SelectedGroups[i].GroupId)
+                    <div style="width:200px; display: inline-block">
+                        <div class="head">
+                            <hr size="5" color="black" class="line" />
+                            <span>@item.Day</span>
+                            <hr size="5" color="black" class="line" />
+                        </div>
+                        @Html.Raw(item.Menu)
                     </div>
                 }
             </div>
-            <div style="width:200px;">
-                @Html.Raw(item.Menu)
+            <div class="head">
+                <hr size="5" color="black" class="line" style="width: 80%;" />
+                <span style="font-size:18pt;">Группы</span>
+                <hr size="5" color="black" class="line" style="width: 80%;" />
             </div>
-            <div style="margin:0px; margin-top:5%; margin-bottom: 2%">
+            <div id="GroupContainer">
+                @if (Model.SelectedGroups.Count > 0)
+                {
+                    for (int i = 0; i < Model.SelectedGroups.Count; i++)
+                    {
+                        <div style="height:auto; border-bottom:1px solid black; padding: 3%;">
+                            @Html.CheckBoxFor(m => m.SelectedGroups[i].Selected) @Model.SelectedGroups[i].GroupName
+                            @Html.HiddenFor(m => m.SelectedGroups[i].GroupName)
+                            @Html.HiddenFor(m => m.SelectedGroups[i].GroupId)
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div style="margin-top: 17%; font-size: 18pt; text-align: center;"><span>Вы не состоите в группе</span></div>
+                }
+            </div>
+            <div style="margin:0px; margin-top:2%; margin-bottom: 2%">
 
                 @Html.AntiForgeryToken()
-                <input id="Day" name="Day" type="hidden" value="@item.Day">
-                @Html.RadioButtonFor(m => m.Type, "Полный") <span class="Lable">Полный</span>
-                @Html.RadioButtonFor(m => m.Type, "Первое") <span class="Lable">Первое</span>
-                @Html.RadioButtonFor(m => m.Type, "Второе") <span class="Lable">Второе</span>
-                <input style="margin-left:400px;" class="button" type="submit" value="Отправить" />
-
+                @Html.RadioButtonFor(m => m.Type, "Полный") <span>Полный</span>
+                @Html.RadioButtonFor(m => m.Type, "Первое") <span>Первое</span>
+                @Html.RadioButtonFor(m => m.Type, "Второе") <span>Второе</span>
+                <input style="margin-left:370px;" class="button" type="submit" value="Отправить" />
             </div>
         }
     </div>
-}
-
+</div>
