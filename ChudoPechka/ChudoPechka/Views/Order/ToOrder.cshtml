@@ -51,7 +51,8 @@
             margin-top: 10px;
         }
 
-        .DataPicker-Day {
+        .DataPicker-Day, .DataPicker-Day-block {
+            border-collapse: collapse;
             padding: 0px;
             border-top: 1px solid black;
             border-bottom: 1px solid black;
@@ -63,19 +64,107 @@
             font-weight: 700;
         }
 
-            .DataPicker-Day :hover {
-                background-color: #ee5f0b;
-            }
-            .DataPicker-Day-tex{
-                margin-top:10px;
-            }
+        .DataPicker-Day-block {
+            background-color: #808080;
+        }
+
+        .DataPicker-Day :hover {
+            background-color: #ee5f0b;
+        }
+
+        .DataPicker-Day-tex {
+            display: table-cell;
+            vertical-align: middle;
+            width: 50px;
+            height: 50px;
+        }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
+        var days = [];
+    </script>
+    @foreach (MenuItem item in menu.MenuItems)
+    {
+        switch (item.Day)
+        {
+            case "Понедельник":
+                <script>
+                    days[days.length] = 0;
+                </script>
+                break;
+            case "Вторник":
+                <script>
+                    days[days.length] = 1;
+                </script>
+                break;
+            case "Среда":
+                <script>
+                    days[days.length] = 2;
+                </script>
+                break;
+            case "Четверг":
+                <script>
+                    days[days.length] = 3;
+                </script>
+                break;
+            case "Пятница":
+                <script>
+                    days[days.length] = 4;
+                </script>
+                break;
+        }
+    }
+    <script>
         $(window).load(function () {
             $('[value=Полный]').attr("checked", "checked");
+
+            var date = new Date();
+            var time = date.getHours() + date.getMinutes();
+            var today = date.getDay();
+
+            if (time > 17) {
+                var index = days.indexOf(today) + 1;
+                days.splice(index, 1);
+            }
+            if (today === 5 || today === 6) {
+                for (var i = 0; i < days.length; i++) {
+                    SetDay(days[i]);
+                }
+            }
+            else {
+                for (var i = 0; i < days.length; i++) {
+                    if (days[i] > today) {
+                        SetDay(days[i]);
+                    }
+                }
+            }
         });
+
+        var setCell = -1;
+
+        function SetDate(elem) {
+            var day = $(elem).attr("id");
+
+            $("#" + setCell).css("background-color", "transparent");
+            $("#Day").removeAttr("value");
+
+            if (day != setCell) {
+                $(elem).css("background-color", "#ee5f0b");
+                $("#Day").attr("value", day);
+                setCell = day;
+            }
+            else
+                setCell = -1;
+        }
+
+        function SetDay(day) {
+            $("#" + day).addClass("DataPicker-Day");
+            $("#" + day).removeClass("DataPicker-Day-block");
+            $("#" + day).attr("onclick", "SetDate(this)");
+        }
     </script>
+    <script src="~/scripts/jquery.validate.js"></script>
+    <script src="~/scripts/jquery.validate.unobtrusive.js"></script>
 }
 
 <div style="margin-bottom:10px;padding-right:20px; padding-left:20px; border-bottom:1px solid black">
@@ -83,75 +172,90 @@
     <div style="margin-bottom:10px;padding-right:20px; padding-left:20px; border-bottom:1px solid black">
         @using (Html.BeginForm())
         {
-            <div style="width:100%; text-align: center; vertical-align: top;">
+            @{
+                Html.EnableClientValidation();
+                Html.EnableUnobtrusiveJavaScript();
+            }
+                <div style="width:100%; text-align: center; vertical-align: top;">
+                    <div class="head">
+                        <hr size="5" color="black" class="line" style="width: 80%;" />
+                        <span style="font-size:18pt;">Меню</span>
+                        <hr size="5" color="black" class="line" style="width: 80%;" />
+                    </div>
+                    @foreach (MenuItem item in menu.MenuItems)
+                {
+                        <div style="width:200px; display: inline-block">
+                            <div class="head">
+                                <hr size="5" color="black" class="line" />
+                                <span>@item.Day</span>
+                                <hr size="5" color="black" class="line" />
+                            </div>
+                            @Html.Raw(item.Menu)
+                        </div>
+                    }
+                </div>
                 <div class="head">
                     <hr size="5" color="black" class="line" style="width: 80%;" />
-                    <span style="font-size:18pt;">Меню</span>
+                    <span style="font-size:18pt;">Группы</span>
                     <hr size="5" color="black" class="line" style="width: 80%;" />
                 </div>
-                @foreach (MenuItem item in menu.MenuItems)
-                {
-                    <div style="width:200px; display: inline-block">
-                        <div class="head">
-                            <hr size="5" color="black" class="line" />
-                            <span>@item.Day</span>
-                            <hr size="5" color="black" class="line" />
-                        </div>
-                        @Html.Raw(item.Menu)
-                    </div>
-                }
-            </div>
-            <div class="head">
-                <hr size="5" color="black" class="line" style="width: 80%;" />
-                <span style="font-size:18pt;">Группы</span>
-                <hr size="5" color="black" class="line" style="width: 80%;" />
-            </div>
-            <div id="GroupContainer">
-                @if (Model.SelectedGroups.Count > 0)
+                <div id="GroupContainer">
+                    @if (Model.SelectedGroups.Count > 0)
                 {
                     for (int i = 0; i < Model.SelectedGroups.Count; i++)
                     {
-                        <div style="height:auto; border-bottom:1px solid black; padding: 3%;">
-                            @Html.CheckBoxFor(m => m.SelectedGroups[i].Selected) @Model.SelectedGroups[i].GroupName
-                            @Html.HiddenFor(m => m.SelectedGroups[i].GroupName)
-                            @Html.HiddenFor(m => m.SelectedGroups[i].GroupId)
-                        </div>
+                            <div style="height:auto; border-bottom:1px solid black; padding: 3%;">
+                                @Html.CheckBoxFor(m => m.SelectedGroups[i].Selected) @Model.SelectedGroups[i].GroupName
+                                @Html.HiddenFor(m => m.SelectedGroups[i].GroupName)
+                                @Html.HiddenFor(m => m.SelectedGroups[i].GroupId)
+                            </div>
+                        }
                     }
-                }
-                else
-                {
-                    <div style="margin-top: 17%; font-size: 18pt; text-align: center;"><span>Вы не состоите в группе</span></div>
-                }
-            </div>
-            <div id="DateConteiner">
-                <table cellspacing="0">
-                    <tr>
-                        <td class="DataPicker-Day" style="border-left: 1px solid black">
-                            <span class="DataPicker-Day-tex">Пн</span>
-                        </td>
-                        <td class="DataPicker-Day">
-                            <span class="DataPicker-Day-tex">Вт</span>
-                        </td>
-                        <td class="DataPicker-Day">
-                            <span class="DataPicker-Day-tex">Ср</span>
-                        </td>
-                        <td class="DataPicker-Day">
-                            <span class="DataPicker-Day-tex">Чт</span>
-                        </td>
-                        <td class="DataPicker-Day">
-                            <span class="DataPicker-Day-tex">Пт</span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div style="margin:0px; margin-top:2%; margin-bottom: 2%">
+                    else
+                    {
+                        <div style="margin-top: 17%; font-size: 18pt; text-align: center;"><span>Вы не состоите в группе</span></div>
+                    }
+                </div>
+                <div id="DateConteiner">
+                    <input id="Day" type="hidden" name="Day" />
+                    <table cellspacing="0" style="height:50px">
+                        <tr>
+                            <td id="0" class="DataPicker-Day-block" style="border-left: 1px solid black">
+                                <div class="DataPicker-Day-tex">
+                                    <span>Пн</span>
+                                </div>
+                            </td>
+                            <td id="1" class="DataPicker-Day-block">
+                                <div class="DataPicker-Day-tex">
+                                    <span>Вт</span>
+                                </div>
+                            </td>
+                            <td id="2" class="DataPicker-Day-block">
+                                <div class="DataPicker-Day-tex">
+                                    <span>Ср</span>
+                                </div>
+                            </td>
+                            <td id="3" class="DataPicker-Day-block">
+                                <div class="DataPicker-Day-tex">
+                                    <span>Чт</span>
+                                </div>
+                            </td>
+                            <td id="4" class="DataPicker-Day-block">
+                                <div class="DataPicker-Day-tex">
+                                    <span>Пт</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="margin:0px; margin-top:2%; margin-bottom: 2%">
 
-                @Html.AntiForgeryToken()
-                @Html.RadioButtonFor(m => m.Type, "Полный") <span>Полный</span>
-                @Html.RadioButtonFor(m => m.Type, "Первое") <span>Первое</span>
-                @Html.RadioButtonFor(m => m.Type, "Второе") <span>Второе</span>
-                <input style="margin-left:370px;" class="button" type="submit" value="Отправить" />
-            </div>
-        }
+                    @Html.AntiForgeryToken()
+                    @Html.RadioButtonFor(m => m.Type, "Полный") <span>Полный</span>
+                    @Html.RadioButtonFor(m => m.Type, "Первое") <span>Первое</span>
+                    @Html.RadioButtonFor(m => m.Type, "Второе") <span>Второе</span>
+                    <input style="margin-left:370px;" class="button" type="submit" value="Отправить" />
+                </div>
+                }
     </div>
 </div>
