@@ -12,10 +12,10 @@ namespace ChudoPechka.Models
 {
     public class OrderModel
     {
-        public string Day { get; set; }
         [Required(ErrorMessage = "Укажите тип заказа")]
         public string Type { get; set; }
-        public DateTime Date { get; set; }
+        [Required(ErrorMessage ="Выберите день заказа")]
+        public int Day { get; set; }
         [Required(ErrorMessage ="Выберите группы")]
         public List<SlectedGroup> SelectedGroups { get; set; }
 
@@ -25,10 +25,9 @@ namespace ChudoPechka.Models
             IStoreDB db = DependencyResolver.Current.GetService<IStoreDB>();
             Order ord = new Order();
 
-            ord.Day = model.Day;
             ord.Type = model.Type;
             ord.UserId = auth.User.Id;
-            ord.Date = model.Date;
+            ord.Day = model.Day;
 
             foreach (SlectedGroup item in model.SelectedGroups)
                 if (db.IsContainGroup(item.GroupId) && item.Selected)

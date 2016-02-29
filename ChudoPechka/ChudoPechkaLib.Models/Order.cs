@@ -13,8 +13,7 @@ namespace ChudoPechkaLib.Models
         [Key]
         public Guid Id { get; set; }
         public string Type { get; set; }
-        public string Day { get; set; }
-        public DateTime Date { get; set; }
+        public int Day { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
         public Guid? UserId { get; set; }
         public virtual User User { get; set; }
