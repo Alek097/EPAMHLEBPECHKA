@@ -19,14 +19,23 @@ namespace ChudoPechkaLib.Data.DataAnnotations
             if (value is int)
                 dayNum = (int)value;
             else
-                throw new FormatException("Неверный формат числа");
+                return false;
 
             DayOfWeek orderDay = GetDay(dayNum);
             DayOfWeek today = date.DayOfWeek;
 
             TimeSpan now = date.TimeOfDay;
 
-            return orderDay > today && now < _validTime;
+            if (orderDay > today)
+            {
+                if (orderDay == today + 1 && now < _validTime)
+                    return true;
+                else if (orderDay == today + 1 && !(now < _validTime))
+                    return false;
+                return true;
+            }
+            else
+                return false;
         }
 
         private DayOfWeek GetDay(int dayNum)

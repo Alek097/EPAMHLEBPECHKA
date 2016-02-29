@@ -117,6 +117,8 @@
     <script>
         $(window).load(function () {
             $('[value=Полный]').attr("checked", "checked");
+            $(".validation-summary-errors>ul").css("display", "block");
+            $(".validation-summary-errors>ul>li").css("display", "block");
 
             var date = new Date();
             var time = date.getHours() + date.getMinutes();
@@ -168,11 +170,10 @@
 }
 
 <div style="margin-bottom:10px;padding-right:20px; padding-left:20px; border-bottom:1px solid black">
-    @Html.ValidationSummary()
     <div style="margin-bottom:10px;padding-right:20px; padding-left:20px; border-bottom:1px solid black">
         @using (Html.BeginForm())
         {
-            @{
+            {
                 Html.EnableClientValidation();
                 Html.EnableUnobtrusiveJavaScript();
             }
@@ -256,6 +257,7 @@
                     @Html.RadioButtonFor(m => m.Type, "Второе") <span>Второе</span>
                     <input style="margin-left:370px;" class="button" type="submit" value="Отправить" />
                 </div>
-                }
+                @Html.ValidationSummary()
+        }
     </div>
 </div>

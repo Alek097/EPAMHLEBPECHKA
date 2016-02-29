@@ -32,16 +32,16 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ToOrder(OrderModel model)
         {
-            if (!Auth.IsAuthentication && !ModelState.IsValid)
+            if (!Auth.IsAuthentication)
                 return Redirect(Url.Action("Index", "Home"));
-            else
+            else if (ModelState.IsValid)
             {
+
                 Auth.ToOrder(model);
 
                 model = new OrderModel();
-
-                return View(model);
             }
+            return View(model);
         }
     }
 }
