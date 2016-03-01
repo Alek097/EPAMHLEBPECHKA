@@ -15,7 +15,10 @@ namespace ChudoPechka.Controllers
         // GET: Order
         public ActionResult Index()
         {
-            return View();
+            if (Auth.IsAuthentication)
+                return View(Auth.User.Orders.ToList());
+            else
+                return Redirect(Url.Action("Index", "Home"));
         }
         [HttpGet]
         public ActionResult ToOrder()

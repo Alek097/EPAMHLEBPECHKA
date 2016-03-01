@@ -1,9 +1,95 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Мои Заказы";
 }
 @using ChudoPechkaLib.Models
 @model List<Order>
 @section ScriptAndStyle{
+    <style>
+        thead {
+            background-color: #ee5f0b;
+            border: 1px solid black;
+            font-size: 16pt;
+        }
 
+        th, td {
+            padding-left: 10px;
+            padding-right: 10px;
+            border-left: 1px solid black;
+        }
+
+        td {
+            height: 80px;
+        }
+
+        #content {
+            padding: 10px;
+        }
+
+        .id {
+            border-left: 0px;
+        }
+
+        .order-inf {
+            border-bottom: 1px solid black;
+        }
+
+        table {
+            margin: auto;
+        }
+
+        .info-line:hover {
+            background-color: #ee5f0b;
+        }
+    </style>
+
+    <script src="~/scripts/jquery-2.2.1.js"></script>
+    <script>
+        function ToInformationAction(elem){
+            var id = $(elem).find(".id").text();
+            location.href = '@Url.Action("Information")?Order_id=' + id;
+        }
+    </script>
 }
+<table cellspacing="0">
+    <thead>
+        <tr>
+            <th style="border-left: 0px;">Id</th>
+            <th>Дата</th>
+            <th>Стоймость</th>
+            <th>Тип</th>
+        </tr>
+    </thead>
+    @if (Model.Count > 0)
+    {
+        foreach (Order order in Model)
+        {
+            if (order.IsOrdered)
+            {
+                <tr class="info-line ordered" onclick="ToInformationAction(this)">
+                    <td class="id order-inf">@order.Id</td>
+                    <td class="date order-inf">@order.Day.ToString("D")</td>
+                    <td class="price order-inf">@string.Format("{0:N}", order.Price)</td>
+                    <td class="type order-inf">@order.Type</td>
+                </tr>
+            }
+            else
+            {
+                <tr class="info-line"  onclick="ToInformationAction(this)">
+                    <td class="id order-inf">@order.Id</td>
+                    <td class="date order-inf">@order.Day.ToString("D")</td>
+                    <td class="price order-inf">@string.Format("{0:N}",order.Price) руб.</td>
+                    <td class="type order-inf">@order.Type</td>
+                </tr>
+            }
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="4" style="text-align:center; border-right:1px solid black; padding-left:300px; padding-right:300px;">
+                У вас пока что нет заказов
+            </td>
+        </tr>
+    }
+</table>
