@@ -15,6 +15,12 @@ namespace ChudoPechkaLib.Models
         public string Type { get; set; }
         public DateTime Day { get; set; }
         public int Price { get; set; }
+        /*
+        Ожидается
+        Заказан
+        Вышел срок ожидания
+        */
+        public string Status { get; set; }
         public bool IsOrdered { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
         public Guid? UserId { get; set; }
