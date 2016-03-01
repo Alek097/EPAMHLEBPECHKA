@@ -14,6 +14,8 @@ namespace ChudoPechkaLib.Models
         public Guid Id { get; set; }
         public string Type { get; set; }
         public DateTime Day { get; set; }
+        public int Price { get; set; }
+        public bool IsOrdered { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
         public Guid? UserId { get; set; }
         public virtual User User { get; set; }
