@@ -43,19 +43,19 @@ namespace ChudoPechkaLib.Data.DataAnnotations
             DayOfWeek day;
             switch(dayNum)
             {
-                case 0:
+                case 1:
                     day = DayOfWeek.Monday;
                     break;
-                case 1:
+                case 2:
                     day = DayOfWeek.Tuesday;
                     break;
-                case 2:
+                case 3:
                     day = DayOfWeek.Wednesday;
                     break;
-                case 3:
+                case 4:
                     day = DayOfWeek.Thursday;
                     break;
-                case 4:
+                case 5:
                     day = DayOfWeek.Friday;
                     break;
                 default:

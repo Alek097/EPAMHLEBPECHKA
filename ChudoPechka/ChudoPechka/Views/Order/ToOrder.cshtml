@@ -89,27 +89,27 @@
         {
             case "Понедельник":
                 <script>
-                    days[days.length] = 0;
+                    days[days.length] = 1;
                 </script>
                 break;
             case "Вторник":
                 <script>
-                    days[days.length] = 1;
+                    days[days.length] = 2;
                 </script>
                 break;
             case "Среда":
                 <script>
-                    days[days.length] = 2;
+                    days[days.length] = 3;
                 </script>
                 break;
             case "Четверг":
                 <script>
-                    days[days.length] = 3;
+                    days[days.length] = 4;
                 </script>
                 break;
             case "Пятница":
                 <script>
-                    days[days.length] = 4;
+                    days[days.length] = 5;
                 </script>
                 break;
         }
@@ -126,7 +126,8 @@
 
             if (time > 17) {
                 var index = days.indexOf(today) + 1;
-                days.splice(index, 1);
+                if (index < days.length)
+                    days.splice(index, 1);
             }
             if (today === 5 || today === 6) {
                 for (var i = 0; i < days.length; i++) {
@@ -134,8 +135,12 @@
                 }
             }
             else {
+                var index = days.indexOf(today);
+                if (index + 1 < days.length && index <= 5 && index != 0)
+                    days.splice(index, 1);
+
                 for (var i = 0; i < days.length; i++) {
-                    if (days[i] > today) {
+                    if (days[i] >= today) {
                         SetDay(days[i]);
                     }
                 }
@@ -177,24 +182,24 @@
                 Html.EnableClientValidation();
                 Html.EnableUnobtrusiveJavaScript();
             }
-                <div style="width:100%; text-align: center; vertical-align: top;">
-                    <div class="head">
-                        <hr size="5" color="black" class="line" style="width: 80%;" />
-                        <span style="font-size:18pt;">Меню</span>
-                        <hr size="5" color="black" class="line" style="width: 80%;" />
-                    </div>
-                    @foreach (MenuItem item in menu.MenuItems)
-                {
-                        <div style="width:200px; display: inline-block">
-                            <div class="head">
-                                <hr size="5" color="black" class="line" />
-                                <span>@item.Day</span>
-                                <hr size="5" color="black" class="line" />
-                            </div>
-                            @Html.Raw(item.Menu)
-                        </div>
-                    }
+            <div style="width:100%; text-align: center; vertical-align: top;">
+                <div class="head">
+                    <hr size="5" color="black" class="line" style="width: 80%;" />
+                    <span style="font-size:18pt;">Меню</span>
+                    <hr size="5" color="black" class="line" style="width: 80%;" />
                 </div>
+                @foreach (MenuItem item in menu.MenuItems)
+                {
+                    <div style="width:200px; display: inline-block">
+                        <div class="head">
+                            <hr size="5" color="black" class="line" />
+                            <span>@item.Day</span>
+                            <hr size="5" color="black" class="line" />
+                        </div>
+                        @Html.Raw(item.Menu)
+                    </div>
+                }
+            </div>
                 <div class="head">
                     <hr size="5" color="black" class="line" style="width: 80%;" />
                     <span style="font-size:18pt;">Группы</span>
@@ -221,27 +226,27 @@
                     <input id="Day" type="hidden" name="Day" />
                     <table cellspacing="0" style="height:50px">
                         <tr>
-                            <td id="0" class="DataPicker-Day-block" style="border-left: 1px solid black">
+                            <td id="1" class="DataPicker-Day-block" style="border-left: 1px solid black">
                                 <div class="DataPicker-Day-tex">
                                     <span>Пн</span>
                                 </div>
                             </td>
-                            <td id="1" class="DataPicker-Day-block">
+                            <td id="2" class="DataPicker-Day-block">
                                 <div class="DataPicker-Day-tex">
                                     <span>Вт</span>
                                 </div>
                             </td>
-                            <td id="2" class="DataPicker-Day-block">
+                            <td id="3" class="DataPicker-Day-block">
                                 <div class="DataPicker-Day-tex">
                                     <span>Ср</span>
                                 </div>
                             </td>
-                            <td id="3" class="DataPicker-Day-block">
+                            <td id="4" class="DataPicker-Day-block">
                                 <div class="DataPicker-Day-tex">
                                     <span>Чт</span>
                                 </div>
                             </td>
-                            <td id="4" class="DataPicker-Day-block">
+                            <td id="5" class="DataPicker-Day-block">
                                 <div class="DataPicker-Day-tex">
                                     <span>Пт</span>
                                 </div>

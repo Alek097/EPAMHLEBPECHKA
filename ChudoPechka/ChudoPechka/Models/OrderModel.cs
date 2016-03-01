@@ -30,9 +30,10 @@ namespace ChudoPechka.Models
             ord.Type = model.Type;
             ord.UserId = auth.User.Id;
 
-            int addDay = ((int)(model.Day - DateTime.Now.DayOfWeek)) + 1;//т.к. в js отсчёт идёт от нуля а в c# 0 - воскресенье
+            ord.Day = DateTime.Now.Date;
 
-            ord.Day = DateTime.Now.AddDays(addDay).Date;
+            while ((int)(ord.Day.DayOfWeek) != model.Day)
+                ord.Day = ord.Day.AddDays(1);
 
             if (model.SelectedGroups != null)
             {
