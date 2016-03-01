@@ -20,6 +20,13 @@ namespace ChudoPechka.Controllers
             else
                 return Redirect(Url.Action("Index", "Home"));
         }
+        public ActionResult Information(Guid Group_id)
+        {
+            if (Auth.IsAuthentication)
+                return View();
+            else
+                return Redirect(Url.Action("Index", "Home"));
+        }
         [HttpGet]
         public ActionResult ToOrder()
         {
