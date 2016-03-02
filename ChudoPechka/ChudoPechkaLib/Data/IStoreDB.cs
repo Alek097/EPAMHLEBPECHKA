@@ -29,6 +29,7 @@ namespace ChudoPechkaLib.Data
         void SendAnnounced(Announced ann);
         void SetReadAnnounced(Announced ann);
         void RemoveUser(Guid group_id, User removeUser);
+        void RemoveOrder(Guid order_id);
         int SaveChanges();
     }
 }

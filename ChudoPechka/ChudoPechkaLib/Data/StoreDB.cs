@@ -289,5 +289,12 @@ namespace ChudoPechkaLib.Data
             this.Entry<Order>(oldOrd).State = EntityState.Modified;
             _IsSavedOrModified = true;
         }
+
+        public void RemoveOrder(Guid order_id)
+        {
+            Order remOrder = this.GetOrder(order_id);
+            this.Entry<Order>(remOrder).State = EntityState.Deleted;
+            _IsSavedOrModified = true;
+        }
     }
 }

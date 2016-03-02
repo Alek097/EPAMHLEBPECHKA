@@ -175,5 +175,11 @@ namespace ChudoPechkaLib
             if (_db.IsContainOrder(order.Id))
                 _db.UpdateOrder(order);
         }
+
+        public void RemoveOrder(Guid order_id)
+        {
+            if (_db.IsContainOrder(order_id))
+                _db.RemoveOrder(order_id);
+        }
     }
 }
