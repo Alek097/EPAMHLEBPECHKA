@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using ChudoPechkaLib.Models;
 using ChudoPechkaLib;
 using ChudoPechkaLib.Data.DataAnnotations;
+using ChudoPechkaLib.Data;
 
 namespace ChudoPechka.Models
 {
@@ -23,6 +24,14 @@ namespace ChudoPechka.Models
         public DateTime Day { get; set; }
         [Required(ErrorMessage = "Выберите группу")]
         public List<SlectedGroup> SelectedGroups { get; set; }
+        [Required(ErrorMessage ="Отсутствует цена")]
+        public int Price { get; set; }
+        [Required(ErrorMessage ="Отсутствует статус")]
+        public string Status { get; set; }
+        [Required(ErrorMessage ="Отсутсвует владеец заказа")]
+        public Guid UserId { get; set; }
+        [Required]
+        public bool IsOrdered { get; set; }
 
         public static implicit operator EditModel(Order model)
         {
@@ -33,6 +42,10 @@ namespace ChudoPechka.Models
             Emodel.id = model.Id;
             Emodel.Type = model.Type;
             Emodel.Day = model.Day;
+            Emodel.Price = model.Price;
+            Emodel.UserId = (Guid)model.UserId;
+            Emodel.Status = model.Status;
+            Emodel.IsOrdered = model.IsOrdered;
             Emodel.SelectedGroups = new List<SlectedGroup>();
 
             List<Group> groups = new List<Group>();
@@ -50,6 +63,27 @@ namespace ChudoPechka.Models
             }
 
             return Emodel;
+        }
+        public static implicit operator Order(EditModel model)
+        {
+            IStoreDB db = DependencyResolver.Current.GetService<IStoreDB>();
+
+            Order ord = new Order();
+            ord.Id = model.id;
+            ord.Price = model.Price;
+            ord.Status = model.Status;
+            ord.Type = model.Type;
+            ord.UserId = model.UserId;
+            ord.IsOrdered = model.IsOrdered;
+            ord.Day = model.Day;
+            ord.Groups = new List<Group>();
+
+            foreach (SlectedGroup item in model.SelectedGroups)
+            {
+                if (item.Selected && db.IsContainGroup(item.GroupId))
+                    ord.Groups.Add(db.GetGroup(item.GroupId));
+            }
+            return ord;
         }
     }
 }
