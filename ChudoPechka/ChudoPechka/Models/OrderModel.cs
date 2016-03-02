@@ -29,6 +29,7 @@ namespace ChudoPechka.Models
 
             ord.Type = model.Type;
             ord.UserId = auth.User.Id;
+            ord.Status = "Ожидается";
 
             ord.Day = DateTime.Now.Date;
 

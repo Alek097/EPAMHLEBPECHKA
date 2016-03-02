@@ -43,6 +43,7 @@ namespace ChudoPechkaLib.Data
             return this.Users
                 .Include(u => u.Groups)
                 .Include(u => u.Announceds)
+                .Include(u => u.Orders)
                 .FirstOrDefault((usr) => usr.Login.Equals(login));
         }
         public User GetUser(Guid usr_id)
@@ -50,6 +51,7 @@ namespace ChudoPechkaLib.Data
             return this.Users
                 .Include(u => u.Groups)
                 .Include(u => u.Announceds)
+                .Include(u => u.Orders)
                 .First((usr) => usr.Id.Equals(usr_id));
         }
         public Group GetGroup(Guid group_id)
@@ -57,6 +59,7 @@ namespace ChudoPechkaLib.Data
             return this.Groups
                .Include(g => g.Administrations)
                .Include(g => g.Users)
+               .Include(g => g.Orders)
                .First(g => g.Id.Equals(group_id));
         }
         public void AddUser(User usr)
@@ -65,7 +68,7 @@ namespace ChudoPechkaLib.Data
 
             usr.Password = this.Encrypt(usr.Password, salt);
             usr.ResponseQuestion = this.Encrypt(usr.ResponseQuestion, salt);
-            usr.AvatarPath = "~/img/Standart/Avatar.jpg"; 
+            usr.AvatarPath = "~/img/Standart/Avatar.jpg";
 
             this.Users.Add(usr);
             this._IsSavedOrModified = true;
@@ -103,7 +106,7 @@ namespace ChudoPechkaLib.Data
         {
             try
             {
-                this.Groups.First((u) => u.Id.Equals(group_id));
+                this.Groups.First((u) => u.Id == group_id);
                 return true;
             }
             catch (InvalidOperationException)
@@ -146,7 +149,7 @@ namespace ChudoPechkaLib.Data
         {
             try
             {
-                this.Users.First((u) => u.Id.Equals(usr_id));
+                this.Users.First((u) => u.Id== usr_id);
                 return true;
             }
             catch (InvalidOperationException)
@@ -158,7 +161,7 @@ namespace ChudoPechkaLib.Data
         {
             try
             {
-                this.Announceds.First(a => a.From.Equals(From_id));
+                this.Announceds.First(a => a.From == From_id);
                 return true;
             }
             catch (InvalidOperationException)
@@ -185,7 +188,7 @@ namespace ChudoPechkaLib.Data
         {
             try
             {
-                this.Users.First((u) => u.Id.Equals(order_id));
+                this.Orders.First((o) => o.Id == order_id);
                 return true;
             }
             catch (InvalidOperationException)
