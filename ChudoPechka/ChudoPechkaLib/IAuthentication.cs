@@ -21,6 +21,7 @@ namespace ChudoPechkaLib
         bool UpdatePassword(string login, string newPass, string responseQuestion);
         bool GetUser(string login, out User usr);
         bool GetGroup(Guid id, out Group grp);
+        bool GetOrder(Guid id, out Order ord);
         void SendAnnounced(Announced ann);
         void AddMemberInGroup(Guid Group_id);
         void AddAuthorInGroup(Guid Group_Id, string login);

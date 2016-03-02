@@ -31,6 +31,13 @@ namespace ChudoPechkaLib.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Announced> Announceds { get; set; }
 
+        public Order GetOrder(Guid order_id)
+        {
+            return this.Orders
+                .Include(o => o.Groups)
+                .Include(o => o.User)
+                .First(o => o.Id.Equals(order_id));
+        }
         public User GetUser(string login)
         {
             return this.Users
@@ -174,6 +181,18 @@ namespace ChudoPechkaLib.Data
                 return false;
             }
         }
+        public bool IsContainOrder(Guid order_id)
+        {
+            try
+            {
+                this.Users.First((u) => u.Id.Equals(order_id));
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
         public void UpdatePassword(string login, string newPassword, string responseQuestion)
         {
             User updateUsr = this.Users.First(u => u.Login.Equals(login));
@@ -249,7 +268,7 @@ namespace ChudoPechkaLib.Data
             }
         }
 
-        public void ToOrder(Order order)
+        public void AddOrder(Order order)
         {
             this.Orders.Add(order);
             _IsSavedOrModified = true;

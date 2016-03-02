@@ -155,7 +155,19 @@ namespace ChudoPechkaLib
 
         public void ToOrder(Order order)
         {
-            _db.ToOrder(order);
+            _db.AddOrder(order);
+        }
+
+        public bool GetOrder(Guid id, out Order ord)
+        {
+            ord = null;
+            if (_db.IsContainOrder(id))
+            {
+                ord = _db.GetOrder(id);
+                return true;
+            }
+            else
+                return false;
         }
     }
 }
