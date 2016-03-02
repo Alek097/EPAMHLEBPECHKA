@@ -20,10 +20,42 @@ namespace ChudoPechka.Controllers
             else
                 return Redirect(Url.Action("Index", "Home"));
         }
-        public ActionResult Edit(Guid Group_id)
+        public ActionResult Edit(Guid Order_id)
         {
             if (Auth.IsAuthentication)
-                return View();
+            {
+                Order ord;
+                if (Auth.GetOrder(Order_id, out ord))
+                {
+                    if (Auth.User.Orders.Contains(ord))
+                    {
+                        EditModel model = ord;
+                        return View(model);
+                    }
+                    else
+                        throw new HttpException(423, "Доступ запрещён");
+                }
+                else
+                    throw new HttpException(404, "Заказ не найден");
+
+            }
+            else
+                return Redirect(Url.Action("Index", "Home"));
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditModel model)
+        {
+            if (Auth.IsAuthentication || !model.Status.Equals("Заказан") || !model.IsOrdered)
+            {
+                if (!ModelState.IsValid)
+                    return View(model);
+                else
+                {
+                    Auth.UpdateOrder(model);
+                    return Redirect("Index");
+                }
+            }
             else
                 return Redirect(Url.Action("Index", "Home"));
         }

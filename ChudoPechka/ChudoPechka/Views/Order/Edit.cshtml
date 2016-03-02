@@ -1,7 +1,97 @@
 ﻿
 @{
     ViewBag.Title = "Information";
+    IMenu menu = DependencyResolver.Current.GetService<IMenu>();
 }
+@using ChudoPechkaLib.Menu
+@using ChudoPechka.Models
+@model EditModel
+@section ScriptAndStyle{
+    <style>
+        .text {
+            width: 190px;
+            line-height: 20px;
+            padding: 5px;
+        }
 
-<h2>Information</h2>
+        .line {
+            width: 80%;
+        }
 
+        .head {
+            font-family: 'Segoe Print';
+            font-size: 14pt;
+            text-align: center;
+        }
+
+        #GroupContainer {
+            overflow-y: scroll;
+            overflow-x: auto;
+            height: 270px;
+            border-left: 1px solid black;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+        }
+    </style>
+}
+@using (Html.BeginForm())
+{
+    <div style="width:100%; text-align: center; vertical-align: top;">
+        <div class="head">
+            <hr size="5" color="black" class="line" style="width: 80%;" />
+            <span style="font-size:18pt;">Меню</span>
+            <hr size="5" color="black" class="line" style="width: 80%;" />
+        </div>
+        @foreach (MenuItem item in menu.MenuItems)
+        {
+            <div style="width:200px; display: inline-block">
+                <div class="head">
+                    <hr size="5" color="black" class="line" />
+                    <span>@item.Day</span>
+                    <hr size="5" color="black" class="line" />
+                </div>
+                @Html.Raw(item.Menu)
+            </div>
+        }
+    </div>
+    <div class="head">
+        <hr size="5" color="black" class="line" style="width: 80%;" />
+        <span style="font-size:18pt;">Группы</span>
+        <hr size="5" color="black" class="line" style="width: 80%;" />
+    </div>
+    <div id="GroupContainer">
+        @if (Model.SelectedGroups.Count > 0)
+        {
+            for (int i = 0; i < Model.SelectedGroups.Count; i++)
+            {
+                <div style="height:auto; border-bottom:1px solid black; padding: 3%;">
+                    @Html.CheckBoxFor(m => m.SelectedGroups[i].Selected) @Model.SelectedGroups[i].GroupName
+                    @Html.HiddenFor(m => m.SelectedGroups[i].GroupName)
+                    @Html.HiddenFor(m => m.SelectedGroups[i].GroupId)
+                </div>
+            }
+        }
+        else
+        {
+            <div style="margin-top: 17%; font-size: 18pt; text-align: center;"><span>Вы не состоите в группе</span></div>
+        }
+    </div>
+    <div style="margin:0px; margin-top:2%; margin-bottom: 2%">
+
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.id)
+        @Html.HiddenFor(m => m.Price)
+        @Html.HiddenFor(m => m.UserId)
+        @Html.HiddenFor(m => m.Status)
+        @Html.HiddenFor(m => m.IsOrdered)
+        @Html.HiddenFor(m => m.Type)
+        @Html.RadioButtonFor(m => m.Type, "Полный") <span>Полный</span>
+        @Html.RadioButtonFor(m => m.Type, "Первое") <span>Первое</span>
+        @Html.RadioButtonFor(m => m.Type, "Второе") <span>Второе</span>
+        <input style="margin-left:370px;" class="button" type="submit" value="Изменить" />
+    </div>
+    <div>
+        @Html.EditorFor(m => m.Day)
+    </div>
+    @Html.ValidationSummary()
+}
