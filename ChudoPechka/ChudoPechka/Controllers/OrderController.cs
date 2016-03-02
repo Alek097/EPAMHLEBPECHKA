@@ -85,5 +85,12 @@ namespace ChudoPechka.Controllers
             }
             return View(model);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Remove(Guid order_id)
+        {
+            Auth.RemoveOrder(order_id);
+            return Redirect("index");
+        }
     }
 }
