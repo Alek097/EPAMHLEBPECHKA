@@ -279,7 +279,14 @@ namespace ChudoPechkaLib.Data
 
         public void UpdateOrder(Order order)
         {
-            this.Entry<Order>(order).State = EntityState.Modified;
+            Order oldOrd = this.GetOrder(order.Id);
+            oldOrd.Groups = order.Groups;
+            oldOrd.Day = order.Day;
+            oldOrd.IsOrdered = order.IsOrdered;
+            oldOrd.Price = order.Price;
+            oldOrd.Status = order.Status;
+            oldOrd.Type = order.Type;
+            this.Entry<Order>(oldOrd).State = EntityState.Modified;
             _IsSavedOrModified = true;
         }
     }
