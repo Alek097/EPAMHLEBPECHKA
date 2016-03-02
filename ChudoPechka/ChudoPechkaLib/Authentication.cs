@@ -169,5 +169,11 @@ namespace ChudoPechkaLib
             else
                 return false;
         }
+
+        public void UpdateOrder(Order order)
+        {
+            if (_db.IsContainOrder(order.Id))
+                _db.UpdateOrder(order);
+        }
     }
 }

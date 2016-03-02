@@ -24,6 +24,7 @@ namespace ChudoPechkaLib.Data
         bool IsContainAnnounced(Guid From_id);
         bool IsContainOrder(Guid order_id);
         bool ResponceOnQuestion(string login, string response);
+        void UpdateOrder(Order order);
         void UpdatePassword(string login, string newPassword,string responseQuestion);
         void SendAnnounced(Announced ann);
         void SetReadAnnounced(Announced ann);
