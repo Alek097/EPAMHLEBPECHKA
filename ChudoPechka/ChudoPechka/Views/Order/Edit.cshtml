@@ -93,5 +93,12 @@
     <div>
         @Html.EditorFor(m => m.Day)
     </div>
-    @Html.ValidationSummary()
 }
+
+@using(Html.BeginForm("Remove", "Order", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="order_id" value="@Model.id" />
+    <input type="submit" class="button" value="Удалить" />
+}
+@Html.ValidationSummary()
