@@ -17,22 +17,38 @@ namespace ChudoPechkaLib.Data.DataAnnotations
             int dayNum = 0;
 
             if (value is int)
-                dayNum = (int)value;
-            else
-                return false;
-
-            DayOfWeek orderDay = GetDay(dayNum);
-            DayOfWeek today = date.DayOfWeek;
-
-            TimeSpan now = date.TimeOfDay;
-
-            if (orderDay > today)
             {
-                if (orderDay == today + 1 && now < _validTime)
+                dayNum = (int)value;
+                DayOfWeek orderDay = GetDay(dayNum);
+                DayOfWeek today = date.DayOfWeek;
+
+                TimeSpan now = date.TimeOfDay;
+
+                if (orderDay > today)
+                {
+                    if (orderDay == today + 1 && now < _validTime)
+                        return true;
+                    else if (orderDay == today + 1 && !(now < _validTime))
+                        return false;
                     return true;
-                else if (orderDay == today + 1 && !(now < _validTime))
+                }
+                else
                     return false;
-                return true;
+            }
+            else if (value is DateTime)
+            {
+                DateTime val = (DateTime)value;
+                DayOfWeek nowDay = date.DayOfWeek;
+                TimeSpan nowTime = date.TimeOfDay;
+                if (date < val)
+                    return true;
+                else if (nowDay == val.DayOfWeek - 1 && nowTime < _validTime)
+                    return true;
+                else if ((nowDay == DayOfWeek.Saturday || nowDay == DayOfWeek.Sunday) && date < val)
+                    return true;
+                else
+                    return false;
+
             }
             else
                 return false;
@@ -41,7 +57,7 @@ namespace ChudoPechkaLib.Data.DataAnnotations
         private DayOfWeek GetDay(int dayNum)
         {
             DayOfWeek day;
-            switch(dayNum)
+            switch (dayNum)
             {
                 case 1:
                     day = DayOfWeek.Monday;

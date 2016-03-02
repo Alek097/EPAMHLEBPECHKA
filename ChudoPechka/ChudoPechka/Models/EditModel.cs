@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 using ChudoPechkaLib.Models;
 using ChudoPechkaLib;
+using ChudoPechkaLib.Data.DataAnnotations;
 
 namespace ChudoPechka.Models
 {
@@ -17,6 +18,7 @@ namespace ChudoPechka.Models
         [Required(ErrorMessage = "Отсутствует тип заказа")]
         public string Type { get; set; }
         [DataType(DataType.Date)]
+        [ValidateDate(ErrorMessage = "Введите допустимую дату")]
         [Required(ErrorMessage = "Отсутствует дата")]
         public DateTime Day { get; set; }
         [Required(ErrorMessage = "Выберите группу")]
