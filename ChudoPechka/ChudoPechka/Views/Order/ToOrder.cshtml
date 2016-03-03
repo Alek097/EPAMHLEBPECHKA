@@ -125,7 +125,7 @@
             var today = date.getDay();
 
             if (time > 17) {
-                var index = days.indexOf(today) + 1;
+                var index = days.indexOf(today);
                 if (index < days.length)
                     days.splice(index, 1);
             }
