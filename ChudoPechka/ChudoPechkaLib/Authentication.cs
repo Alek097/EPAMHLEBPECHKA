@@ -181,5 +181,22 @@ namespace ChudoPechkaLib
             if (_db.IsContainOrder(order_id))
                 _db.RemoveOrder(order_id);
         }
+
+        public void RemoveOrder(Guid group_id, Guid order_id)
+        {
+            if (!_db.IsContainGroup(group_id))
+                throw new InvalidConstraintException("Группа не найдена");
+            else if (!_db.IsContainOrder(order_id))
+                throw new InvalidConstraintException("Заказ не найден");
+            else
+                _db.RemoveOrder(group_id, order_id);
+        }
+        public void RecoveryOrder(Guid group_id, Guid order_id)
+        {
+            if (!_db.IsContainGroup(group_id))
+                throw new InvalidOperationException("Группа не найдена");
+            else if (!_db.IsContainOrder(order_id))
+                throw new InvalidOperationException("Заказ не найден");
+        }
     }
 }

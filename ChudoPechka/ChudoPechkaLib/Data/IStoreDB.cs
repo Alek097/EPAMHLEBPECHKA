@@ -7,7 +7,7 @@ using ChudoPechkaLib.Models;
 
 namespace ChudoPechkaLib.Data
 {
-    public interface IStoreDB :IDisposable
+    public interface IStoreDB : IDisposable
     {
         User GetUser(string login);
         Group GetGroup(Guid group_id);
@@ -25,11 +25,13 @@ namespace ChudoPechkaLib.Data
         bool IsContainOrder(Guid order_id);
         bool ResponceOnQuestion(string login, string response);
         void UpdateOrder(Order order);
-        void UpdatePassword(string login, string newPassword,string responseQuestion);
+        void UpdatePassword(string login, string newPassword, string responseQuestion);
         void SendAnnounced(Announced ann);
         void SetReadAnnounced(Announced ann);
         void RemoveUser(Guid group_id, User removeUser);
         void RemoveOrder(Guid order_id);
+        void RemoveOrder(Guid group_id, Guid order_id);
+        void RecoveryOrder(Guid group_id, Guid order_id);
         int SaveChanges();
     }
 }

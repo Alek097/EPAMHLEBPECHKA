@@ -70,10 +70,53 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public void RemoveUser(Guid group_id)
         {
+            //TODO:Сделать его с ридеректом назад в вызывающий контроллер
             if(Auth.IsAuthentication)
             {
                 Auth.RemoveUser(group_id);
             }
         }
+        public ActionResult OrderInf(Guid Group_Id)
+        {
+            Group grp = null;
+            if (!Auth.IsAuthentication)
+                throw new HttpException(401, "Вы не авторизированы");
+            else if (!Auth.GetGroup(Group_Id, out grp))
+                throw new HttpException(404, "Группа не найдена");
+            else
+            {
+                ViewData["Group_id"] = grp.Id;
+                return View(grp.Orders);
+            }
+        }
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveOrder(Guid Group_id, Guid Order_id)
+        {
+            try
+            {
+                Auth.RemoveOrder(Group_id, Order_id);
+                throw new HttpException(200, "Закзаз удалён из списка группы");
+            }
+            catch(InvalidOperationException ex)
+            {
+                throw new HttpException(404, ex.Message);
+            }
+            
+        }
+        [ValidateAntiForgeryToken]
+        public ActionResult RecoveryOrder(Guid Group_id, Guid Order_id)
+        {
+            try
+            {
+                Auth.RecoveryOrder(Group_id, Order_id);
+                throw new HttpException(200, "Закзаз удалён из списка группы");
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new HttpException(404, ex.Message);
+            }
+        }
+
+
     }
 }

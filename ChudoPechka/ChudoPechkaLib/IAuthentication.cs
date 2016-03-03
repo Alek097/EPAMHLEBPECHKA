@@ -28,6 +28,8 @@ namespace ChudoPechkaLib
         void AddAuthorInGroup(Guid Group_Id, string login);
         void RemoveUser(Guid group_id);
         void RemoveOrder(Guid order_id);
+        void RemoveOrder(Guid group_id, Guid order_id);
+        void RecoveryOrder(Guid group_id, Guid order_id);
         void SetReadAnnounced(Announced ann);
         void ToOrder(Order order);
     }

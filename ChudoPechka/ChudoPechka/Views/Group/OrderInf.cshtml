@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "OrderInf";
+    int fullPrice = 0;
+    int orderedPrice = 0;
+    int notOrderedPrice = 0;
+}
+@model List<Order>
+@using ChudoPechkaLib.Models
+@section ScriptAndStyle{
+    <style>
+        thead {
+            background-color: #ee5f0b;
+            border: 1px solid black;
+            font-size: 16pt;
+        }
+
+        th, td {
+            padding-left: 10px;
+            padding-right: 10px;
+            border-left: 1px solid black;
+        }
+
+        td {
+            height: 80px;
+        }
+
+        #content {
+            padding: 10px;
+        }
+
+        .borderleft {
+            border-left: 0px;
+        }
+
+        .order-inf {
+            border-bottom: 1px solid black;
+        }
+
+        table {
+            margin: auto;
+        }
+
+        .info-line:hover {
+            background-color: #ee5f0b;
+        }
+    </style>
+    <script src="~/scripts/jquery-2.2.1.js"></script>
+    <script>
+        function removeOrder(elem) {
+            var group_id = $(elem).find(".group-id").val();
+            var order_id = $(elem).find(".order-id").val();
+            var token = $('[name=__RequestVerificationToken]').val();
+
+            var UrlData = { "Group_id": group_id, "Order_id": order_id, "__RequestVerificationToken": token };
+
+            $.ajax({
+                url: '@Url.Action("RemoveOrder")',
+                contentType: "text",
+                method: "Post",
+                data: UrlData,
+                success: function () {
+                    $(elem).find(".button").text("Восстановить");
+                    $(elem).find(".button").removeAttr("onclick");
+                    $(elem).find(".button").attr(".onclick", "recoveryOrder($(this).parent('.info-line')");
+                    $(elem).css("opacity", 0.4);
+                },
+                fail: function () {
+                    $(elem).find(".error").text("Произошла ошибка");
+                }
+            });
+        }
+
+        function recoveryOrder(elem)
+        {
+            var group_id = $(elem).find(".group-id").val();
+            var order_id = $(elem).find(".order-id").val();
+            var token = $('[name=__RequestVerificationToken]').val();
+
+            var UrlData = { "Group_id": group_id, "Order_id": order_id, "__RequestVerificationToken": token };
+
+            $.ajax({
+                url: '@Url.Action("RemoveOrder")',
+                contentType: "text",
+                method: "Post",
+                data: UrlData,
+                success: function () {
+                    $(elem).find(".button").text("Отменить");
+                    $(elem).find(".button").removeAttr("onclick");
+                    $(elem).find(".button").attr(".onclick", "removeOrder($(this).parent('.info-line')");
+                    $(elem).css("opacity", 1);
+                },
+                fail: function () {
+                    $(elem).find(".error").text("Произошла ошибка");
+                }
+            })
+        }
+    </script>
+}
+@Html.AntiForgeryToken()
+<table cellspacing="0">
+    <thead>
+        <tr>
+            <th style="border-left: 0px;">Id</th>
+            <th>Дата</th>
+            <th>Стоймость</th>
+            <th>Тип</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    @if (Model.Count > 0)
+    {
+        foreach (Order order in Model)
+        {
+            fullPrice += order.Price;
+            if (order.IsOrdered)
+            {
+                orderedPrice += order.Price;
+            }
+            else
+            {
+                notOrderedPrice += order.Price;
+            }
+            <tr class="info-line">
+                <td class="borderleft order-inf">@order.Id</td>
+                <td class="order-inf">@order.Day.ToString("D")<br />@order.Day.DayOfWeek.ToString()</td>
+                <td class="order-inf">@string.Format("{0:N}", order.Price) руб.</td>
+                <td class="order-inf">@order.Type</td>
+                <td class="order-inf">@order.Status</td>
+                <td class="order-inf">
+
+                    <input type="hidden" value="@order.Id" name="Order_id" class="order-id" />
+                    <input type="hidden" value="@ViewData["Group_id"]" name="Group_id" class="group-id" />
+                    <button class="button" onclick="removeOrder($(this).parent('.info-line'))">Отменить</button>
+                    <div class="error" style="color:red"></div>
+
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                ИТОГ ЗАКАЗАННЫХ:
+            </td>
+            <td colspan="5" style="text-align:right; border-right:1px solid black; padding-left:300px;">
+                @string.Format("{0:N}", orderedPrice) руб.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ИТОГ НЕ ЗАКАЗАННЫХ:
+            </td>
+            <td colspan="5" style="text-align:right; border-right:1px solid black; padding-left:300px;">
+                @string.Format("{0:N}", notOrderedPrice) руб.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ИТОГ:
+            </td>
+            <td colspan="5" style="text-align:right; border-right:1px solid black; padding-left:300px;">
+                @string.Format("{0:N}", fullPrice) руб.
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <td colspan="6" style="text-align:center; border-right:1px solid black; padding-left:300px; padding-right:300px;">
+                У вас пока что нет заказов
+            </td>
+        </tr>
+    }
+</table>
+

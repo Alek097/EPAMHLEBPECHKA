@@ -57,11 +57,15 @@
         <div>
             <span style="font-size:16pt; margin: 10px;">@Model.Name</span>
         </div>
-        @if (auth.IsAuthentication && (Model.Users.Contains(usr) || Model.Administrations.FirstOrDefault((a) => a.Equals(usr)) != null))
+        @if (auth.IsAuthentication && (Model.Users.Contains(usr) || Model.Administrations.Contains(usr)))//Проходит если ты админ или участник
         {
             <div style="margin-top:10px;">
                 <input type="text" class="text-box" id="login" /><button class="button" onclick="send()">Отправить</button>
             </div>
+        }
+        @if (auth.IsAuthentication && Model.Administrations.Contains(usr))
+        {
+            <button class="button" onclick="location.href = '@Url.Action("OrderInf")?Group_id=@Model.Id'" style="width: 100%;">Информация о заказах</button>
         }
         <div>
             <hr size="5" color="black" class="line" style="margin-top:15px;" />

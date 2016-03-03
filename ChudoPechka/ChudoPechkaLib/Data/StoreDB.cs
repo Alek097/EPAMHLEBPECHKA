@@ -296,5 +296,27 @@ namespace ChudoPechkaLib.Data
             this.Entry<Order>(remOrder).State = EntityState.Deleted;
             _IsSavedOrModified = true;
         }
+
+        public void RemoveOrder(Guid group_id, Guid order_id)
+        {
+            Group grp = this.GetGroup(group_id);
+            Order ord = this.GetOrder(order_id);
+
+            grp.Orders.Remove(ord);
+
+            this.Entry<Group>(grp).State = EntityState.Modified;
+            _IsSavedOrModified = true;
+        }
+
+        public void RecoveryOrder(Guid group_id, Guid order_id)
+        {
+            Group grp = this.GetGroup(group_id);
+            Order ord = this.GetOrder(order_id);
+
+            grp.Orders.Add(ord);
+
+            this.Entry<Group>(grp).State = EntityState.Modified;
+            _IsSavedOrModified = true;
+        }
     }
 }
