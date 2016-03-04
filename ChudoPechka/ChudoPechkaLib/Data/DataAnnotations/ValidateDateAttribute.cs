@@ -24,14 +24,16 @@ namespace ChudoPechkaLib.Data.DataAnnotations
 
                 TimeSpan now = date.TimeOfDay;
 
-                if (orderDay > today)
+                if (orderDay > today)//Я написал это ночью если честно сам не понимаю как это работает, магия какая-то.
                 {
-                    if (orderDay == today + 1 && now < _validTime)
-                        return true;
-                    else if (orderDay == today + 1 && !(now < _validTime))
+                    if (orderDay == today + 1 && !(now < _validTime))
                         return false;
                     return true;
                 }
+                else if (today == DayOfWeek.Saturday || today == DayOfWeek.Sunday)
+                    return false;
+                else if (today == DayOfWeek.Friday && now < _validTime)
+                    return true;
                 else
                     return false;
             }

@@ -124,12 +124,20 @@
             var time = date.getHours();
             var today = date.getDay();
 
+            if (today == 0 || today == 6)
+            {
+                var index = days.indexOf(1);
+                if (index != -1) {
+                    days.splice(index, 1);
+                    return;
+                }
+            }
             if (time > 17) {
                 var index = days.indexOf(today);
                 if (index < days.length)
                     days.splice(index, 1);
             }
-            if (today === 5 || today === 6) {
+            if (today === 5) {
                 for (var i = 0; i < days.length; i++) {
                     SetDay(days[i]);
                 }
