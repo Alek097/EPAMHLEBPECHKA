@@ -115,6 +115,8 @@ namespace ChudoPechkaLib.Menu
             bool thursday = false;
             bool friday = false;
 
+            List<DateTime> workdays = new List<DateTime>();
+
             string ul = Regex.Match(html, "<ul id=\"issues\">" + @"(.|\s)+?" + "</ul>").ToString();//Убеждаемся что мы взяли нужный ul, а то кто знает какие ещё у них извращения в голове появятся
             MatchCollection li = Regex.Matches(ul, "<li" + @"(.|\s)+?>" + @"(.|\s)+?" + @"(.|\s)+?</li>");//Берём все li из ul. Их аж 50, Карл!
             ul = "<?xml version=\"1.0\"?><ul>";
@@ -124,26 +126,55 @@ namespace ChudoPechkaLib.Menu
                     {
                         monday = true;
                         ul += item.ToString();
+                        DateTime workday = DateTime.Now.Date;
+                        while (workday.DayOfWeek != DayOfWeek.Monday)
+                            workday.AddDays(1);
+
+                        workdays.Add(workday);
                     }
                     else if (item.ToString().Contains("id=\"Вторник\"") && !tuesday)
                     {
                         tuesday = true;
                         ul += item.ToString();
+
+                        DateTime workday = DateTime.Now.Date;
+                        while (workday.DayOfWeek != DayOfWeek.Tuesday)
+                            workday.AddDays(1);
+
+                        workdays.Add(workday);
                     }
                     else if (item.ToString().Contains("id=\"Среда\"") && !wednesday)
                     {
                         wednesday = true;
                         ul += item.ToString();
+
+                        DateTime workday = DateTime.Now.Date;
+                        while (workday.DayOfWeek != DayOfWeek.Wednesday)//добавляем рабочие дни, это пригодится при валидации
+                            workday.AddDays(1);
+
+                        workdays.Add(workday);
                     }
                     else if (item.ToString().Contains("id=\"Четверг\"") && !thursday)
                     {
                         thursday = true;
                         ul += item.ToString();
+
+                        DateTime workday = DateTime.Now.Date;
+                        while (workday.DayOfWeek != DayOfWeek.Thursday)
+                            workday.AddDays(1);
+
+                        workdays.Add(workday);
                     }
                     else if (item.ToString().Contains("id=\"Пятница\"") && !friday)
                     {
                         friday = true;
                         ul += item.ToString();
+
+                        DateTime workday = DateTime.Now.Date;
+                        while (workday.DayOfWeek != DayOfWeek.Monday)
+                            workday.AddDays(1);
+
+                        workdays.Add(workday);
                     }
                     else
                         break;//Возможно все элементы найдены
@@ -151,7 +182,15 @@ namespace ChudoPechkaLib.Menu
             ul += "</ul>";
 
             ul = ul.Replace("&nbsp", "THIS_IS");
+
+            Workdays.GetWorkdays.Days = workdays;
+
             return ul;
+        }
+
+        private void AddWorkDay(DayOfWeek day)
+        {
+
         }
     }
 }

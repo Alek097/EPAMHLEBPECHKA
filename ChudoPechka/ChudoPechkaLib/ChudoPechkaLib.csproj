@@ -66,6 +66,7 @@
     <Compile Include="Data\SaltDB.cs" />
     <Compile Include="Data\StoreDB.cs" />
     <Compile Include="IAuthentication.cs" />
+    <Compile Include="Menu\Workdays.cs" />
     <Compile Include="Menu\IMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\MenuItem.cs" />
