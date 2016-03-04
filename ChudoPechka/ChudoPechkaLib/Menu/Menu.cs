@@ -63,27 +63,19 @@ namespace ChudoPechkaLib.Menu
         private void ValidationMenu(string html)
         {
             List<XmlNode> ValidDays = new List<XmlNode>(5);
-            string xml = this.GetXmlMenu(html);
+            string xml = this.GetMenu(html);
 
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
 
             XmlNode ul = doc.ChildNodes[1];
 
-            for (int i = 0; i < 5; i++)
-            {
-                XmlNode menuItem = ul.ChildNodes[i];
-
-                if (this.IsContainMenu(menuItem))
-                    ValidDays.Add(menuItem);
-
-            }
-
-            foreach (XmlNode item in ValidDays)
+            foreach (XmlNode item in ul.ChildNodes)
             {
                 XmlNode img = item.ChildNodes[0];
                 XmlAttribute src = img.Attributes["src"];
                 src.Value = _chudoPechka + src.Value;
+                ValidDays.Add(item);
             }
 
             this.SetMenu(ValidDays);
@@ -100,7 +92,7 @@ namespace ChudoPechkaLib.Menu
                 Match FullPrice = Regex.Match(node.InnerText, @"[0-9]* [0-9]* руб.");
                 Match WithoutFullPrice = Regex.Match(node.InnerText, @"[0-9]* [0-9]* руб. без первого");
 
-                itemMenu.FullPrice = int.Parse(FullPrice.ToString().Replace("руб.", "").Replace(" ",""));
+                itemMenu.FullPrice = int.Parse(FullPrice.ToString().Replace("руб.", "").Replace(" ", ""));
                 itemMenu.WithoutFullPrice = int.Parse(WithoutFullPrice.ToString().Replace("руб. без первого", "").Replace(" ", ""));
                 itemMenu.Day = node.Attributes["id"].InnerText;
                 itemMenu.Img = node.FirstChild.OuterXml;
@@ -114,24 +106,52 @@ namespace ChudoPechkaLib.Menu
             this._menuItems = MenuItems;
         }
 
-        private string GetXmlMenu(string html)
+        private string GetMenu(string html)
         {
-            string ul = Regex.Match(html, "<ul id=\"issues\">" + @"(.|\s)+?" + "</ul>").ToString();
-            ul = "<?xml version=\"1.0\" encoding=\"utf - 8\" ?>\r\n" + ul;
+            //Они отвечают за найденные элементы, чтобы они не повторялись
+            bool monday = false;
+            bool tuesday = false;
+            bool wednesday = false;
+            bool thursday = false;
+            bool friday = false;
+
+            string ul = Regex.Match(html, "<ul id=\"issues\">" + @"(.|\s)+?" + "</ul>").ToString();//Убеждаемся что мы взяли нужный ul, а то кто знает какие ещё у них извращения в голове появятся
+            MatchCollection li = Regex.Matches(ul, "<li" + @"(.|\s)+?>" + @"(.|\s)+?" + @"(.|\s)+?</li>");//Берём все li из ul. Их аж 50, Карл!
+            ul = "<?xml version=\"1.0\"?><ul>";
+            foreach (Match item in li)
+                if (Regex.IsMatch(item.ToString(), @"[0-9]+?(\s)*гр"))//Находим все элементы в которых указан вес, если есть вес значит этот элемент содержит какое-то блюдо, да хоть хлеб
+                    if (item.ToString().Contains("id=\"Понедельник\"") && !monday)
+                    {
+                        monday = true;
+                        ul += item.ToString();
+                    }
+                    else if (item.ToString().Contains("id=\"Вторник\"") && !tuesday)
+                    {
+                        tuesday = true;
+                        ul += item.ToString();
+                    }
+                    else if (item.ToString().Contains("id=\"Среда\"") && !wednesday)
+                    {
+                        wednesday = true;
+                        ul += item.ToString();
+                    }
+                    else if (item.ToString().Contains("id=\"Четверг\"") && !thursday)
+                    {
+                        thursday = true;
+                        ul += item.ToString();
+                    }
+                    else if (item.ToString().Contains("id=\"Пятница\"") && !friday)
+                    {
+                        friday = true;
+                        ul += item.ToString();
+                    }
+                    else
+                        break;//Возможно все элементы найдены
+
+            ul += "</ul>";
+
             ul = ul.Replace("&nbsp", "THIS_IS");
             return ul;
         }
-
-        private bool IsContainMenu(XmlNode menuItem)
-        {
-            string a = menuItem.ChildNodes[1].InnerXml;
-
-            if (string.IsNullOrEmpty(a) || string.Equals(a, "<span style=\"font-size: 17px;\">THIS_IS;</span>"))
-                return false;
-
-            return true;
-
-        }
-
     }
 }
