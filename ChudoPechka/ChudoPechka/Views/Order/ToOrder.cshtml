@@ -124,34 +124,12 @@
             var time = date.getHours();
             var today = date.getDay();
 
-            if (today == 0 || today == 6)
-            {
-                var index = days.indexOf(1);
-                if (index != -1) {
-                    days.splice(index, 1);
-                    return;
-                }
-            }
-            if (time > 17) {
-                var index = days.indexOf(today);
-                if (index < days.length)
-                    days.splice(index, 1);
-            }
-            if (today === 5) {
-                for (var i = 0; i < days.length; i++) {
-                    SetDay(days[i]);
-                }
-            }
-            else {
-                var index = days.indexOf(today);
-                if (index + 1 < days.length && index <= 5 && index != 0)
-                    days.splice(index, 1);
 
-                for (var i = 0; i < days.length; i++) {
-                    if (days[i] >= today) {
-                        SetDay(days[i]);
-                    }
-                }
+            var index = days.indexOf(today);
+            days.splice(index, 1);
+
+            for (var i = 0; i < days.length; i++) {
+                SetDay(days[i]);
             }
         });
 
@@ -208,28 +186,28 @@
                     </div>
                 }
             </div>
-                <div class="head">
-                    <hr size="5" color="black" class="line" style="width: 80%;" />
-                    <span style="font-size:18pt;">Группы</span>
-                    <hr size="5" color="black" class="line" style="width: 80%;" />
-                </div>
-                <div id="GroupContainer">
-                    @if (Model.SelectedGroups.Count > 0)
+            <div class="head">
+                <hr size="5" color="black" class="line" style="width: 80%;" />
+                <span style="font-size:18pt;">Группы</span>
+                <hr size="5" color="black" class="line" style="width: 80%;" />
+            </div>
+            <div id="GroupContainer">
+                @if (Model.SelectedGroups.Count > 0)
                 {
                     for (int i = 0; i < Model.SelectedGroups.Count; i++)
                     {
-                            <div style="height:auto; border-bottom:1px solid black; padding: 3%;">
-                                @Html.CheckBoxFor(m => m.SelectedGroups[i].Selected) @Model.SelectedGroups[i].GroupName
-                                @Html.HiddenFor(m => m.SelectedGroups[i].GroupName)
-                                @Html.HiddenFor(m => m.SelectedGroups[i].GroupId)
-                            </div>
-                        }
+                        <div style="height:auto; border-bottom:1px solid black; padding: 3%;">
+                            @Html.CheckBoxFor(m => m.SelectedGroups[i].Selected) @Model.SelectedGroups[i].GroupName
+                            @Html.HiddenFor(m => m.SelectedGroups[i].GroupName)
+                            @Html.HiddenFor(m => m.SelectedGroups[i].GroupId)
+                        </div>
                     }
-                    else
-                    {
-                        <div style="margin-top: 17%; font-size: 18pt; text-align: center;"><span>Вы не состоите в группе</span></div>
-                    }
-                </div>
+                }
+                else
+                {
+                    <div style="margin-top: 17%; font-size: 18pt; text-align: center;"><span>Вы не состоите в группе</span></div>
+                }
+            </div>
                 <div id="DateConteiner">
                     <input id="Day" type="hidden" name="Day" />
                     <table cellspacing="0" style="height:50px">
