@@ -139,26 +139,26 @@
             </tr>
         }
         <tr>
-            <td>
+            <td class="borderleft">
                 ИТОГ ЗАКАЗАННЫХ:
             </td>
-            <td colspan="5" style="text-align:right; border-right:1px solid black; padding-left:300px;">
+            <td colspan="5" style="text-align:right; padding-left:300px;">
                 @string.Format("{0:N}", orderedPrice) руб.
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="borderleft">
                 ИТОГ НЕ ЗАКАЗАННЫХ:
             </td>
-            <td colspan="5" style="text-align:right; border-right:1px solid black; padding-left:300px;">
+            <td colspan="5" style="text-align:right; padding-left:300px;">
                 @string.Format("{0:N}", notOrderedPrice) руб.
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="borderleft">
                 ИТОГ:
             </td>
-            <td colspan="5" style="text-align:right; border-right:1px solid black; padding-left:300px;">
+            <td colspan="5" style="text-align:right; padding-left:300px;">
                 @string.Format("{0:N}", fullPrice) руб.
             </td>
         </tr>
@@ -166,7 +166,7 @@
     else
     {
         <tr>
-            <td colspan="6" style="text-align:center; border-right:1px solid black; padding-left:300px; padding-right:300px;">
+            <td colspan="6" style="text-align:center; border-right: padding-left:300px; padding-right:300px;">
                 У вас пока что нет заказов
             </td>
         </tr>
