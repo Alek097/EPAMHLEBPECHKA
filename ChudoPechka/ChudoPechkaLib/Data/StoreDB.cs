@@ -324,5 +324,33 @@ namespace ChudoPechkaLib.Data
             this.Entry<Group>(grp).State = EntityState.Modified;
             _IsSavedOrModified = true;
         }
+
+        public void ToOrder(Guid group_id)
+        {
+            Group grp = this.GetGroup(group_id);
+
+            foreach (Order order in grp.Orders)
+                if (!order.Status.Equals("Отменён"))
+                {
+                    order.IsOrdered = true;
+                    order.Status = "Заказан";
+                }
+            this.Entry<Group>(grp).State = EntityState.Modified;
+            _IsSavedOrModified = true;
+        }
+
+        public void RemoveCancelledOrders(Guid group_id)
+        {
+            Group grp = this.GetGroup(group_id);
+
+            Order[] orders = grp.Orders.Where(o => o.Status.Equals("Отменён")).ToArray();
+
+            for (int i = 0; i < orders.Length; i++)
+                this.Entry<Order>(orders[i]).State = EntityState.Deleted;
+
+            this.Entry<Group>(grp).State = EntityState.Modified;
+
+            _IsSavedOrModified = true;
+        }
     }
 }

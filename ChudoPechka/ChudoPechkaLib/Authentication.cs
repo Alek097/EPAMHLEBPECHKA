@@ -197,6 +197,24 @@ namespace ChudoPechkaLib
                 throw new InvalidOperationException("Группа не найдена");
             else if (!_db.IsContainOrder(order_id))
                 throw new InvalidOperationException("Заказ не найден");
+            else
+                _db.RecoveryOrder(group_id, order_id);
+        }
+
+        public void RemoveCancelledOrders(Guid group_id)
+        {
+            if (_db.IsContainGroup(group_id))
+                _db.RemoveCancelledOrders(group_id);
+            else
+                throw new InvalidOperationException("Группа не найдена");
+        }
+
+        public void ToOrder(Guid group_id)
+        {
+            if (_db.IsContainGroup(group_id))
+                _db.ToOrder(group_id);
+            else
+                throw new InvalidOperationException("Группа не найдена");
         }
     }
 }

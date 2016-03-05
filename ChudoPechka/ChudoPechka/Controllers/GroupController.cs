@@ -58,23 +58,29 @@ namespace ChudoPechka.Controllers
             {
                 Auth.AddMemberInGroup(Group_Id);
             }
+            else
+                throw new HttpException(401, "Вы не авторизированы");
         }
         [ValidateAntiForgeryToken]
         public void AddAuthor(Guid Group_Id, string login)
         {
-            if(Auth.IsAuthentication)
+            if (Auth.IsAuthentication)
             {
                 Auth.AddAuthorInGroup(Group_Id, login);
             }
+            else
+                throw new HttpException(401, "Вы не авторизированы");
         }
         [ValidateAntiForgeryToken]
         public void RemoveUser(Guid group_id)
         {
             //TODO:Сделать его с ридеректом назад в вызывающий контроллер
-            if(Auth.IsAuthentication)
+            if (Auth.IsAuthentication)
             {
                 Auth.RemoveUser(group_id);
             }
+            else
+                throw new HttpException(401, "Вы не авторизированы");
         }
         public ActionResult OrderInf(Guid Group_Id)
         {
@@ -86,26 +92,30 @@ namespace ChudoPechka.Controllers
             else
             {
                 ViewData["Group_id"] = grp.Id;
-                return View(grp.Orders);
+                return View(grp.Orders/*.Where(o => o.Day == DateTime.Now.Date.AddDays(1)).ToList()*/);//На завтра
             }
         }
         [ValidateAntiForgeryToken]
         public ActionResult RemoveOrder(Guid Group_id, Guid Order_id)
         {
+            if (!Auth.IsAuthentication)
+                throw new HttpException(401, "Вы не авторизированы");
             try
             {
                 Auth.RemoveOrder(Group_id, Order_id);
                 throw new HttpException(200, "Закзаз удалён из списка группы");
             }
-            catch(InvalidOperationException ex)
+            catch (InvalidOperationException ex)
             {
                 throw new HttpException(404, ex.Message);
             }
-            
+
         }
         [ValidateAntiForgeryToken]
         public ActionResult RecoveryOrder(Guid Group_id, Guid Order_id)
         {
+            if (!Auth.IsAuthentication)
+                throw new HttpException(401, "Вы не авторизированы");
             try
             {
                 Auth.RecoveryOrder(Group_id, Order_id);
@@ -116,7 +126,21 @@ namespace ChudoPechka.Controllers
                 throw new HttpException(404, ex.Message);
             }
         }
-
-
+        [ValidateAntiForgeryToken]
+        public ActionResult ToOrder(Guid Group_id)
+        {
+            if (!Auth.IsAuthentication)
+                throw new HttpException(401, "Вы не авторизированы");
+            Auth.ToOrder(Group_id);
+            return Redirect(Url.Action("OrderInf", new { Group_id = Group_id }));
+        }
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveCancelledOrders(Guid Group_id)
+        {
+            if (!Auth.IsAuthentication)
+                throw new HttpException(401, "Вы не авторизированы");
+            Auth.RemoveCancelledOrders(Group_id);
+            return Redirect(Url.Action("OrderInf", new { Group_id = Group_id }));
+        }
     }
 }

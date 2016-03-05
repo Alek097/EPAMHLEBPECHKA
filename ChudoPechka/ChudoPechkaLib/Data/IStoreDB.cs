@@ -30,8 +30,10 @@ namespace ChudoPechkaLib.Data
         void SetReadAnnounced(Announced ann);
         void RemoveUser(Guid group_id, User removeUser);
         void RemoveOrder(Guid order_id);
+        void RemoveCancelledOrders(Guid group_id);
         void RemoveOrder(Guid group_id, Guid order_id);
         void RecoveryOrder(Guid group_id, Guid order_id);
+        void ToOrder(Guid group_id);
         int SaveChanges();
     }
 }
