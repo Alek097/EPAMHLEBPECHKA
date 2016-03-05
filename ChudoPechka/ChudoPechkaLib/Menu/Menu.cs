@@ -13,8 +13,6 @@ namespace ChudoPechkaLib.Menu
 {
     public class Menu : IMenu
     {
-
-
         public List<MenuItem> MenuItems
         {
             get
@@ -48,52 +46,174 @@ namespace ChudoPechkaLib.Menu
 
         private void Loop()
         {
+            bool isSuccessfulSearch = false;
             string html = this.GetHtml();
-            string urlDocMenu = this.GetUrlDock(html);
-            string dockName = Path.GetFileNameWithoutExtension(urlDocMenu);
+            string urlDocMenu = _chudoPechka + this.GetUrlDock(html);//Из Html получаем ссылку
+            List<DateTime> dates = new List<DateTime>();
+            List<string> menuTexts = new List<string>();
+            DateTime minDate = DateTime.Now;
+            DateTime maxDate = DateTime.Now;
 
-            List<MenuItem> menu = this.GetOther(html);
+            List<MenuItem> menuItems = this.GetOther(html);
 
 
             Word.Application MSWord = new Word.Application();
 
             Word.Document Doc = MSWord.Documents.Open(urlDocMenu, ConfirmConversions: true);
 
+            for (int i = 0; i < Doc.Paragraphs.Count; i++)
+            {
+                string text = Doc.Paragraphs[i + 1].Range.Text.ToString();
+
+                if (Regex.IsMatch(text, @"(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])([- /.](19|20)\d\d)?"))
+                {
+                    isSuccessfulSearch = true;
+
+                    MatchCollection matchDates = Regex.Matches(text, @"(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])([- /.](19|20)\d\d)?");
+                    for (int j = 0; j < matchDates.Count; j++)
+                    {
+                        if (matchDates[j].ToString().Split('.').Length == 2)
+                        {
+                            int year = DateTime.Now.Year;
+                            if (j == 0)
+                                minDate = DateTime.Parse(string.Format("{0}.{1}", matchDates[j], year));
+                            else
+                                maxDate = DateTime.Parse(string.Format("{0}.{1}", matchDates[j], year));
+                        }
+                        else if (matchDates[i].ToString().Split('.').Length == 3)//На случай если вдруг укажут год
+                        {
+                            if (j == 0)
+                                minDate = DateTime.Parse(matchDates[j].ToString());
+                            else
+                                maxDate = DateTime.Parse(matchDates[j].ToString());
+                        }
+                        else
+                            throw new ArgumentException("Неверный формат даты");
+                    }
+
+                }
+            }
+
+            if (!isSuccessfulSearch)
+                throw new InvalidOperationException("дата не найдена в документе");
+
+            while (minDate <= maxDate)
+            {
+                dates.Add(minDate);
+                minDate = minDate.AddDays(1);
+            }
+            string menutext = null;
+            int index = 0;//Для подставления цены.
             foreach (Word.Table WTable in Doc.Tables)
             {
                 foreach (Word.Row WRow in WTable.Rows)
                 {
                     foreach (Word.Cell WCell in WRow.Cells)
                     {
-                        string cellVal = WCell.Range.Text;
+                        string cellVal = WCell.Range.Text.Replace("\r\a", "");
 
                         if (cellVal.Equals("Наименование") || cellVal.Equals("Выход"))
                             continue;
-                        else if (cellVal.Equals("Понедельник"))
+                        else
                         {
+                            switch (cellVal)
+                            {
+                                case "Понедельник":
+                                    {
+                                        if (menutext != null)
+                                        {
+                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+                                            menutext += "</div>";
+                                            menuTexts.Add(menutext);
+                                        }
 
-                        }
-                        else if (cellVal.Equals("Вторник"))
-                        {
+                                        menutext = "<div class=\"text\">";
+                                        break;
+                                    }
+                                case "Вторник":
+                                    {
+                                        if (menutext != null)
+                                        {
+                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+                                            menutext += "</div>";
+                                            menuTexts.Add(menutext);
+                                        }
 
-                        }
-                        else if (cellVal.Equals("Среда"))
-                        {
+                                        menutext = "<div class=\"text\">";
+                                        break;
+                                    }
+                                case "Среда":
+                                    {
+                                        if (menutext != null)
+                                        {
+                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice); ;
+                                            menutext += "</div>";
+                                            menuTexts.Add(menutext);
+                                            index++;
+                                        }
 
-                        }
-                        else if (cellVal.Equals("Четверг"))
-                        {
+                                        menutext = "<div class=\"text\">";
+                                        break;
+                                    }
+                                case "Четверг":
+                                    {
+                                        if (menutext != null)
+                                        {
+                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+                                            menutext += "</div>";
+                                            menuTexts.Add(menutext);
+                                            index++;
+                                        }
 
-                        }
-                        else if (cellVal.Equals("Пятница"))
-                        {
+                                        menutext = "<div class=\"text\">";
+                                        break;
+                                    }
+                                case "Пятница":
+                                    {
+                                        if (menutext != null)
+                                        {
 
-                        }
+                                            menutext +=string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>",menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+                                            menutext += "</div>";
+                                            menuTexts.Add(menutext);
+                                            index++;
+                                        }
+
+                                        menutext = "<div class=\"text\">";
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        if (Regex.IsMatch(cellVal, @"[0-9]+?\s*?гр"))
+                                            menutext += string.Format("{0}</span><br/><br/>", cellVal);
+                                        else                                
+                                            menutext += "<span>" + Regex.Replace(cellVal, @"/(.|\s)+?/", "") + ", ";
+                                        
+                                        break;
+                                    }
+                            }
+                        }                      
                     }
                 }
             }
+            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+            menuTexts.Add(menutext);
 
+            if (menuItems.Count != menuTexts.Count)
+                throw new InvalidOperationException("Количество дней и меню не совпадают");
+            else
+            {
+                for (int i = 0; i < menuItems.Count; i++)
+                {
+                    MenuItem tmp = menuItems[i];
+                    tmp.Menu = menuTexts[i];
+                    menuItems[i] = tmp;//Вообще без понятия но напрямую если обращаться компилятор ругается, магия какая-то
+                }
+
+            }
+            this._menuItems = menuItems;
         }
+
         private string GetHtml()
         {
             string html;
@@ -103,11 +223,12 @@ namespace ChudoPechkaLib.Menu
             }
             return html;
         }
-
         private string GetUrlDock(string html)
         {
-            string pattern = "<a target=\"_blank\" href=\""+@".+"+"\" class=\"file but\">Скачать меню</a>";
-            return Regex.Match(html, pattern).ToString();
+            string pattern = "<a target=\"_blank\" href=\"" + @".+" + "\" class=\"file but\">Скачать меню</a>";
+            string Url = Regex.Match(html, pattern).ToString();
+            Url = Regex.Match(Url, "href=\"" + @".+?" + "\"").ToString().Replace("href=", "").Replace("\"", "");
+            return Url;
         }
 
         private List<MenuItem> GetOther(string html)
@@ -203,11 +324,6 @@ namespace ChudoPechkaLib.Menu
             Workdays.GetWorkdays.Days = workdays;
 
             return ul;
-        }
-
-        private void AddWorkDay(DayOfWeek day)
-        {
-
         }
     }
 }
