@@ -8,6 +8,32 @@
     int fullOrder = 0;//Полный
     int firstOrder = 0;//Первое
     int secondOrder = 0;//Второе
+
+    //Отменённые заказы
+    int CancelledFullPrice = 0;
+
+    int CancelledFullOrder = 0;//Полный
+    int CancelledFirstOrder = 0;//Первое
+    int CancelledSecondOrder = 0;//Второе
+
+    List<Order> CancelledOrders = Model.Where(o => o.Status.Equals("Отменён")).ToList();
+    foreach (Order order in CancelledOrders)
+    {
+        Model.Remove(order);
+
+        if (order.Type.Equals("Полный"))
+        {
+            CancelledFullOrder++;
+        }
+        else if (order.Type.Equals("Первое"))
+        {
+            CancelledFirstOrder++;
+        }
+        else
+        {
+            CancelledSecondOrder++;
+        }
+    }
 }
 @model List<Order>
 @using ChudoPechkaLib.Models
@@ -53,21 +79,19 @@
     <script src="~/scripts/jquery-2.2.1.js"></script>
     <script>
         function removeOrder(elem) {
-            var group_id = $(elem).find(".group-id").val();
-            var order_id = $(elem).find(".order-id").val();
+            elem = $(elem).parent($(".info-line"));
+            var group_id = $(elem).find($('[name=Group_id]')).val();
+            var order_id = $(elem).find($('[name=Order_id]')).val();
             var token = $('[name=__RequestVerificationToken]').val();
-
-            var UrlData = { "Group_id": group_id, "Order_id": order_id, "__RequestVerificationToken": token };
 
             $.ajax({
                 url: '@Url.Action("RemoveOrder")',
-                contentType: "text",
                 method: "Post",
-                data: UrlData,
+                data: "Group_id=" + group_id + "&Order_id=" + order_id + "&__RequestVerificationToken=" + token,
                 success: function () {
                     $(elem).find(".button").text("Восстановить");
                     $(elem).find(".button").removeAttr("onclick");
-                    $(elem).find(".button").attr(".onclick", "recoveryOrder($(this).parent('.info-line')");
+                    $(elem).find(".button").attr("onclick", "recoveryOrder(this)");
                     $(elem).css("opacity", 0.4);
                 },
                 fail: function () {
@@ -77,21 +101,21 @@
         }
 
         function recoveryOrder(elem) {
-            var group_id = $(elem).find(".group-id").val();
-            var order_id = $(elem).find(".order-id").val();
+            elem = $(elem).parent($(".info-line"));
+            var group_id = $(elem).find('[name=Group_id]').val();
+            var order_id = $(elem).find('[name=Order_id]').val();
             var token = $('[name=__RequestVerificationToken]').val();
 
             var UrlData = { "Group_id": group_id, "Order_id": order_id, "__RequestVerificationToken": token };
 
             $.ajax({
-                url: '@Url.Action("RemoveOrder")',
-                contentType: "text",
+                url: '@Url.Action("RecoveryOrder")',
                 method: "Post",
-                data: UrlData,
+                data: "Group_id=" + group_id + "&Order_id=" + order_id + "&__RequestVerificationToken=" + token,
                 success: function () {
                     $(elem).find(".button").text("Отменить");
                     $(elem).find(".button").removeAttr("onclick");
-                    $(elem).find(".button").attr(".onclick", "removeOrder($(this).parent('.info-line')");
+                    $(elem).find(".button").attr("onclick", "removeOrder(this)");
                     $(elem).css("opacity", 1);
                 },
                 fail: function () {
@@ -151,7 +175,7 @@
 
                     <input type="hidden" value="@order.Id" name="Order_id" class="order-id" />
                     <input type="hidden" value="@ViewData["Group_id"]" name="Group_id" class="group-id" />
-                    <button class="button" onclick="removeOrder($(this).parent('.info-line'))">Отменить</button>
+                    <button class="button" onclick="removeOrder(this)">Отменить</button>
                     <div class="error" style="color:red"></div>
 
                 </td>
@@ -191,13 +215,14 @@
                 @string.Format("{0:N}", fullPrice) руб.
             </td>
         </tr>
+
         if (Model.FirstOrDefault(o => !o.IsOrdered) != null)
         {
-
             <tr>
                 <td colspan="7" style="border-left:0px; text-align: left;">
-                    @using (Html.BeginForm("ToOrder","Group", FormMethod.Post))
+                    @using (Html.BeginForm("ToOrder", "Group", FormMethod.Post))
                     {
+                        @Html.AntiForgeryToken()
                         <input type="hidden" name="Group_id" value="@ViewData["Group_id"]" />
                         <input type="submit" value="Заказать" class="button" />
                     }
@@ -210,6 +235,56 @@
         <tr>
             <td colspan="7" style="text-align:center; padding-left:300px; padding-right:300px;border-right:1px solid black">
                 На завтра нет заказов
+            </td>
+        </tr>
+    }
+    @if (CancelledOrders.Count > 0)
+    {
+        <thead>
+            <tr>
+                <th colspan="7" class="borderleft">
+                    Запросы на отмену
+                </th>
+            </tr>
+        </thead>
+        foreach (Order order in CancelledOrders)
+        {
+            <tr class="info-line">
+                <td class="borderleft order-inf">@order.Id</td>
+                <td class="order-inf">@order.User.Login</td>
+                <td class="order-inf">@order.Day.ToString("D")<br />@order.Day.DayOfWeek.ToString()</td>
+                <td class="order-inf">@string.Format("{0:N}", order.Price) руб.</td>
+                <td class="order-inf">@order.Type</td>
+                <td class="order-inf">@order.Status</td>
+                <td class="order-inf"></td>
+</tr>
+        }
+        <tr>
+            <td class="borderleft" style="border-bottom:1px solid black">ПОЛНЫЕ:</td>
+            <td style="border-bottom:1px solid black; text-align:right;">X @CancelledFullOrder</td>
+
+            <td style="border-bottom:1px solid black">ТОЛЬКО ПЕРВОЕ:</td>
+            <td style="border-bottom:1px solid black; text-align:right;">X @CancelledFirstOrder</td>
+
+            <td style="border-bottom:1px solid black">ТОЛЬКО ВТОРОЕ:</td>
+            <td colspan="2" style="border-bottom:1px solid black; text-align:right;">X @CancelledSecondOrder</td>
+        </tr>
+        <tr>
+            <td class="borderleft">
+                ИТОГ:
+            </td>
+            <td colspan="6" style="text-align:right; padding-left:300px;">
+                @string.Format("{0:N}", CancelledFullPrice) руб.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7" style="border-left:0px; text-align: left;">
+                @using (Html.BeginForm("RemoveCancelledOrders", "Group", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="Group_id" value="@ViewData["Group_id"]" />
+                        <input type="submit" value="Отменить все" class="button" />
+                }
             </td>
         </tr>
     }
