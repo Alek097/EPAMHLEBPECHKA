@@ -97,11 +97,14 @@ namespace ChudoPechkaLib.Menu
             if (!isSuccessfulSearch)
                 throw new InvalidOperationException("дата не найдена в документе");
 
-            while (minDate <= maxDate)
+            while (minDate <= maxDate)//Добавление всех дат в промежутке, они нам потребуются для валидации
             {
                 dates.Add(minDate);
                 minDate = minDate.AddDays(1);
             }
+
+            Workdays.GetWorkdays.Days = dates;//учтанавливаем рабочие дни
+
             string menutext = null;
             int index = 0;//Для подставления цены.
             foreach (Word.Table WTable in Doc.Tables)

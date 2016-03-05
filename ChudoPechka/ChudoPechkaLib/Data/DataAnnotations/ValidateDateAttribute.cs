@@ -16,17 +16,17 @@ namespace ChudoPechkaLib.Data.DataAnnotations
 
         public override bool IsValid(object value)
         {
-            DateTime date = DateTime.Now;
+            DateTime date = DateTime.Now.Date;
             int dayNum = 0;
+            TimeSpan now = date.TimeOfDay;
+            date = date.Date;
 
             if (value is int)
             {
                 dayNum = (int)value;
                 DayOfWeek orderDay = GetDay(dayNum);
                 DayOfWeek today = date.DayOfWeek;
-
-                TimeSpan now = date.TimeOfDay;
-
+      
                 if (orderDay == today)
                     return false;
                 else if (orderDay > today && orderDay != DayOfWeek.Saturday)
@@ -47,12 +47,13 @@ namespace ChudoPechkaLib.Data.DataAnnotations
                 DateTime val = (DateTime)value;
                 DayOfWeek nowDay = date.DayOfWeek;
                 TimeSpan nowTime = date.TimeOfDay;
-                if (date < val)
-                    return true;
-                else if (nowDay == val.DayOfWeek - 1 && nowTime < _validTime)
-                    return true;
-                else if ((nowDay == DayOfWeek.Saturday || nowDay == DayOfWeek.Sunday) && date < val)
-                    return true;
+
+                if (val > date && val.DayOfWeek != DayOfWeek.Saturday)
+                {
+                    if (val == date.AddDays(1) && !(now < _validTime))
+                        return false;
+                    return this.IsWorkDay(date, val.DayOfWeek, true);
+                }
                 else
                     return false;
 
@@ -88,10 +89,11 @@ namespace ChudoPechkaLib.Data.DataAnnotations
         }
         private bool IsWorkDay(DateTime today, DayOfWeek orderDay, bool TillFriday)
         {
+
             if (TillFriday)
             {
                 while (today.DayOfWeek != orderDay)
-                    today.AddDays(1);
+                    today = today.AddDays(1);
                 if (_workdays.Days.Contains(today))
                     return true;
                 else
@@ -100,7 +102,7 @@ namespace ChudoPechkaLib.Data.DataAnnotations
             else
             {
                 while (today.DayOfWeek != orderDay)
-                    today.AddDays(-1);
+                    today = today.AddDays(-1);
                 if (_workdays.Days.Contains(today))
                     return true;
                 else
