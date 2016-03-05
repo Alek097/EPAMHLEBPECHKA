@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.IO;
+
+using Word = Microsoft.Office.Interop.Word;
 
 namespace ChudoPechkaLib.Menu
 {
@@ -46,8 +49,49 @@ namespace ChudoPechkaLib.Menu
         private void Loop()
         {
             string html = this.GetHtml();
+            string urlDocMenu = this.GetUrlDock(html);
+            string dockName = Path.GetFileNameWithoutExtension(urlDocMenu);
 
-            this.ValidationMenu(html);
+            List<MenuItem> menu = this.GetOther(html);
+
+
+            Word.Application MSWord = new Word.Application();
+
+            Word.Document Doc = MSWord.Documents.Open(urlDocMenu, ConfirmConversions: true);
+
+            foreach (Word.Table WTable in Doc.Tables)
+            {
+                foreach (Word.Row WRow in WTable.Rows)
+                {
+                    foreach (Word.Cell WCell in WRow.Cells)
+                    {
+                        string cellVal = WCell.Range.Text;
+
+                        if (cellVal.Equals("Наименование") || cellVal.Equals("Выход"))
+                            continue;
+                        else if (cellVal.Equals("Понедельник"))
+                        {
+
+                        }
+                        else if (cellVal.Equals("Вторник"))
+                        {
+
+                        }
+                        else if (cellVal.Equals("Среда"))
+                        {
+
+                        }
+                        else if (cellVal.Equals("Четверг"))
+                        {
+
+                        }
+                        else if (cellVal.Equals("Пятница"))
+                        {
+
+                        }
+                    }
+                }
+            }
 
         }
         private string GetHtml()
@@ -60,9 +104,15 @@ namespace ChudoPechkaLib.Menu
             return html;
         }
 
-        private void ValidationMenu(string html)
+        private string GetUrlDock(string html)
         {
-            List<XmlNode> ValidDays = new List<XmlNode>(5);
+            string pattern = "<a target=\"_blank\" href=\""+@".+"+"\" class=\"file but\">Скачать меню</a>";
+            return Regex.Match(html, pattern).ToString();
+        }
+
+        private List<MenuItem> GetOther(string html)
+        {
+            List<XmlNode> Days = new List<XmlNode>(5);
             string xml = this.GetMenu(html);
 
             XmlDocument doc = new XmlDocument();
@@ -75,13 +125,13 @@ namespace ChudoPechkaLib.Menu
                 XmlNode img = item.ChildNodes[0];
                 XmlAttribute src = img.Attributes["src"];
                 src.Value = _chudoPechka + src.Value;
-                ValidDays.Add(item);
+                Days.Add(item);
             }
 
-            this.SetMenu(ValidDays);
+            return this.GetPrice(Days);
         }
 
-        private void SetMenu(List<XmlNode> nodes)
+        private List<MenuItem> GetPrice(List<XmlNode> nodes)
         {
             List<MenuItem> MenuItems = new List<MenuItem>(5);
             foreach (XmlNode node in nodes)
@@ -96,14 +146,10 @@ namespace ChudoPechkaLib.Menu
                 itemMenu.WithoutFullPrice = int.Parse(WithoutFullPrice.ToString().Replace("руб. без первого", "").Replace(" ", ""));
                 itemMenu.Day = node.Attributes["id"].InnerText;
                 itemMenu.Img = node.FirstChild.OuterXml;
-                itemMenu.Menu = node.LastChild.OuterXml
-                    .Replace("THIS_IS", "&nbsp");
-
-                itemMenu.Menu = Regex.Replace(itemMenu.Menu, "<div class=\"but but-zakaz-menu\"" + @"(.|\s)*?" + ">Заказать обед</div>", "");
 
                 MenuItems.Add(itemMenu);
             }
-            this._menuItems = MenuItems;
+            return MenuItems;
         }
 
         private string GetMenu(string html)
@@ -126,55 +172,26 @@ namespace ChudoPechkaLib.Menu
                     {
                         monday = true;
                         ul += item.ToString();
-                        DateTime workday = DateTime.Now.Date;
-                        while (workday.DayOfWeek != DayOfWeek.Monday)
-                            workday.AddDays(1);
-
-                        workdays.Add(workday);
                     }
                     else if (item.ToString().Contains("id=\"Вторник\"") && !tuesday)
                     {
                         tuesday = true;
                         ul += item.ToString();
-
-                        DateTime workday = DateTime.Now.Date;
-                        while (workday.DayOfWeek != DayOfWeek.Tuesday)
-                            workday.AddDays(1);
-
-                        workdays.Add(workday);
                     }
                     else if (item.ToString().Contains("id=\"Среда\"") && !wednesday)
                     {
                         wednesday = true;
                         ul += item.ToString();
-
-                        DateTime workday = DateTime.Now.Date;
-                        while (workday.DayOfWeek != DayOfWeek.Wednesday)//добавляем рабочие дни, это пригодится при валидации
-                            workday.AddDays(1);
-
-                        workdays.Add(workday);
                     }
                     else if (item.ToString().Contains("id=\"Четверг\"") && !thursday)
                     {
                         thursday = true;
                         ul += item.ToString();
-
-                        DateTime workday = DateTime.Now.Date;
-                        while (workday.DayOfWeek != DayOfWeek.Thursday)
-                            workday.AddDays(1);
-
-                        workdays.Add(workday);
                     }
                     else if (item.ToString().Contains("id=\"Пятница\"") && !friday)
                     {
                         friday = true;
                         ul += item.ToString();
-
-                        DateTime workday = DateTime.Now.Date;
-                        while (workday.DayOfWeek != DayOfWeek.Monday)
-                            workday.AddDays(1);
-
-                        workdays.Add(workday);
                     }
                     else
                         break;//Возможно все элементы найдены
