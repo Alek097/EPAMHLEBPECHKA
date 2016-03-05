@@ -16,7 +16,7 @@ namespace ChudoPechka.Controllers
         public ActionResult Index()
         {
             if (Auth.IsAuthentication)
-                return View(Auth.User.Orders.ToList());
+                return View(Auth.User.Orders.Where(o => !o.Status.Equals("Отменён")).ToList());
             else
                 return Redirect(Url.Action("Index", "Home"));
         }

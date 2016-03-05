@@ -149,7 +149,7 @@ namespace ChudoPechkaLib.Data
         {
             try
             {
-                this.Users.First((u) => u.Id== usr_id);
+                this.Users.First((u) => u.Id == usr_id);
                 return true;
             }
             catch (InvalidOperationException)
@@ -293,7 +293,13 @@ namespace ChudoPechkaLib.Data
         public void RemoveOrder(Guid order_id)
         {
             Order remOrder = this.GetOrder(order_id);
-            this.Entry<Order>(remOrder).State = EntityState.Deleted;
+            if (!remOrder.IsOrdered)
+                this.Entry<Order>(remOrder).State = EntityState.Deleted;
+            else
+            {
+                remOrder.Status = "Отменён";
+                this.Entry<Order>(remOrder).State = EntityState.Modified;
+            }
             _IsSavedOrModified = true;
         }
 
