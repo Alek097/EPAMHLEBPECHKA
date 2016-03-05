@@ -165,7 +165,7 @@
             <td style="border-bottom:1px solid black; text-align:right;">X @firstOrder</td>
 
             <td style="border-bottom:1px solid black">ТОЛЬКО ВТОРОЕ:</td>
-            <td colspan="2"  style="border-bottom:1px solid black; text-align:right;">X @secondOrder</td>
+            <td colspan="2" style="border-bottom:1px solid black; text-align:right;">X @secondOrder</td>
         </tr>
         <tr>
             <td class="borderleft" style="border-bottom: 1px solid black">
@@ -191,14 +191,26 @@
                 @string.Format("{0:N}", fullPrice) руб.
             </td>
         </tr>
+        if (Model.FirstOrDefault(o => !o.IsOrdered) != null)
+        {
+
+            <tr>
+                <td colspan="7" style="border-left:0px; text-align: left;">
+                    @using (Html.BeginForm("ToOrder","Group", FormMethod.Post))
+                    {
+                        <input type="hidden" name="Group_id" value="@ViewData["Group_id"]" />
+                        <input type="submit" value="Заказать" class="button" />
+                    }
+                </td>
+            </tr>
+        }
     }
     else
     {
         <tr>
-            <td colspan="6" style="text-align:center; padding-left:300px; padding-right:300px;">
+            <td colspan="7" style="text-align:center; padding-left:300px; padding-right:300px;border-right:1px solid black">
                 На завтра нет заказов
             </td>
         </tr>
     }
 </table>
-
