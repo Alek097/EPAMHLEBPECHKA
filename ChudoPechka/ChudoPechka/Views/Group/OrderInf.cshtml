@@ -4,6 +4,10 @@
     int fullPrice = 0;
     int orderedPrice = 0;
     int notOrderedPrice = 0;
+
+    int fullOrder = 0;//Полный
+    int firstOrder = 0;//Первое
+    int secondOrder = 0;//Второе
 }
 @model List<Order>
 @using ChudoPechkaLib.Models
@@ -39,6 +43,7 @@
 
         table {
             margin: auto;
+            text-align: center;
         }
 
         .info-line:hover {
@@ -71,8 +76,7 @@
             });
         }
 
-        function recoveryOrder(elem)
-        {
+        function recoveryOrder(elem) {
             var group_id = $(elem).find(".group-id").val();
             var order_id = $(elem).find(".order-id").val();
             var token = $('[name=__RequestVerificationToken]').val();
@@ -102,6 +106,7 @@
     <thead>
         <tr>
             <th style="border-left: 0px;">Id</th>
+            <th>Пользователь</th>
             <th>Дата</th>
             <th>Стоймость</th>
             <th>Тип</th>
@@ -122,8 +127,22 @@
             {
                 notOrderedPrice += order.Price;
             }
+
+            if (order.Type.Equals("Полный"))
+            {
+                fullOrder++;
+            }
+            else if (order.Type.Equals("Первое"))
+            {
+                firstOrder++;
+            }
+            else
+            {
+                secondOrder++;
+            }
             <tr class="info-line">
                 <td class="borderleft order-inf">@order.Id</td>
+                <td class="order-inf">@order.User.Login</td>
                 <td class="order-inf">@order.Day.ToString("D")<br />@order.Day.DayOfWeek.ToString()</td>
                 <td class="order-inf">@string.Format("{0:N}", order.Price) руб.</td>
                 <td class="order-inf">@order.Type</td>
@@ -139,18 +158,28 @@
             </tr>
         }
         <tr>
-            <td class="borderleft">
+            <td class="borderleft" style="border-bottom:1px solid black">ПОЛНЫЕ:</td>
+            <td style="border-bottom:1px solid black; text-align:right;">X @fullOrder</td>
+
+            <td style="border-bottom:1px solid black">ТОЛЬКО ПЕРВОЕ:</td>
+            <td style="border-bottom:1px solid black; text-align:right;">X @firstOrder</td>
+
+            <td style="border-bottom:1px solid black">ТОЛЬКО ВТОРОЕ:</td>
+            <td colspan="2"  style="border-bottom:1px solid black; text-align:right;">X @secondOrder</td>
+        </tr>
+        <tr>
+            <td class="borderleft" style="border-bottom: 1px solid black">
                 ИТОГ ЗАКАЗАННЫХ:
             </td>
-            <td colspan="5" style="text-align:right; padding-left:300px;">
+            <td colspan="6" style="text-align:right; padding-left:300px; border-bottom: 1px solid black">
                 @string.Format("{0:N}", orderedPrice) руб.
             </td>
         </tr>
         <tr>
-            <td class="borderleft">
+            <td class="borderleft" style="border-bottom: 1px solid black">
                 ИТОГ НЕ ЗАКАЗАННЫХ:
             </td>
-            <td colspan="5" style="text-align:right; padding-left:300px;">
+            <td colspan="6" style="text-align:right; padding-left:300px;border-bottom: 1px solid black">
                 @string.Format("{0:N}", notOrderedPrice) руб.
             </td>
         </tr>
@@ -158,7 +187,7 @@
             <td class="borderleft">
                 ИТОГ:
             </td>
-            <td colspan="5" style="text-align:right; padding-left:300px;">
+            <td colspan="6" style="text-align:right; padding-left:300px;">
                 @string.Format("{0:N}", fullPrice) руб.
             </td>
         </tr>
@@ -166,8 +195,8 @@
     else
     {
         <tr>
-            <td colspan="6" style="text-align:center; border-right: padding-left:300px; padding-right:300px;">
-                У вас пока что нет заказов
+            <td colspan="6" style="text-align:center; padding-left:300px; padding-right:300px;">
+                На завтра нет заказов
             </td>
         </tr>
     }
