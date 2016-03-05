@@ -6,20 +6,6 @@
 @using ChudoPechkaLib
 @section ScriptAndStyle{
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>
-        $(window).load(function () {
-            $.ajax({
-                method: "Get",
-                url: "@Url.Action("GetMenu","Home")",
-                contentType: "html",
-                success: function (ResHtml) {
-                    $("#content").html(ResHtml);
-                    $(".menuItem > .imgConteiner > img").attr("class", "foodImg");
-                    SetButton();
-                }
-            });
-        })
-    </script>
 
     <style>
         .menuItem{
@@ -32,6 +18,8 @@
             width:190px;
             line-height:20px;
             padding:5px;
+            text-align:center;
+            font-size:17px;
         }
         .foodImg, .imgConteiner {
             width:600px;
@@ -52,12 +40,19 @@
             font-size: 14pt;
         }
     </style>
+    <script>
+        $(window).load(function () {
+            $(".imgConteiner>img").css("width", "600px")
+            SetButton();
+        })
+    </script>
     @if(auth.IsAuthentication)
     {
         <script>
             function SetButton ()  {
-                $(".text").append("<div style=\"margin-left: 50px;margin-top: 15px\"><button class=\"button\" onclick=\"location.href = '@Url.Action("ToOrder", "Order")'\"> Заказать</button></div>");
+                $(".text").append("<div style=\"margin-top: 15px\"><button class=\"button\" onclick=\"location.href = '@Url.Action("ToOrder", "Order")'\"> Заказать</button></div>");
             }
         </script>
     }
 }
+@{ Html.RenderAction("GetMenu");}
