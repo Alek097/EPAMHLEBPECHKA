@@ -29,7 +29,7 @@
             margin-top: 0px;
             background-color: rgba(255, 255, 255, 0.9);
             padding-top: 10px;
-            font-family:Calibri;
+            font-family: Calibri;
         }
 
         #cap {
@@ -118,8 +118,8 @@
         }
 
         #Group-context-menu {
-            /*TODO:Разметка для контекстного меню.*/
             margin-right: 10%;
+            display: none;
         }
 
         .context-menu:hover {
@@ -164,7 +164,7 @@
                 var aSize = $(".HeadMenuItem>a").height();
                 if (spanSize === null)
                     spanSize = 15;
-                if(aSize === null)
+                if (aSize === null)
                     aSize = 15;
 
                 $("#conteiner-Menu").css("height", CapSize + "px");
@@ -190,12 +190,18 @@
 <body>
     <div>
         <div id="cap">
-            <img src="http://chudo-pechka.by/assets/templates/Chudopechka/images/logo.png" id="logo" />
+            <a href="@Url.Action("Index","Home")">
+                <img src="http://chudo-pechka.by/assets/templates/Chudopechka/images/logo.png" id="logo" />
+            </a>
             <div id="conteiner-Menu">
                 <ul id="menu">
                     @if (auth.IsAuthentication)
                     {
-                        //(_|_)
+                        <li class="auth-menu context-menu" style="margin-right:0px;" onclick="location.href = '@Url.Action("Index","Order")'">
+                            <div class="name">
+                                <span>Заказ</span>
+                            </div>
+                        </li>
                         //TODO: Добавить элементы аутендифицированного пользователя.
                         <li class="auth-menu context-menu" onmouseover="Render('Group-context-menu')" onmouseout="Derender('Group-context-menu')">
                             <div class="name">
@@ -205,7 +211,7 @@
                                 <li class="HeadMenuItem" onclick="Riderict('@Url.Action("Create", "Group")')">
                                     <a class="User-menu">Создать</a>
                                 </li>
-                                @if(auth.User.IsNewAnnouced())
+                                @if (auth.User.IsNewAnnouced())
                                 {
                                     <li class="HeadMenuItem" style="background-color: red;" onclick="Riderict('@Url.Action("Index", "Announced")')">
                                         <a class="User-menu">Оповещания</a><!--Не знаю почему но тоже самое со span не работает-->
