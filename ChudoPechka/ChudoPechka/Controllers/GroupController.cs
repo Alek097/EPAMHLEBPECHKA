@@ -72,12 +72,13 @@ namespace ChudoPechka.Controllers
                 throw new HttpException(401, "Вы не авторизированы");
         }
         [ValidateAntiForgeryToken]
-        public void RemoveUser(Guid group_id)
+        public ActionResult RemoveUser(Guid group_id)
         {
             //TODO:Сделать его с ридеректом назад в вызывающий контроллер
             if (Auth.IsAuthentication)
             {
                 Auth.RemoveUser(group_id);
+                return Redirect(Url.Action("My"));
             }
             else
                 throw new HttpException(401, "Вы не авторизированы");

@@ -28,9 +28,9 @@
             overflow-y: scroll;
             overflow-x: auto;
             height: 270px;
-            border-left: 1px solid black;
             border-bottom: 1px solid black;
             border-top: 1px solid black;
+            text-align: left;
         }
     </style>
 }
@@ -88,14 +88,17 @@
         @Html.RadioButtonFor(m => m.Type, "Полный") <span>Полный</span>
         @Html.RadioButtonFor(m => m.Type, "Первое") <span>Первое</span>
         @Html.RadioButtonFor(m => m.Type, "Второе") <span>Второе</span>
-        <input style="margin-left:370px;" class="button" type="submit" value="Изменить" />
+        @if (!Model.IsOrdered)
+        {
+            <input style="margin-left:370px;" class="button" type="submit" value="Изменить" />
+        }
     </div>
     <div>
         @Html.EditorFor(m => m.Day)
     </div>
 }
 
-@using(Html.BeginForm("Remove", "Order", FormMethod.Post))
+@using (Html.BeginForm("Remove", "Order", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" name="order_id" value="@Model.id" />

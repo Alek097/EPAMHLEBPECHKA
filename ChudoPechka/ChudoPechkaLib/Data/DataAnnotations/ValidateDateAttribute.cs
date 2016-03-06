@@ -26,18 +26,18 @@ namespace ChudoPechkaLib.Data.DataAnnotations
                 dayNum = (int)value;
                 DayOfWeek orderDay = GetDay(dayNum);
                 DayOfWeek today = date.DayOfWeek;
-      
+
                 if (orderDay == today)
                     return false;
                 else if (orderDay > today && orderDay != DayOfWeek.Saturday)
                 {
                     if (orderDay == today + 1 && !(now < _validTime))
                         return false;
-                    return this.IsWorkDay(date, orderDay, false);
+                    return this.IsWorkDay(date, orderDay);
                 }
                 else if (orderDay < today && orderDay != DayOfWeek.Sunday && orderDay != DayOfWeek.Saturday)// Если пятница то меню поменялось, здесь мы смотрим чьто возможно день закза - не рабочий
                 {
-                    return this.IsWorkDay(date, orderDay, true);
+                    return this.IsWorkDay(date, orderDay);
                 }
                 else
                     return false;
@@ -52,7 +52,7 @@ namespace ChudoPechkaLib.Data.DataAnnotations
                 {
                     if (val == date.AddDays(1) && !(now < _validTime))
                         return false;
-                    return this.IsWorkDay(date, val.DayOfWeek, true);
+                    return this.IsWorkDay(date, val.DayOfWeek);
                 }
                 else
                     return false;
@@ -87,27 +87,15 @@ namespace ChudoPechkaLib.Data.DataAnnotations
             }
             return day;
         }
-        private bool IsWorkDay(DateTime today, DayOfWeek orderDay, bool TillFriday)
+        private bool IsWorkDay(DateTime today, DayOfWeek orderDay)
         {
-
-            if (TillFriday)
-            {
-                while (today.DayOfWeek != orderDay)
-                    today = today.AddDays(1);
-                if (_workdays.Days.Contains(today))
-                    return true;
-                else
-                    return false;
-            }
+            while (today.DayOfWeek != orderDay)
+                today = today.AddDays(1);
+            if (_workdays.Days.Contains(today))
+                return true;
             else
-            {
-                while (today.DayOfWeek != orderDay)
-                    today = today.AddDays(-1);
-                if (_workdays.Days.Contains(today))
-                    return true;
-                else
-                    return false;
-            }
+                return false;
+
         }
 
     }

@@ -11,6 +11,14 @@
             display: inline-block;
             font-size: 16pt;
             border: 1px solid black;
+            margin-bottom:15px;
+        }
+        form{
+            display:inline;
+        }
+        #content
+        {
+            text-align:center;
         }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -27,7 +35,6 @@
 }
 @if (Model.Groups.Count > 0 || Model.AdministartionGroups.Count > 0)
 {
-    @Html.AntiForgeryToken()
     <div style="padding: 10px;">
         @if (Model.AdministartionGroups.Count > 0)
         {
@@ -45,7 +52,12 @@
                                 <a href="@Url.Action("Index", "Group", new { Group_id = item.Id })">@item.Name</a>
                             </div>
                             <div style="display:inline">
-                                <button class="button" onclick="out('@item.Id')">Покинуть</button>
+                                @using (Html.BeginForm("RemoveUser", "Group"))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Group_id" value="@item.Id" />
+                                    <input type="submit" value="Покинуть" class="button" />
+                                }
                             </div>
                         </div>
                     }

@@ -44,7 +44,7 @@
             border-left: 1px solid black;
             border-bottom: 1px solid black;
             border-top: 1px solid black;
-            text-align:left;
+            text-align: left;
         }
 
         #DateConteiner {
@@ -127,7 +127,8 @@
 
 
             var index = days.indexOf(today);
-            days.splice(index, 1);
+            if (index != -1)
+                days.splice(index, 1);
 
             for (var i = 0; i < days.length; i++) {
                 SetDay(days[i]);
@@ -209,38 +210,38 @@
                     <div style="margin-top: 17%; font-size: 18pt; text-align: center;"><span>Вы не состоите в группе</span></div>
                 }
             </div>
-                <div id="DateConteiner">
-                    <input id="Day" type="hidden" name="Day" />
-                    <table cellspacing="0" style="height:50px">
-                        <tr>
-                            <td id="1" class="DataPicker-Day-block" style="border-left: 1px solid black">
-                                <div class="DataPicker-Day-tex">
-                                    <span>Пн</span>
-                                </div>
-                            </td>
-                            <td id="2" class="DataPicker-Day-block">
-                                <div class="DataPicker-Day-tex">
-                                    <span>Вт</span>
-                                </div>
-                            </td>
-                            <td id="3" class="DataPicker-Day-block">
-                                <div class="DataPicker-Day-tex">
-                                    <span>Ср</span>
-                                </div>
-                            </td>
-                            <td id="4" class="DataPicker-Day-block">
-                                <div class="DataPicker-Day-tex">
-                                    <span>Чт</span>
-                                </div>
-                            </td>
-                            <td id="5" class="DataPicker-Day-block">
-                                <div class="DataPicker-Day-tex">
-                                    <span>Пт</span>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+            <div id="DateConteiner">
+                <input id="Day" type="hidden" name="Day" />
+                <table cellspacing="0" style="height:50px">
+                    <tr>
+                        <td id="1" class="DataPicker-Day-block" style="border-left: 1px solid black">
+                            <div class="DataPicker-Day-tex">
+                                <span>Пн</span>
+                            </div>
+                        </td>
+                        <td id="2" class="DataPicker-Day-block">
+                            <div class="DataPicker-Day-tex">
+                                <span>Вт</span>
+                            </div>
+                        </td>
+                        <td id="3" class="DataPicker-Day-block">
+                            <div class="DataPicker-Day-tex">
+                                <span>Ср</span>
+                            </div>
+                        </td>
+                        <td id="4" class="DataPicker-Day-block">
+                            <div class="DataPicker-Day-tex">
+                                <span>Чт</span>
+                            </div>
+                        </td>
+                        <td id="5" class="DataPicker-Day-block">
+                            <div class="DataPicker-Day-tex">
+                                <span>Пт</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
                 <div style="margin:0px; margin-top:2%; margin-bottom: 2%">
 
                     @Html.AntiForgeryToken()
