@@ -54,7 +54,8 @@ namespace ChudoPechkaLib.Menu
             DateTime minDate = DateTime.Now;
             DateTime maxDate = DateTime.Now;
 
-            List<MenuItem> menuItems = this.GetOther(html);
+            List<MenuItem> menuItems = null;
+            menuItems = this.GetOther(html);
 
 
             Word.Application MSWord = new Word.Application();
@@ -103,6 +104,18 @@ namespace ChudoPechkaLib.Menu
                 minDate = minDate.AddDays(1);
             }
 
+            if (dates.Count == menuItems.Count)
+            {
+                for (int i = 0; i < menuItems.Count; i++)
+                {
+                    MenuItem tmp = menuItems[i];
+                    tmp.Date = dates[i];
+                    menuItems[i] = tmp;//Это кажется что элементы коллекции структуры
+                }
+            }
+            else
+                throw new InvalidOperationException("Количество допустимых дат и меню не совапают");
+
             Workdays.GetWorkdays.Days = dates;//учтанавливаем рабочие дни
 
             string menutext = null;
@@ -125,7 +138,7 @@ namespace ChudoPechkaLib.Menu
                                     {
                                         if (menutext != null)
                                         {
-                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0:N} руб.</span><br/><span style=\"font-size: 15px;\">({1:N} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
                                             menutext += "</div>";
                                             menuTexts.Add(menutext);
                                         }
@@ -137,7 +150,7 @@ namespace ChudoPechkaLib.Menu
                                     {
                                         if (menutext != null)
                                         {
-                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0:N} руб.</span><br/><span style=\"font-size: 15px;\">({1:N} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
                                             menutext += "</div>";
                                             menuTexts.Add(menutext);
                                         }
@@ -149,7 +162,7 @@ namespace ChudoPechkaLib.Menu
                                     {
                                         if (menutext != null)
                                         {
-                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice); ;
+                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0:N} руб.</span><br/><span style=\"font-size: 15px;\">({1:N} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice); ;
                                             menutext += "</div>";
                                             menuTexts.Add(menutext);
                                             index++;
@@ -162,7 +175,7 @@ namespace ChudoPechkaLib.Menu
                                     {
                                         if (menutext != null)
                                         {
-                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0:N} руб.</span><br/><span style=\"font-size: 15px;\">({1:N} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
                                             menutext += "</div>";
                                             menuTexts.Add(menutext);
                                             index++;
@@ -176,7 +189,7 @@ namespace ChudoPechkaLib.Menu
                                         if (menutext != null)
                                         {
 
-                                            menutext +=string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>",menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+                                            menutext +=string.Format("<div><span style=\"font-size: 19px;\">{0:N} руб.</span><br/><span style=\"font-size: 15px;\">({1:N} руб. без первого)</span></div>",menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
                                             menutext += "</div>";
                                             menuTexts.Add(menutext);
                                             index++;
@@ -199,18 +212,18 @@ namespace ChudoPechkaLib.Menu
                     }
                 }
             }
-            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0} руб.</span><br/><span style=\"font-size: 15px;\">({1} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
-            menuTexts.Add(menutext);
+            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0:N} руб.</span><br/><span style=\"font-size: 15px;\">({1:N} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+            menuTexts.Add(menutext);//т.к. последнего дня не попадает добавим её здесь
 
             if (menuItems.Count != menuTexts.Count)
-                throw new InvalidOperationException("Количество дней и меню не совпадают");
+                throw new InvalidOperationException("Количество меню и html кода не совпадают");
             else
             {
                 for (int i = 0; i < menuItems.Count; i++)
                 {
                     MenuItem tmp = menuItems[i];
                     tmp.Menu = menuTexts[i];
-                    menuItems[i] = tmp;//Вообще без понятия но напрямую если обращаться компилятор ругается, магия какая-то
+                    menuItems[i] = tmp;
                 }
 
             }

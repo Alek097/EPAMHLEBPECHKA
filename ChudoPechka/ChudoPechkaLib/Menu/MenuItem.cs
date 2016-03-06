@@ -13,5 +13,6 @@ namespace ChudoPechkaLib.Menu
         public string Menu { get; set; }
         public int FullPrice { get; set; }
         public int WithoutFullPrice { get; set; }
+        public DateTime Date { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 using ChudoPechkaLib;
+using ChudoPechkaLib.Menu;
 using ChudoPechkaLib.Models;
 using ChudoPechkaLib.Data;
 using ChudoPechkaLib.Data.DataAnnotations;
@@ -25,6 +26,8 @@ namespace ChudoPechka.Models
         {
             IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
             IStoreDB db = DependencyResolver.Current.GetService<IStoreDB>();
+            IMenu menu = DependencyResolver.Current.GetService<IMenu>();
+            
             Order ord = new Order();
 
             ord.Type = model.Type;
@@ -35,6 +38,21 @@ namespace ChudoPechka.Models
 
             while ((int)(ord.Day.DayOfWeek) != model.Day)
                 ord.Day = ord.Day.AddDays(1);
+
+            MenuItem mItem;
+            try
+            {
+                mItem = menu.MenuItems.First(m => m.Date.Equals(ord.Day));
+            }
+            catch(InvalidOperationException)
+            {
+                throw new InvalidOperationException("Не найден день с такой датойы");
+            }
+
+            if (model.Type.Equals("Полный"))
+                ord.Price = mItem.FullPrice;
+            else
+                ord.Price = mItem.WithoutFullPrice;
 
             if (model.SelectedGroups != null)
             {
