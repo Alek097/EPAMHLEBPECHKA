@@ -36,6 +36,12 @@ namespace ChudoPechkaLib.Menu
             {
                 while (true)
                 {
+                    /*
+                    Вам наверное интересно почему такая долгая задержка у этого потока аж если я помню в 10 минут?
+                    Всё очень просто, когда я парсил сайт у меня постоянно бомбило по поводу их ущербной разметки, хоть я сам пишу не лучше (за что мне всей душой стыдно)
+                    Но именно с ними я понял что надо быть готовым ко всему что они выкинут.
+                    По этому парсер работает так на всякий случай, вдруг они совершат опечатку в названии блюда или дате а потом исправят её.
+                    */
                     Thread.Sleep(600000);
                     this.Loop();
                 }
@@ -44,6 +50,7 @@ namespace ChudoPechkaLib.Menu
             _refreshMenu.Start();
         }
 
+        //Если не работает, попробуйте поставить свечку в церкви
         private void Loop()
         {
             bool isSuccessfulSearch = false;
@@ -228,6 +235,8 @@ namespace ChudoPechkaLib.Menu
 
             }
             this._menuItems = menuItems;
+
+            Doc.Application.Quit();//закрываем документ
         }
 
         private string GetHtml()
@@ -298,8 +307,6 @@ namespace ChudoPechkaLib.Menu
             bool thursday = false;
             bool friday = false;
 
-            List<DateTime> workdays = new List<DateTime>();
-
             string ul = Regex.Match(html, "<ul id=\"issues\">" + @"(.|\s)+?" + "</ul>").ToString();//Убеждаемся что мы взяли нужный ul, а то кто знает какие ещё у них извращения в голове появятся
             MatchCollection li = Regex.Matches(ul, "<li" + @"(.|\s)+?>" + @"(.|\s)+?" + @"(.|\s)+?</li>");//Берём все li из ul. Их аж 50, Карл!
             ul = "<?xml version=\"1.0\"?><ul>";
@@ -336,8 +343,6 @@ namespace ChudoPechkaLib.Menu
             ul += "</ul>";
 
             ul = ul.Replace("&nbsp", "THIS_IS");
-
-            Workdays.GetWorkdays.Days = workdays;
 
             return ul;
         }
