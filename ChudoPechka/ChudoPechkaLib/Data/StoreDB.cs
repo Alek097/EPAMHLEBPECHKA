@@ -352,5 +352,16 @@ namespace ChudoPechkaLib.Data
 
             _IsSavedOrModified = true;
         }
+
+        public void UpdateAvatar(string login, string fileName)
+        {
+            User usr = this.GetUser(login);
+
+            usr.AvatarPath = fileName;
+
+            this.Entry<User>(usr).State = EntityState.Modified;
+
+            _IsSavedOrModified = true;
+        }
     }
 }

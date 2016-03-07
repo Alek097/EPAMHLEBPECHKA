@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.IO;
 using System.Data;
 using System.Web;
 using System.Web.Security;
+
 
 using ChudoPechkaLib.Models;
 using ChudoPechkaLib.Data;
@@ -215,6 +215,11 @@ namespace ChudoPechkaLib
                 _db.ToOrder(group_id);
             else
                 throw new InvalidOperationException("Группа не найдена");
+        }
+
+        public void UpdateAvatar(string login, string fileName)
+        {
+            _db.UpdateAvatar(login, fileName);
         }
     }
 }

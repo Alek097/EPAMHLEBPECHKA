@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using System.Drawing;
 
 using ChudoPechka.Models;
 using ChudoPechkaLib.Data;
@@ -103,7 +104,7 @@ namespace ChudoPechka.Controllers
             if (Auth.GetUser(login, out usr))
                 return View(usr);
             else
-                return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
+                return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");//Сейчас мне на это больно смотреть....
 
         }
         public ActionResult GetUser(string login)
@@ -113,6 +114,49 @@ namespace ChudoPechka.Controllers
                 return View(usr);
             else
                 return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
+        }
+        [HttpPost]
+        public ActionResult UploadAvatar(HttpPostedFileBase upload)
+        {
+            if (Auth.IsAuthentication)
+            {
+                if (upload != null)
+                {
+                    string UrlAvatar = Path.Combine("~", "img", "Users", Auth.User.Login + Path.GetExtension(upload.FileName));
+                    string fileName = Server.MapPath(Path.Combine("~", "img", "Users", Auth.User.Login + Path.GetExtension(upload.FileName)));//Получаем путь к файлу
+
+                    if (System.IO.File.Exists(fileName))//Проверяем есть ли такой файл
+                        System.IO.File.Delete(fileName);//И удаляем его
+
+                    Bitmap avatar = new Bitmap(Image.FromStream(upload.InputStream));
+                    int newSize = 0;
+
+                    if (avatar.Width > avatar.Height)//Изменяем размеры, не хотел делать отдельный приватный метод
+                        newSize = avatar.Height;
+                    else
+                        newSize = avatar.Width;
+
+                    Image newSizeAvatar = new Bitmap(newSize, newSize);
+                    using (Graphics g = Graphics.FromImage((Image)newSizeAvatar))
+                    {
+                        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                        g.DrawImage(avatar, 0, 0, newSize, newSize);
+                        g.Dispose();
+                    }
+
+                    newSizeAvatar.Save(fileName);
+
+                    Auth.UpdateAvatar(Auth.User.Login, UrlAvatar);
+
+                    return Redirect(Url.Action("Index", new { login = Auth.User.Login }));
+                }
+                else
+                    throw new HttpException(400, "Вы не выбрали файл");
+            }
+            else
+                throw new HttpException(401, "Вы не авторизированы");
+            
+
         }
     }
 }

@@ -6,15 +6,17 @@
     groups.AddRange(Model.AdministartionGroups);
     groups.AddRange(Model.Groups);
     groups.Sort();
+    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
 }
 @using ChudoPechkaLib.Models
+@using ChudoPechkaLib
 @model User
 @section ScriptAndStyle{
     <style>
         #AvatarContainer {
             width: 300px;
-            height: auto;
-            display: inline-block;
+            height: 100%;
+            float: left;
         }
 
         #Avatar {
@@ -25,9 +27,9 @@
 
         #User-information {
             width: 500px;
-            float: right;
             text-align: center;
             font-size: 19pt;
+            display: inline-block;
         }
 
         .Group {
@@ -43,9 +45,6 @@
     </style>
 
 }
-<div id="AvatarContainer">
-    <img src="@Url.Content(Model.AvatarPath)" id="Avatar" />
-</div>
 <div id="User-information">
     <span>@FullName</span>
     <div style="text-align:left; font-size:14pt; margin-top: 50px;padding-left:25px">
@@ -55,7 +54,7 @@
     <div style="margin-top:50px">
         <span>Группы</span>
     </div>
-    <div style="overflow-x:scroll; margin-left:25px;">
+    <div style="overflow-x:scroll; margin-left:25px;margin-bottom:10px;">
         @foreach (Group group in groups)
         {
             <div class="Group">
@@ -65,6 +64,20 @@
             </div>
         }
     </div>
+    @if (auth.User.Equals(Model))
+    {
+        <div style="margin-top:50px; margin-bottom:10px;">
+            <span>Сменить аватар</span>
+            @using (Html.BeginForm("UploadAvatar", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="file" name="upload" />
+                <input type="submit" value="Загрузить" class="button" />
+            }
+        </div>
+    }
+</div>
+<div id="AvatarContainer">
+    <img src="@Url.Content(Model.AvatarPath)" id="Avatar" />
 </div>
 
 

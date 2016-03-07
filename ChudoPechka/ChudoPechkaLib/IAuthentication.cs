@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.IO;
 using System.Web;
 
 using ChudoPechkaLib.Models;
@@ -34,5 +34,6 @@ namespace ChudoPechkaLib
         void SetReadAnnounced(Announced ann);
         void ToOrder(Guid group_id);
         void ToOrder(Order order);
+        void UpdateAvatar(string login, string fileName);
     }
 }
