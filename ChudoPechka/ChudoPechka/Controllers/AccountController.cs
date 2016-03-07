@@ -14,9 +14,13 @@ namespace ChudoPechka.Controllers
     {
         // GET: Account
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string login)
         {
-            return View();//TODO: Написать представление описания юзера
+            User usr;
+            if (Auth.GetUser(login, out usr))
+                return View(usr);
+            else
+                throw new HttpException(404, "Пользователь не найден");
         }
         [HttpGet]
         public ActionResult Create()

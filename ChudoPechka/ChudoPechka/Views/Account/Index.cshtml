@@ -1,7 +1,70 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    string FullName = Model.FirsName + " " + Model.SecondName;
+    ViewBag.Title = FullName;
+    List<Group> groups = new List<Group>();
+    groups.AddRange(Model.AdministartionGroups);
+    groups.AddRange(Model.Groups);
+    groups.Sort();
 }
+@using ChudoPechkaLib.Models
+@model User
+@section ScriptAndStyle{
+    <style>
+        #AvatarContainer {
+            width: 300px;
+            height: auto;
+            display: inline-block;
+        }
 
-<h2>Index</h2>
+        #Avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+        }
+
+        #User-information {
+            width: 500px;
+            float: right;
+            text-align: center;
+            font-size: 19pt;
+        }
+
+        .Group {
+            display: table-cell;
+            border-left: 1px solid black;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+            .Group:hover {
+                background-color: white;
+            }
+    </style>
+
+}
+<div id="AvatarContainer">
+    <img src="@Url.Content(Model.AvatarPath)" id="Avatar" />
+</div>
+<div id="User-information">
+    <span>@FullName</span>
+    <div style="text-align:left; font-size:14pt; margin-top: 50px;padding-left:25px">
+        <span>Дата рождения: @Model.BirthDay.ToString("D")</span><br />
+        <span>Логин: @Model.Login</span>
+    </div>
+    <div style="margin-top:50px">
+        <span>Группы</span>
+    </div>
+    <div style="overflow-x:scroll; margin-left:25px;">
+        @foreach (Group group in groups)
+        {
+            <div class="Group">
+                <a href="@Url.Action("Index","Group", new {Group_id = group.Id })">
+                    @group.Name
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
 

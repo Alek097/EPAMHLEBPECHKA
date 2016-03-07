@@ -211,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\DataBase\" />
+    <Folder Include="img\Users\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChudoPechkaLib.Models\ChudoPechkaLibModels.csproj">
