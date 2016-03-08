@@ -72,9 +72,15 @@ namespace ChudoPechkaLib.Data
                .Include(g => g.Orders)
                .First(g => g.Id.Equals(group_id));
         }
+        public Dish GetDish(Guid dish_id)
+        {
+            return this.Dishes
+                .Include(d => d.Comments)
+                .First(d => d.Id.Equals(dish_id));
+        }
         public Guid AddDish(string nameDish)
         {
-            if(!this.IsContainDish(nameDish))
+            if (!this.IsContainDish(nameDish))
             {
                 Dish dish = new Dish();
                 dish.Name = nameDish;
@@ -188,6 +194,18 @@ namespace ChudoPechkaLib.Data
             try
             {
                 this.Announceds.First(a => a.From == From_id);
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
+        public bool IsContainDish(Guid dish_id)
+        {
+            try
+            {
+                this.Dishes.First(d => d.Id.Equals(dish_id));
                 return true;
             }
             catch (InvalidOperationException)
@@ -396,7 +414,7 @@ namespace ChudoPechkaLib.Data
                 this.Dishes.First(d => d.Name.Equals(nameDish));
                 return true;
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return false;
             }

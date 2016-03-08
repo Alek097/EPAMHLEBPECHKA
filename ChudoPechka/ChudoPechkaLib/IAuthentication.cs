@@ -23,6 +23,7 @@ namespace ChudoPechkaLib
         bool GetUser(string login, out User usr);
         bool GetGroup(Guid id, out Group grp);
         bool GetOrder(Guid id, out Order ord);
+        bool GetDish(Guid id, out Dish dish);
         void SendAnnounced(Announced ann);
         void AddMemberInGroup(Guid Group_id);
         void AddAuthorInGroup(Guid Group_Id, string login);

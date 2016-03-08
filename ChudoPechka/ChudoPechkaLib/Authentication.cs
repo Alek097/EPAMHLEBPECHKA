@@ -125,6 +125,16 @@ namespace ChudoPechkaLib
             }
             return false;
         }
+        public bool GetDish(Guid id, out Dish dish)
+        {
+            dish = null;
+            if (_db.IsContainDish(id))
+            {
+                dish = _db.GetDish(id);
+                return true;
+            }
+            else return false;
+        }
 
         public void SendAnnounced(Announced ann)
         {

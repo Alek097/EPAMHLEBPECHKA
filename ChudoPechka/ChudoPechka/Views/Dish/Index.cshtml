@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = Model.Name;
+    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+}
+@using ChudoPechkaLib.Models
+@using ChudoPechkaLib;
+@model Dish
+@section ScriptAndStyle{
+    <style>
+        #text {
+            width: 600px;
+            height: 80px;
+        }
+
+        .button {
+            margin-left: 85px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        $(window).load(function () {
+            SetComments();
+        });
+
+        function SetComments() {
+            $.ajax({
+                async: true,
+                contentType: "text/html",
+                method: "Post",
+                success: function (html) {
+                    $(".comments").html(html);
+                }
+            });
+        }
+
+        function SendComment() {
+            var data = {
+                "__RequestVerificationToken": $("[name=__RequestVerificationToken]").val(),
+                "user_login": $("#user_login").val(),
+                "dish_id": $("#dish_id").val(),
+                "text": $("#text").val()
+            };
+
+            $.post('@Url.Action("AddComment")', data)
+                .success(function () {
+                    SetComments();
+                });
+        }
+    </script>
+    <script src="~/scripts/jquery-2.2.1.js"></script>
+}
+<div style="padding-left:15px;">
+    <div style="text-align:center; font-size: 19pt;">
+        <span>@Model.Name</span>
+    </div>
+    @if (auth.IsAuthentication)
+    {
+        <div style="width:80px;height:auto; display:inline-block;">
+            <img src="@Url.Content(auth.User.AvatarPath)" style="width:100%; height:100%; border-radius:100%;" />
+        </div>
+        <div style="display:inline-block">
+            @Html.AntiForgeryToken()
+            <input type="hidden" value="@auth.User.Login" id="user_login" />
+            <input type="hidden" value="@Model.Id" id="dish_id" />
+            <textarea id="text"></textarea><br />
+        </div>
+        <button class="button" onclick="SendComment()">Отправить</button>
+    }
+    <div id="comments">
+
+    </div>
+</div>
