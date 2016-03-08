@@ -24,12 +24,22 @@ namespace ChudoPechkaLib.Data
                 .HasMany(u => u.Groups)
                 .WithMany(g => g.Users)
                 .Map(m => m.ToTable("UsersGroups"));
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Comments)
+                .WithRequired(c => c.User);
+
+            modelBuilder.Entity<Dish>()
+                .HasMany(d => d.Comments)
+                .WithRequired(c => c.Dish);
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Announced> Announceds { get; set; }
+        public DbSet<Dish> Dishes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public Order GetOrder(Guid order_id)
         {

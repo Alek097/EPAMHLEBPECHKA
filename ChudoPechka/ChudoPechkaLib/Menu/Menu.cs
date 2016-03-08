@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 
 using Word = Microsoft.Office.Interop.Word;
+using ChudoPechkaLib.Data;
 
 namespace ChudoPechkaLib.Menu
 {
@@ -209,8 +210,11 @@ namespace ChudoPechkaLib.Menu
                                     {
                                         if (Regex.IsMatch(cellVal, @"[0-9]+?\s*?гр"))
                                             menutext += string.Format("{0}</span><br/><br/>", cellVal);
-                                        else                                
-                                            menutext += "<span>" + Regex.Replace(cellVal, @"/(.|\s)+?/", "") + ", ";
+                                        else
+                                        {
+                                            cellVal = Regex.Replace(cellVal, @"/(.|\s)+?/", "");
+                                            menutext += "<span>" + cellVal + ", ";
+                                        }
                                         
                                         break;
                                     }
@@ -220,7 +224,7 @@ namespace ChudoPechkaLib.Menu
                 }
             }
             menutext += string.Format("<div><span style=\"font-size: 19px;\">{0:N} руб.</span><br/><span style=\"font-size: 15px;\">({1:N} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
-            menuTexts.Add(menutext);//т.к. последнего дня не попадает добавим её здесь
+            menuTexts.Add(menutext);//т.к. меню последнего дня не попадает добавим его здесь
 
             if (menuItems.Count != menuTexts.Count)
                 throw new InvalidOperationException("Количество меню и html кода не совпадают");

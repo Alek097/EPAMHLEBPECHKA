@@ -29,6 +29,7 @@ namespace ChudoPechkaLib.Models
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Announced> Announceds { get; set; }
         public virtual ICollection<Group> AdministartionGroups { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         public bool IsNewAnnouced()
         {

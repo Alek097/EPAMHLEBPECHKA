@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Announced.cs" />
     <Compile Include="AnnouncedType.cs" />
+    <Compile Include="Comment.cs" />
+    <Compile Include="Dish.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
