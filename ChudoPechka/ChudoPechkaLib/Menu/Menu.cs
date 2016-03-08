@@ -14,6 +14,7 @@ namespace ChudoPechkaLib.Menu
 {
     public class Menu : IMenu
     {
+        private static IStoreDB _db = new StoreDB();
         public List<MenuItem> MenuItems
         {
             get
@@ -197,7 +198,7 @@ namespace ChudoPechkaLib.Menu
                                         if (menutext != null)
                                         {
 
-                                            menutext +=string.Format("<div><span style=\"font-size: 19px;\">{0:N} руб.</span><br/><span style=\"font-size: 15px;\">({1:N} руб. без первого)</span></div>",menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
+                                            menutext += string.Format("<div><span style=\"font-size: 19px;\">{0:N} руб.</span><br/><span style=\"font-size: 15px;\">({1:N} руб. без первого)</span></div>", menuItems[index].FullPrice, menuItems[index].WithoutFullPrice);
                                             menutext += "</div>";
                                             menuTexts.Add(menutext);
                                             index++;
@@ -213,13 +214,14 @@ namespace ChudoPechkaLib.Menu
                                         else
                                         {
                                             cellVal = Regex.Replace(cellVal, @"/(.|\s)+?/", "");
-                                            menutext += "<span>" + cellVal + ", ";
+                                            Guid dish_id = _db.AddDish(cellVal);
+                                            menutext += "<span>" + "<a href=\"Dish/Index?dish_id=" + dish_id.ToString() + "\">" + cellVal + "</a>, ";
                                         }
-                                        
+
                                         break;
                                     }
                             }
-                        }                      
+                        }
                     }
                 }
             }

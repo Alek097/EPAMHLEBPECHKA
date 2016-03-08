@@ -72,6 +72,22 @@ namespace ChudoPechkaLib.Data
                .Include(g => g.Orders)
                .First(g => g.Id.Equals(group_id));
         }
+        public Guid AddDish(string nameDish)
+        {
+            if(!this.IsContainDish(nameDish))
+            {
+                Dish dish = new Dish();
+                dish.Name = nameDish;
+                this.Dishes.Add(dish);
+                base.SaveChanges();//Т.к. в отличие от остальных методов он вызывается из статического экземпляра,а не из ninject
+
+                return dish.Id;
+            }
+            else
+            {
+                return this.Dishes.First(d => d.Name.Equals(nameDish)).Id;
+            }
+        }
         public void AddUser(User usr)
         {
             string salt = _saltDB.GetSalt(usr.Id);
@@ -372,6 +388,18 @@ namespace ChudoPechkaLib.Data
             this.Entry<User>(usr).State = EntityState.Modified;
 
             _IsSavedOrModified = true;
+        }
+        private bool IsContainDish(string nameDish)
+        {
+            try
+            {
+                this.Dishes.First(d => d.Name.Equals(nameDish));
+                return true;
+            }
+            catch(InvalidOperationException)
+            {
+                return false;
+            }
         }
     }
 }
