@@ -20,7 +20,7 @@ namespace ChudoPechkaLib.Models
 
         public int CompareTo(object obj)
         {
-            return Date.CompareTo(obj);
+            return Date.CompareTo((obj as Comment).Date);
         }
     }
 }

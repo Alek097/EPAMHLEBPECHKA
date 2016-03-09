@@ -144,6 +144,11 @@
     <Content Include="Global.asax" />
     <Content Include="img\BG.jpg" />
     <Content Include="img\Standart\Avatar.jpg" />
+    <Content Include="img\Standart\Edit.png" />
+    <Content Include="img\Standart\Edit_hover.png" />
+    <Content Include="img\Standart\Delete.png" />
+    <Content Include="img\Standart\Delete_hover.png" />
+    <Content Include="img\Standart\Load.gif" />
     <Content Include="scripts\jquery-2.2.1.js" />
     <Content Include="scripts\jquery-2.2.1.min.js" />
     <Content Include="scripts\jquery-2.2.1.min.map" />
@@ -204,6 +209,7 @@
     <Content Include="Views\Order\Edit.cshtml" />
     <Content Include="Views\Group\OrderInf.cshtml" />
     <Content Include="Views\Dish\Index.cshtml" />
+    <Content Include="Views\Dish\GetComments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -35,5 +35,15 @@ namespace ChudoPechka.Controllers
             else
                 throw new HttpException(401, "Ошибка авторизации");
         }
+        public PartialViewResult GetComments(Guid dish_id)
+        {
+            Dish dish = null;
+            if (Auth.GetDish(dish_id, out dish))
+            {
+                return PartialView(dish.Comments.ToList());
+            }
+            else
+                throw new HttpException(404, "Блюдо не найдено");
+        }
     }
 }

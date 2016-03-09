@@ -1,0 +1,39 @@
+﻿@{ 
+    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+    Model.Sort();
+    Model.Reverse();
+}
+@using ChudoPechkaLib;
+@using ChudoPechkaLib.Models
+@model List<Comment>
+
+@foreach (Comment comment in Model)
+{
+    <div class="comment">
+        <div style="width:80px;height:80px; display:inline-block;">
+            <img src="@Url.Content(comment.User.AvatarPath)" style="width:100%; height:100%; display:inline-block; border-radius:100%" />
+        </div>
+        <div class="comment-text-container">
+            @if (auth.IsAuthentication && auth.User.Equals(comment.User))
+            {
+                <div>
+                    <div class="comment-button" onmousemove="OnMoveButton(this, '@Url.Content("~/img/Standart/Delete_hover.png")')" onmouseout="OnLeaveButton(this, '@Url.Content("~/img/Standart/Delete.png")')">
+                        <input id="login" type="hidden" value="@comment.User.Login" />
+                        <input id="comment_id" type="hidden" value="@comment.Id" />
+                        <img src="~/img/Standart/Delete.png" class="comment-button-img" title="Удалить" />
+                    </div>
+                    <div class="comment-button" onmousemove="OnMoveButton(this, '@Url.Content("~/img/Standart/Edit_hover.png")')" onmouseout="OnLeaveButton(this, '@Url.Content("~/img/Standart/Edit.png")')">
+                        <input id="login" type="hidden" value="@comment.User.Login" />
+                        <input id="comment_id" type="hidden" value="@comment.Id" />
+                        <img src="~/img/Standart/Edit.png" class="comment-button-img" title="Редактировать" />
+                    </div>
+                </div>
+            }
+            <span class="comment-text">
+                @comment.Text
+            </span><br />
+            <hr />
+            <span style="font-size:8pt; font-family: monospace">Дата: @comment.Date</span>
+        </div>
+    </div> 
+}
