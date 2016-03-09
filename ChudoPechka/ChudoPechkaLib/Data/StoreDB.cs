@@ -429,6 +429,7 @@ namespace ChudoPechkaLib.Data
             comment.User = user;
             comment.Dish = dish;
             comment.Text = text;
+            comment.Date = DateTime.Now;
 
             dish.Comments.Add(comment);
 
