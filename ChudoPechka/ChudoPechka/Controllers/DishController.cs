@@ -35,6 +35,26 @@ namespace ChudoPechka.Controllers
             else
                 throw new HttpException(401, "Ошибка авторизации");
         }
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveComment(string user_login, Guid comment_id)
+        {
+            User usr = null;
+
+            if (Auth.GetUser(user_login, out usr) && usr.Equals(Auth.User))
+            {
+                try
+                {
+                    Auth.RemoveComment(comment_id);
+                    throw new HttpException(200, "OK");
+                }
+                catch(InvalidOperationException ex)
+                {
+                    throw new HttpException(404, ex.Message);
+                }
+            }
+            else
+                throw new HttpException(401, "Ошибка авторизации");
+        }
         public PartialViewResult GetComments(Guid dish_id)
         {
             Dish dish = null;

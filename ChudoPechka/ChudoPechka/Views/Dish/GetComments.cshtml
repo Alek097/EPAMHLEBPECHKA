@@ -17,14 +17,14 @@
             @if (auth.IsAuthentication && auth.User.Equals(comment.User))
             {
                 <div>
-                    <div class="comment-button" onmousemove="OnMoveButton(this, '@Url.Content("~/img/Standart/Delete_hover.png")')" onmouseout="OnLeaveButton(this, '@Url.Content("~/img/Standart/Delete.png")')">
-                        <input id="login" type="hidden" value="@comment.User.Login" />
-                        <input id="comment_id" type="hidden" value="@comment.Id" />
+                    <div class="comment-button" onmousemove="OnMoveButton(this, '@Url.Content("~/img/Standart/Delete_hover.png")')" onmouseout="OnLeaveButton(this, '@Url.Content("~/img/Standart/Delete.png")')" onclick="DeleteComment(this)">
+                        <input class="login" type="hidden" value="@comment.User.Login" />
+                        <input class="comment_id" type="hidden" value="@comment.Id" />
                         <img src="~/img/Standart/Delete.png" class="comment-button-img" title="Удалить" />
                     </div>
                     <div class="comment-button" onmousemove="OnMoveButton(this, '@Url.Content("~/img/Standart/Edit_hover.png")')" onmouseout="OnLeaveButton(this, '@Url.Content("~/img/Standart/Edit.png")')">
-                        <input id="login" type="hidden" value="@comment.User.Login" />
-                        <input id="comment_id" type="hidden" value="@comment.Id" />
+                        <input class="login" type="hidden" value="@comment.User.Login" />
+                        <input class="comment_id" type="hidden" value="@comment.Id" />
                         <img src="~/img/Standart/Edit.png" class="comment-button-img" title="Редактировать" />
                     </div>
                 </div>

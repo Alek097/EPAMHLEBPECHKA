@@ -74,7 +74,6 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RemoveUser(Guid group_id)
         {
-            //TODO:Сделать его с ридеректом назад в вызывающий контроллер
             if (Auth.IsAuthentication)
             {
                 Auth.RemoveUser(group_id);

@@ -236,5 +236,13 @@ namespace ChudoPechkaLib
         {
             _db.AddComment(login, text, dish_id);
         }
+
+        public void RemoveComment(Guid comment_id)
+        {
+            if (_db.IsContainComment(comment_id))
+                _db.RemoveComment(comment_id);
+            else
+                throw new InvalidOperationException("Комментарий не найден");
+        }
     }
 }

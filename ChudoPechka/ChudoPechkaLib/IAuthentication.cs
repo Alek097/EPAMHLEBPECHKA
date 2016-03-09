@@ -32,6 +32,7 @@ namespace ChudoPechkaLib
         void RemoveOrder(Guid order_id);
         void RemoveOrder(Guid group_id, Guid order_id);
         void RemoveCancelledOrders(Guid group_id);
+        void RemoveComment(Guid comment_id);
         void RecoveryOrder(Guid group_id, Guid order_id);
         void SetReadAnnounced(Announced ann);
         void ToOrder(Guid group_id);

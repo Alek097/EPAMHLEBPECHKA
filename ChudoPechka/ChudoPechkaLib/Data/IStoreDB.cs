@@ -13,6 +13,7 @@ namespace ChudoPechkaLib.Data
         Group GetGroup(Guid group_id);
         Order GetOrder(Guid order_id);
         Dish GetDish(Guid dish_id);
+        Comment GetComment(Guid comment_id);
         void AddUser(User usr);
         void AddMemberInGroup(Guid group_id, User usr);
         void AddAuthorInGroup(Guid group_id, string login);
@@ -22,6 +23,7 @@ namespace ChudoPechkaLib.Data
         Guid AddDish(string nameDish);
         bool IsContainGroup(Guid group_id);
         bool IsContainDish(Guid dish_id);
+        bool IsContainComment(Guid comment_id);
         bool IsContainUser(string login, string pass);
         bool IsContainUser(string login);
         bool IsContainUser(Guid usr_id);
@@ -36,6 +38,7 @@ namespace ChudoPechkaLib.Data
         void RemoveUser(Guid group_id, User removeUser);
         void RemoveOrder(Guid order_id);
         void RemoveCancelledOrders(Guid group_id);
+        void RemoveComment(Guid comment_id);
         void RemoveOrder(Guid group_id, Guid order_id);
         void RecoveryOrder(Guid group_id, Guid order_id);
         void ToOrder(Guid group_id);

@@ -78,6 +78,13 @@ namespace ChudoPechkaLib.Data
                 .Include(d => d.Comments)
                 .First(d => d.Id.Equals(dish_id));
         }
+        public Comment GetComment(Guid comment_id)
+        {
+            return this.Comments
+                .Include(c => c.User)
+                .Include(c => c.Dish)
+                .First(c => c.Id.Equals(comment_id));
+        }
         public Guid AddDish(string nameDish)
         {
             if (!this.IsContainDish(nameDish))
@@ -161,6 +168,18 @@ namespace ChudoPechkaLib.Data
                     return false;
             }
             catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
+        public bool IsContainComment(Guid comment_id)
+        {
+            try
+            {
+                this.Comments.First(c => c.Id.Equals(comment_id));
+                return true;
+            }
+            catch(InvalidCastException)
             {
                 return false;
             }
@@ -434,6 +453,15 @@ namespace ChudoPechkaLib.Data
             dish.Comments.Add(comment);
 
             this.Comments.Add(comment);
+
+            _IsSavedOrModified = true;
+        }
+
+        public void RemoveComment(Guid comment_id)
+        {
+            Comment comment = this.GetComment(comment_id);
+
+            this.Entry<Comment>(comment).State = EntityState.Deleted;
 
             _IsSavedOrModified = true;
         }
