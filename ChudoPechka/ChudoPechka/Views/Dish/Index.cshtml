@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = Model.Name;
     IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
 }
@@ -16,6 +15,9 @@
         .button {
             margin-left: 85px;
             margin-bottom: 10px;
+        }
+        .line{
+            width:70%;
         }
     </style>
     <script>
@@ -52,7 +54,9 @@
 }
 <div style="padding-left:15px;">
     <div style="text-align:center; font-size: 19pt;">
+        <hr size="5" color="black" class="line">
         <span>@Model.Name</span>
+        <hr size="5" color="black" class="line">
     </div>
     @if (auth.IsAuthentication)
     {

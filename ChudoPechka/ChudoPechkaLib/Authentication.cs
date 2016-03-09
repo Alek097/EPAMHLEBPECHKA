@@ -231,5 +231,10 @@ namespace ChudoPechkaLib
         {
             _db.UpdateAvatar(login, fileName);
         }
+
+        public void AddComment(string login, string text, Guid dish_id)
+        {
+            _db.AddComment(login, text, dish_id);
+        }
     }
 }

@@ -25,7 +25,15 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddComment(string text, string user_login, Guid dish_id)
         {
-            throw new HttpException(200, "OK");
+            User usr = null;
+
+            if (Auth.GetUser(user_login, out usr) && usr.Equals(Auth.User))
+            {
+                Auth.AddComment(user_login, text, dish_id);
+                throw new HttpException(200, "OK");
+            }
+            else
+                throw new HttpException(401, "Ошибка авторизации");
         }
     }
 }

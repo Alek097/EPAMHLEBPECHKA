@@ -419,5 +419,22 @@ namespace ChudoPechkaLib.Data
                 return false;
             }
         }
+
+        public void AddComment(string login, string text, Guid dish_id)
+        {
+            Dish dish = this.GetDish(dish_id);
+            User user = this.GetUser(login);
+
+            Comment comment = new Comment();
+            comment.User = user;
+            comment.Dish = dish;
+            comment.Text = text;
+
+            dish.Comments.Add(comment);
+
+            this.Comments.Add(comment);
+
+            _IsSavedOrModified = true;
+        }
     }
 }
