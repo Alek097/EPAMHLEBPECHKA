@@ -465,5 +465,16 @@ namespace ChudoPechkaLib.Data
 
             _IsSavedOrModified = true;
         }
+
+        public void UpdateComment(Guid comment_id, string newText)
+        {
+            Comment modifComment = this.GetComment(comment_id);
+
+            modifComment.Text = newText;
+
+            this.Entry<Comment>(modifComment).State = EntityState.Modified;
+
+            _IsSavedOrModified = true;
+        }
     }
 }

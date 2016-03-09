@@ -39,18 +39,28 @@ namespace ChudoPechka.Controllers
         public ActionResult RemoveComment(string user_login, Guid comment_id)
         {
             User usr = null;
-
+            Comment comment = null;
             if (Auth.GetUser(user_login, out usr) && usr.Equals(Auth.User))
             {
-                try
+                if (Auth.GetComment(comment_id, out comment))
                 {
-                    Auth.RemoveComment(comment_id);
-                    throw new HttpException(200, "OK");
+                    if (comment.User.Equals(Auth.User))
+                    {
+                        try
+                        {
+                            Auth.RemoveComment(comment_id);
+                            throw new HttpException(200, "OK");
+                        }
+                        catch (InvalidOperationException ex)
+                        {
+                            throw new HttpException(404, ex.Message);
+                        }
+                    }
+                    else
+                        throw new HttpException(423, "Доступ запрещён");
                 }
-                catch(InvalidOperationException ex)
-                {
-                    throw new HttpException(404, ex.Message);
-                }
+                else
+                    throw new HttpException(404, "Комментарий не найден");
             }
             else
                 throw new HttpException(401, "Ошибка авторизации");
@@ -64,6 +74,36 @@ namespace ChudoPechka.Controllers
             }
             else
                 throw new HttpException(404, "Блюдо не найдено");
+        }
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateComment(Guid comment_id, string user_login, string text)
+        {
+            User usr = null;
+            Comment comment = null;
+            if (Auth.GetUser(user_login, out usr) && usr.Equals(Auth.User))
+            {
+                if (Auth.GetComment(comment_id, out comment))
+                {
+                    if (comment.User.Equals(Auth.User))
+                    {
+                        try
+                        {
+                            Auth.UpdateComment(comment_id, text);
+                            throw new HttpException(200, "OK");
+                        }
+                        catch (InvalidOperationException ex)
+                        {
+                            throw new HttpException(404, ex.Message);
+                        }
+                    }
+                    else
+                        throw new HttpException(423, "Доступ запрещён");
+                }
+                else
+                    throw new HttpException(404, "Комментарий не найден");
+            }
+            else
+                throw new HttpException(401, "Ошибка авторизации");
         }
     }
 }

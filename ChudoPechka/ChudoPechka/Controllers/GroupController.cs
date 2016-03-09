@@ -92,7 +92,7 @@ namespace ChudoPechka.Controllers
             else
             {
                 ViewData["Group_id"] = grp.Id;
-                return View(grp.Orders/*.Where(o => o.Day == DateTime.Now.Date.AddDays(1)).ToList()*/);//На завтра
+                return View(grp.Orders.Where(o => o.Day == DateTime.Now.Date.AddDays(1)).ToList());//На завтра
             }
         }
         [ValidateAntiForgeryToken]

@@ -244,5 +244,22 @@ namespace ChudoPechkaLib
             else
                 throw new InvalidOperationException("Комментарий не найден");
         }
+
+        public bool GetComment(Guid id, out Comment comment)
+        {
+            comment = null;
+            if (_db.IsContainComment(id))
+            {
+                comment = _db.GetComment(id);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public void UpdateComment(Guid comment_id, string newText)
+        {
+            _db.UpdateComment(comment_id, newText);
+        }
     }
 }

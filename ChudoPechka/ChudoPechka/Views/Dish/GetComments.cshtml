@@ -10,6 +10,10 @@
 @foreach (Comment comment in Model)
 {
     <div class="comment">
+        <div class="comment-information">
+            <input class="login" type="hidden" value="@comment.User.Login" />
+            <input class="comment_id" type="hidden" value="@comment.Id" />
+        </div>
         <div style="width:80px;height:80px; display:inline-block;">
             <img src="@Url.Content(comment.User.AvatarPath)" style="width:100%; height:100%; display:inline-block; border-radius:100%" />
         </div>
@@ -18,13 +22,9 @@
             {
                 <div>
                     <div class="comment-button" onmousemove="OnMoveButton(this, '@Url.Content("~/img/Standart/Delete_hover.png")')" onmouseout="OnLeaveButton(this, '@Url.Content("~/img/Standart/Delete.png")')" onclick="DeleteComment(this)">
-                        <input class="login" type="hidden" value="@comment.User.Login" />
-                        <input class="comment_id" type="hidden" value="@comment.Id" />
                         <img src="~/img/Standart/Delete.png" class="comment-button-img" title="Удалить" />
                     </div>
-                    <div class="comment-button" onmousemove="OnMoveButton(this, '@Url.Content("~/img/Standart/Edit_hover.png")')" onmouseout="OnLeaveButton(this, '@Url.Content("~/img/Standart/Edit.png")')">
-                        <input class="login" type="hidden" value="@comment.User.Login" />
-                        <input class="comment_id" type="hidden" value="@comment.Id" />
+                    <div class="comment-button" onmousemove="OnMoveButton(this, '@Url.Content("~/img/Standart/Edit_hover.png")')" onmouseout="OnLeaveButton(this, '@Url.Content("~/img/Standart/Edit.png")')" onclick="SetEditorForComment($(this))">
                         <img src="~/img/Standart/Edit.png" class="comment-button-img" title="Редактировать" />
                     </div>
                 </div>
