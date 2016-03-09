@@ -250,7 +250,18 @@ namespace ChudoPechkaLib.Menu
             string html;
             using (WebClient wc = new WebClient() { Encoding = Encoding.UTF8 })
             {
-                html = wc.DownloadString(_chudoPechka);//TODO:Обработать WebExeption
+                while (true)
+                {
+                    try
+                    {
+                        html = wc.DownloadString(_chudoPechka);
+                        break;
+                    }
+                    catch (WebException)
+                    {
+                        continue;
+                    }
+                }
             }
             return html;
         }
