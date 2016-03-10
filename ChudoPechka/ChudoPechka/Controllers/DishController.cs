@@ -29,7 +29,7 @@ namespace ChudoPechka.Controllers
 
             if (Manager.GetUser(user_login, out usr) && usr.Equals(Manager.User))
             {
-                Manager.AddComment(user_login, text, dish_id);
+                Manager.AddComment(usr, text, dish_id);
                 throw new HttpException(200, "OK");
             }
             else
@@ -38,29 +38,10 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RemoveComment(string user_login, Guid comment_id)
         {
-            User usr = null;
-            Comment comment = null;
-            if (Manager.GetUser(user_login, out usr) && usr.Equals(Manager.User))
+            if (Manager.IsAuthentication)
             {
-                if (Manager.GetComment(comment_id, out comment))
-                {
-                    if (comment.User.Equals(Manager.User))
-                    {
-                        try
-                        {
-                            Manager.RemoveComment(comment_id);
-                            throw new HttpException(200, "OK");
-                        }
-                        catch (InvalidOperationException ex)
-                        {
-                            throw new HttpException(404, ex.Message);
-                        }
-                    }
-                    else
-                        throw new HttpException(423, "Доступ запрещён");
-                }
-                else
-                    throw new HttpException(404, "Комментарий не найден");
+                Manager.RemoveComment(comment_id);
+                throw new HttpException(200, "OK");
             }
             else
                 throw new HttpException(401, "Ошибка авторизации");
@@ -78,29 +59,10 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UpdateComment(Guid comment_id, string user_login, string text)
         {
-            User usr = null;
-            Comment comment = null;
-            if (Manager.GetUser(user_login, out usr) && usr.Equals(Manager.User))
+            if (Manager.IsAuthentication && Manager.User.Login.Equals(user_login))
             {
-                if (Manager.GetComment(comment_id, out comment))
-                {
-                    if (comment.User.Equals(Manager.User))
-                    {
-                        try
-                        {
-                            Manager.UpdateComment(comment_id, text);
-                            throw new HttpException(200, "OK");
-                        }
-                        catch (InvalidOperationException ex)
-                        {
-                            throw new HttpException(404, ex.Message);
-                        }
-                    }
-                    else
-                        throw new HttpException(423, "Доступ запрещён");
-                }
-                else
-                    throw new HttpException(404, "Комментарий не найден");
+                Manager.UpdateComment(comment_id, text);
+                throw new HttpException(200, "OK");
             }
             else
                 throw new HttpException(401, "Ошибка авторизации");

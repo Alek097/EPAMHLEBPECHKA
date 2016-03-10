@@ -2,7 +2,7 @@
 @using System.Web.Mvc
 @using ChudoPechkaLib
 @{
-    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+    IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
     /*
     НАПОМИНАНИЕ: Переплетается смысл меню еды и юзер меню. Если не будет лень исправить
     */

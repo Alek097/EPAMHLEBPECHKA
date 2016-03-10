@@ -160,7 +160,7 @@ namespace ChudoPechka.Controllers
 
                     newSizeAvatar.Save(fileName);
 
-                    Manager.UpdateAvatar(Manager.User.Login, UrlAvatar);
+                    Manager.UpdateAvatar(Manager.User, UrlAvatar);
 
                     return Redirect(Url.Action("Index", new { login = Manager.User.Login }));
                 }

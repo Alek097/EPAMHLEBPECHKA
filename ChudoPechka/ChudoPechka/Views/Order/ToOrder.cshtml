@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "ToOrder";
     IMenu menu = DependencyResolver.Current.GetService<IMenu>();
-    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+    IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
     List<Group> groups = new List<Group>(auth.User.Groups);
     groups.AddRange(auth.User.AdministartionGroups);
     groups.Sort();

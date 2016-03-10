@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = Model.Name;
-    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+    IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
     User usr = auth.User;
 }
 @using ChudoPechkaLib.Models;

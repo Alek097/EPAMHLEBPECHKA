@@ -27,7 +27,7 @@ namespace ChudoPechkaLib
         bool GetComment(Guid id, out Comment comment);
         void SendAnnounced(Announced ann);
         void AddMoney(string login, uint addMoney);
-        void AddComment(string login, string text, Guid dish_id);
+        void AddComment(User user, string text, Guid dish_id);
         void AddMemberInGroup(Guid Group_id);
         void AddAdministrationInGroup(Guid Group_Id, string login);
         void RemoveUser(Guid group_id);
@@ -39,7 +39,7 @@ namespace ChudoPechkaLib
         void SetReadAnnounced(Announced ann);
         void ToOrder(Guid group_id);
         void ToOrder(Order order);
-        void UpdateAvatar(string login, string fileName);
+        void UpdateAvatar(User usr, string fileName);
         void UpdateComment(Guid comment_id, string newText);
     }
 }

@@ -146,11 +146,15 @@ namespace ChudoPechkaLib
             User usr = this.User;
             if (_db.IsContainGroup(group_id) && _db.IsContainAnnounced(group_id))
                 _db.AddMemberInGroup(group_id, usr);
+            else
+                throw new HttpException(404, "Группа или приглашение в группу не найдены");
         }
         public void AddAdministrationInGroup(Guid group_id, string login)
         {
             if (_db.IsContainGroup(group_id) && _db.IsContainUser(login))
                 _db.AddAuthorInGroup(group_id, login);
+            else
+                throw new HttpException(404, "Группа или пользователь не найдены");
         }
 
         public void SetReadAnnounced(Announced ann)
@@ -160,7 +164,10 @@ namespace ChudoPechkaLib
 
         public void RemoveUser(Guid group_id)
         {
-            _db.RemoveUser(group_id, this.User);
+            if (_db.IsContainGroup(group_id))
+                _db.RemoveUser(group_id, this.User);
+            else
+                throw new HttpException(404, "Группа не найдена");
         }
 
         public void ToOrder(Order order)
@@ -190,23 +197,25 @@ namespace ChudoPechkaLib
         {
             if (_db.IsContainOrder(order_id))
                 _db.RemoveOrder(order_id);
+            else
+                throw new HttpException(404, "Заказ не найден");
         }
 
         public void RemoveOrder(Guid group_id, Guid order_id)
         {
             if (!_db.IsContainGroup(group_id))
-                throw new InvalidConstraintException("Группа не найдена");
+                throw new HttpException(404, "Группа не найдена");
             else if (!_db.IsContainOrder(order_id))
-                throw new InvalidConstraintException("Заказ не найден");
+                throw new HttpException(404, "Заказ не найден");
             else
                 _db.RemoveOrder(group_id, order_id);
         }
         public void RecoveryOrder(Guid group_id, Guid order_id)
         {
             if (!_db.IsContainGroup(group_id))
-                throw new InvalidOperationException("Группа не найдена");
+                throw new HttpException(404, "Группа не найдена");
             else if (!_db.IsContainOrder(order_id))
-                throw new InvalidOperationException("Заказ не найден");
+                throw new HttpException(404, "Заказ не найден");
             else
                 _db.RecoveryOrder(group_id, order_id);
         }
@@ -216,7 +225,7 @@ namespace ChudoPechkaLib
             if (_db.IsContainGroup(group_id))
                 _db.RemoveCancelledOrders(group_id);
             else
-                throw new InvalidOperationException("Группа не найдена");
+                throw new HttpException(404, "Группа не найдена");
         }
 
         public void ToOrder(Guid group_id)
@@ -224,25 +233,32 @@ namespace ChudoPechkaLib
             if (_db.IsContainGroup(group_id))
                 _db.ToOrder(group_id);
             else
-                throw new InvalidOperationException("Группа не найдена");
+                throw new HttpException(404, "Группа не найдена");
         }
 
-        public void UpdateAvatar(string login, string fileName)
+        public void UpdateAvatar(User usr, string fileName)
         {
-            _db.UpdateAvatar(login, fileName);
+            _db.UpdateAvatar(usr, fileName);
         }
 
-        public void AddComment(string login, string text, Guid dish_id)
+        public void AddComment(User user, string text, Guid dish_id)
         {
-            _db.AddComment(login, text, dish_id);
+            _db.AddComment(user, text, dish_id);
         }
 
         public void RemoveComment(Guid comment_id)
         {
             if (_db.IsContainComment(comment_id))
+            {
+                Comment comment = _db.GetComment(comment_id);
+
+                if(!this.User.Equals(comment.User))
+                    throw new HttpException(423, "Доступ запрещён");
+
                 _db.RemoveComment(comment_id);
+            }
             else
-                throw new InvalidOperationException("Комментарий не найден");
+                throw new HttpException(404, "Комментарий не найден");
         }
 
         public bool GetComment(Guid id, out Comment comment)
@@ -259,7 +275,18 @@ namespace ChudoPechkaLib
 
         public void UpdateComment(Guid comment_id, string newText)
         {
-            _db.UpdateComment(comment_id, newText);
+            Comment comment = null;
+            if (this.GetComment(comment_id, out comment))
+            {
+                if (comment.User.Equals(this.User))
+                {
+                    _db.UpdateComment(comment, newText);
+                }
+                else
+                    throw new HttpException(423, "Доступ запрещён");
+            }
+            else
+                throw new HttpException(404, "Комментарий не найден");
         }
 
         public void AddMoney(string login, uint addMoney)

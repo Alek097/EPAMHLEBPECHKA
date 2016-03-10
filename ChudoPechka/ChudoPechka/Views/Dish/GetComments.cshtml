@@ -1,5 +1,5 @@
 ﻿@{ 
-    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+    IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
     Model.Sort();
     Model.Reverse();
 }

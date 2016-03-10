@@ -15,23 +15,29 @@ namespace ChudoPechka.Controllers
         {
             if (!Manager.IsAuthentication)
                 return Redirect(Url.Action("Index", "Home"));
-            return View();
+            else
+                return View();
         }
-        public ActionResult GetAnnounced()
+        public PartialViewResult GetAnnounced()
         {
             if (!Manager.IsAuthentication)
-                throw new HttpException(423,"Вы не авторизованы");
+                throw new HttpException(423, "Вы не авторизованы");
             else
             {
                 List<Announced> Anns = Manager.User.Announceds.ToList();
-                return View(Anns);
+                return PartialView(Anns);
             }
         }
         [ValidateAntiForgeryToken]
         public void SendAnnounced(AnnouncedModel model)
         {
             if (Manager.IsAuthentication)
+            {
                 Manager.SendAnnounced(model);
+                throw new HttpException(200, "OK");
+            }
+            else
+                throw new HttpException(423, "Вы не авторизованы");
         }
     }
 }

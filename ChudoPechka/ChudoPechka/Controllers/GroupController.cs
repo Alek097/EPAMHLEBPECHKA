@@ -17,14 +17,16 @@ namespace ChudoPechka.Controllers
             Group grp;
             if (Manager.GetGroup(Group_id, out grp))
                 return View(grp);
-            throw new HttpException(404, "Группа не найдена");
+            else
+                throw new HttpException(404, "Группа не найдена");
         }
         [HttpGet]
         public ActionResult Create()
         {
             if (Manager.IsAuthentication)
                 return View();
-            return Redirect(Url.Action("Index", "Home"));
+            else
+                return Redirect(Url.Action("Index", "Home"));
         }
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -67,6 +69,7 @@ namespace ChudoPechka.Controllers
             if (Manager.IsAuthentication)
             {
                 Manager.AddAdministrationInGroup(Group_Id, login);
+                throw new HttpException(200, "OK");
             }
             else
                 throw new HttpException(401, "Вы не авторизированы");
@@ -86,7 +89,7 @@ namespace ChudoPechka.Controllers
         {
             Group grp = null;
             if (!Manager.IsAuthentication)
-                throw new HttpException(401, "Вы не авторизированы");
+                return Redirect(Url.Action("Index", "Home"));
             else if (!Manager.GetGroup(Group_Id, out grp))
                 throw new HttpException(404, "Группа не найдена");
             else
@@ -100,15 +103,9 @@ namespace ChudoPechka.Controllers
         {
             if (!Manager.IsAuthentication)
                 throw new HttpException(401, "Вы не авторизированы");
-            try
-            {
-                Manager.RemoveOrder(Group_id, Order_id);
-                throw new HttpException(200, "Закзаз удалён из списка группы");
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw new HttpException(404, ex.Message);
-            }
+
+            Manager.RemoveOrder(Group_id, Order_id);
+            throw new HttpException(200, "Закзаз удалён из списка группы");
 
         }
         [ValidateAntiForgeryToken]
@@ -116,15 +113,9 @@ namespace ChudoPechka.Controllers
         {
             if (!Manager.IsAuthentication)
                 throw new HttpException(401, "Вы не авторизированы");
-            try
-            {
-                Manager.RecoveryOrder(Group_id, Order_id);
-                throw new HttpException(200, "Закзаз удалён из списка группы");
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw new HttpException(404, ex.Message);
-            }
+
+            Manager.RecoveryOrder(Group_id, Order_id);
+            throw new HttpException(200, "Закзаз удалён из списка группы");
         }
         [ValidateAntiForgeryToken]
         public ActionResult ToOrder(Guid Group_id)

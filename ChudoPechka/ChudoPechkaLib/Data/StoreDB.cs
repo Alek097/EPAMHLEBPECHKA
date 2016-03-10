@@ -421,10 +421,8 @@ namespace ChudoPechkaLib.Data
             _IsSavedOrModified = true;
         }
 
-        public void UpdateAvatar(string login, string fileName)
+        public void UpdateAvatar(User usr, string fileName)
         {
-            User usr = this.GetUser(login);
-
             usr.AvatarPath = fileName;
 
             this.Entry<User>(usr).State = EntityState.Modified;
@@ -444,10 +442,9 @@ namespace ChudoPechkaLib.Data
             }
         }
 
-        public void AddComment(string login, string text, Guid dish_id)
+        public void AddComment(User user, string text, Guid dish_id)
         {
             Dish dish = this.GetDish(dish_id);
-            User user = this.GetUser(login);
 
             Comment comment = new Comment();
             comment.User = user;
@@ -471,13 +468,11 @@ namespace ChudoPechkaLib.Data
             _IsSavedOrModified = true;
         }
 
-        public void UpdateComment(Guid comment_id, string newText)
+        public void UpdateComment(Comment comment, string newText)
         {
-            Comment modifComment = this.GetComment(comment_id);
+            comment.Text = newText;
 
-            modifComment.Text = newText;
-
-            this.Entry<Comment>(modifComment).State = EntityState.Modified;
+            this.Entry<Comment>(comment).State = EntityState.Modified;
 
             _IsSavedOrModified = true;
         }

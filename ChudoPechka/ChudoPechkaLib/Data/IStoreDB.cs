@@ -19,7 +19,7 @@ namespace ChudoPechkaLib.Data
         void AddAuthorInGroup(Guid group_id, string login);
         void AddGroup(Group grp);
         void AddMoney(string login, uint addMoney);
-        void AddComment(string login, string text, Guid dish_id);
+        void AddComment(User user, string text, Guid dish_id);
         void AddOrder(Order order);
         Guid AddDish(string nameDish);
         bool IsContainGroup(Guid group_id);
@@ -33,8 +33,8 @@ namespace ChudoPechkaLib.Data
         bool ResponceOnQuestion(string login, string response);
         void UpdateOrder(Order order);
         void UpdatePassword(string login, string newPassword, string responseQuestion);
-        void UpdateAvatar(string login, string fileName);
-        void UpdateComment(Guid comment_id, string newText);
+        void UpdateAvatar(User usr, string fileName);
+        void UpdateComment(Comment comment, string newText);
         void SendAnnounced(Announced ann);
         void SetReadAnnounced(Announced ann);
         void RemoveUser(Guid group_id, User removeUser);
