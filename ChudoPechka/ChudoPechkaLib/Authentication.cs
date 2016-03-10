@@ -261,5 +261,10 @@ namespace ChudoPechkaLib
         {
             _db.UpdateComment(comment_id, newText);
         }
+
+        public void AddMoney(string login, uint addMoney)
+        {
+            _db.AddMoney(login, addMoney);
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace ChudoPechka.Controllers
         public ActionResult GetAnnounced()
         {
             if (!Auth.IsAuthentication)
-                throw new HttpException(423,"Вы не авторизованны");
+                throw new HttpException(423,"Вы не авторизованы");
             else
             {
                 List<Announced> Anns = Auth.User.Announceds.ToList();

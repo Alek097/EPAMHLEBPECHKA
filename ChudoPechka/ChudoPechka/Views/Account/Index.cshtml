@@ -71,7 +71,19 @@
             @using (Html.BeginForm("UploadAvatar", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="file" name="upload" />
+                @Html.AntiForgeryToken()
                 <input type="submit" value="Загрузить" class="button" />
+            }
+            <br />
+            <hr />
+            <br />
+            <span>Пополнить баланс</span>
+            @using (Html.BeginForm("AddMoney", "Account", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.Login)
+                @Html.AntiForgeryToken()
+                <input type="text" class="text-box" name="addMoney" />
+                <input type="submit" class="button" value="Пополнить" />
             }
         </div>
     }

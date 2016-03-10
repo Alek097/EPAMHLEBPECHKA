@@ -481,5 +481,16 @@ namespace ChudoPechkaLib.Data
 
             _IsSavedOrModified = true;
         }
+
+        public void AddMoney(string login, uint addMoney)
+        {
+            User usr = this.GetUser(login);
+
+            usr.Balnce += (int)addMoney;
+
+            this.Entry<User>(usr).State = EntityState.Modified;
+
+            _IsSavedOrModified = true;
+        }
     }
 }

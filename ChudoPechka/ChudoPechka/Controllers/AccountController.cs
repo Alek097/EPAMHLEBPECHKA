@@ -6,13 +6,26 @@ using System.Web.Mvc;
 using System.Drawing;
 
 using ChudoPechka.Models;
-using ChudoPechkaLib.Data;
 using ChudoPechkaLib.Models;
 
 namespace ChudoPechka.Controllers
 {
     public class AccountController : ChudoPechka.Controllers.Base.BaseController
     {
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddMoney(string login, uint addMoney)
+        {
+            User usr;
+            if (!Auth.IsAuthentication)
+                throw new HttpException(423, "Вы не авторизованы");
+            else if (!Auth.GetUser(login, out usr))
+                throw new HttpException(404, "Пользователь не найден");
+
+            Auth.AddMoney(login, addMoney);
+
+            return Redirect(Url.Action("Index", new { login = login }));
+        }
         // GET: Account
         [HttpGet]
         public ActionResult Index(string login)
@@ -116,6 +129,7 @@ namespace ChudoPechka.Controllers
                 return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UploadAvatar(HttpPostedFileBase upload)
         {
             if (Auth.IsAuthentication)
