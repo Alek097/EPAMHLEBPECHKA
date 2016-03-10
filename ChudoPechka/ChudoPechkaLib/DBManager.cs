@@ -10,7 +10,7 @@ using ChudoPechkaLib.Data;
 
 namespace ChudoPechkaLib
 {
-    public class Authentication : IAuthentication
+    public class DBManager : IDBManager
     {
         private const string COOKIE_NAME = "_TEST_COOKIE";//TODO: По завершению дать нормальное название
         private IStoreDB _db;
@@ -147,7 +147,7 @@ namespace ChudoPechkaLib
             if (_db.IsContainGroup(group_id) && _db.IsContainAnnounced(group_id))
                 _db.AddMemberInGroup(group_id, usr);
         }
-        public void AddAuthorInGroup(Guid group_id, string login)
+        public void AddAdministrationInGroup(Guid group_id, string login)
         {
             if (_db.IsContainGroup(group_id) && _db.IsContainUser(login))
                 _db.AddAuthorInGroup(group_id, login);

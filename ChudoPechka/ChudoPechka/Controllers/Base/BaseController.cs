@@ -10,10 +10,10 @@ namespace ChudoPechka.Controllers.Base
 {
     public class BaseController : Controller
     {
-        public IAuthentication Auth { get; set; }
+        public IDBManager Manager { get; set; }
         public BaseController()
         {
-            this.Auth = DependencyResolver.Current.GetService<IAuthentication>();
+            this.Manager = DependencyResolver.Current.GetService<IDBManager>();
         }
     }
 }

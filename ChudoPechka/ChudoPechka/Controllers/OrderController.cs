@@ -15,19 +15,19 @@ namespace ChudoPechka.Controllers
         // GET: Order
         public ActionResult Index()
         {
-            if (Auth.IsAuthentication)
-                return View(Auth.User.Orders.Where(o => !o.Status.Equals("Отменён")).ToList());
+            if (Manager.IsAuthentication)
+                return View(Manager.User.Orders.Where(o => !o.Status.Equals("Отменён")).ToList());
             else
                 return Redirect(Url.Action("Index", "Home"));
         }
         public ActionResult Edit(Guid Order_id)
         {
-            if (Auth.IsAuthentication)
+            if (Manager.IsAuthentication)
             {
                 Order ord;
-                if (Auth.GetOrder(Order_id, out ord))
+                if (Manager.GetOrder(Order_id, out ord))
                 {
-                    if (Auth.User.Orders.Contains(ord))
+                    if (Manager.User.Orders.Contains(ord))
                     {
                         EditModel model = ord;
                         return View(model);
@@ -46,13 +46,13 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditModel model)
         {
-            if (Auth.IsAuthentication || !model.Status.Equals("Заказан") || !model.IsOrdered)
+            if (Manager.IsAuthentication || !model.Status.Equals("Заказан") || !model.IsOrdered)
             {
                 if (!ModelState.IsValid)
                     return View(model);
                 else
                 {
-                    Auth.UpdateOrder(model);
+                    Manager.UpdateOrder(model);
                     return Redirect("Index");
                 }
             }
@@ -62,7 +62,7 @@ namespace ChudoPechka.Controllers
         [HttpGet]
         public ActionResult ToOrder()
         {
-            if (Auth.IsAuthentication)
+            if (Manager.IsAuthentication)
             {
                 OrderModel model = new OrderModel();
                 return View(model);
@@ -74,12 +74,12 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ToOrder(OrderModel model)
         {
-            if (!Auth.IsAuthentication)
+            if (!Manager.IsAuthentication)
                 return Redirect(Url.Action("Index", "Home"));
             else if (ModelState.IsValid)
             {
 
-                Auth.ToOrder(model);
+                Manager.ToOrder(model);
 
                 model = new OrderModel();
             }
@@ -89,7 +89,7 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Remove(Guid order_id)
         {
-            Auth.RemoveOrder(order_id);
+            Manager.RemoveOrder(order_id);
             return Redirect("index");
         }
     }

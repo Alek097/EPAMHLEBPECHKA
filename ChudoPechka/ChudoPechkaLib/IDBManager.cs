@@ -9,7 +9,7 @@ using ChudoPechkaLib.Data;
 
 namespace ChudoPechkaLib
 {
-    public interface IAuthentication
+    public interface IDBManager
     {
         User User { get; set; }
         bool IsAuthentication { get; set; }
@@ -29,7 +29,7 @@ namespace ChudoPechkaLib
         void AddMoney(string login, uint addMoney);
         void AddComment(string login, string text, Guid dish_id);
         void AddMemberInGroup(Guid Group_id);
-        void AddAuthorInGroup(Guid Group_Id, string login);
+        void AddAdministrationInGroup(Guid Group_Id, string login);
         void RemoveUser(Guid group_id);
         void RemoveOrder(Guid order_id);
         void RemoveOrder(Guid group_id, Guid order_id);

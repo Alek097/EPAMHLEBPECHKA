@@ -13,25 +13,25 @@ namespace ChudoPechka.Controllers
     {
         public ActionResult Index()
         {
-            if (!Auth.IsAuthentication)
+            if (!Manager.IsAuthentication)
                 return Redirect(Url.Action("Index", "Home"));
             return View();
         }
         public ActionResult GetAnnounced()
         {
-            if (!Auth.IsAuthentication)
+            if (!Manager.IsAuthentication)
                 throw new HttpException(423,"Вы не авторизованы");
             else
             {
-                List<Announced> Anns = Auth.User.Announceds.ToList();
+                List<Announced> Anns = Manager.User.Announceds.ToList();
                 return View(Anns);
             }
         }
         [ValidateAntiForgeryToken]
         public void SendAnnounced(AnnouncedModel model)
         {
-            if (Auth.IsAuthentication)
-                Auth.SendAnnounced(model);
+            if (Manager.IsAuthentication)
+                Manager.SendAnnounced(model);
         }
     }
 }

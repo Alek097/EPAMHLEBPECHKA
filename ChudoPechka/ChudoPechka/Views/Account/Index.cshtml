@@ -6,7 +6,7 @@
     groups.AddRange(Model.AdministartionGroups);
     groups.AddRange(Model.Groups);
     groups.Sort();
-    IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+    IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
 }
 @using ChudoPechkaLib.Models
 @using ChudoPechkaLib

@@ -24,7 +24,7 @@ namespace ChudoPechka.Models
 
         public static implicit operator Order(OrderModel model)
         {
-            IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+            IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
             IStoreDB db = DependencyResolver.Current.GetService<IStoreDB>();
             IMenu menu = DependencyResolver.Current.GetService<IMenu>();
             

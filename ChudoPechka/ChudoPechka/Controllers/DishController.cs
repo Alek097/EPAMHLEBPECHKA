@@ -15,7 +15,7 @@ namespace ChudoPechka.Controllers
         {
             Dish dish = null;
 
-            if (Auth.GetDish(dish_id, out dish))
+            if (Manager.GetDish(dish_id, out dish))
             {
                 return View(dish);
             }
@@ -27,9 +27,9 @@ namespace ChudoPechka.Controllers
         {
             User usr = null;
 
-            if (Auth.GetUser(user_login, out usr) && usr.Equals(Auth.User))
+            if (Manager.GetUser(user_login, out usr) && usr.Equals(Manager.User))
             {
-                Auth.AddComment(user_login, text, dish_id);
+                Manager.AddComment(user_login, text, dish_id);
                 throw new HttpException(200, "OK");
             }
             else
@@ -40,15 +40,15 @@ namespace ChudoPechka.Controllers
         {
             User usr = null;
             Comment comment = null;
-            if (Auth.GetUser(user_login, out usr) && usr.Equals(Auth.User))
+            if (Manager.GetUser(user_login, out usr) && usr.Equals(Manager.User))
             {
-                if (Auth.GetComment(comment_id, out comment))
+                if (Manager.GetComment(comment_id, out comment))
                 {
-                    if (comment.User.Equals(Auth.User))
+                    if (comment.User.Equals(Manager.User))
                     {
                         try
                         {
-                            Auth.RemoveComment(comment_id);
+                            Manager.RemoveComment(comment_id);
                             throw new HttpException(200, "OK");
                         }
                         catch (InvalidOperationException ex)
@@ -68,7 +68,7 @@ namespace ChudoPechka.Controllers
         public PartialViewResult GetComments(Guid dish_id)
         {
             Dish dish = null;
-            if (Auth.GetDish(dish_id, out dish))
+            if (Manager.GetDish(dish_id, out dish))
             {
                 return PartialView(dish.Comments.ToList());
             }
@@ -80,15 +80,15 @@ namespace ChudoPechka.Controllers
         {
             User usr = null;
             Comment comment = null;
-            if (Auth.GetUser(user_login, out usr) && usr.Equals(Auth.User))
+            if (Manager.GetUser(user_login, out usr) && usr.Equals(Manager.User))
             {
-                if (Auth.GetComment(comment_id, out comment))
+                if (Manager.GetComment(comment_id, out comment))
                 {
-                    if (comment.User.Equals(Auth.User))
+                    if (comment.User.Equals(Manager.User))
                     {
                         try
                         {
-                            Auth.UpdateComment(comment_id, text);
+                            Manager.UpdateComment(comment_id, text);
                             throw new HttpException(200, "OK");
                         }
                         catch (InvalidOperationException ex)

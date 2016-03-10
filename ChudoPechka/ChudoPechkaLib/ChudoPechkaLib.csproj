@@ -62,14 +62,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication.cs" />
+    <Compile Include="DBManager.cs" />
     <Compile Include="Data\DataAnnotations\ContainLoginAttribute.cs" />
     <Compile Include="Data\DataAnnotations\DuplicateLoginAttribute.cs" />
     <Compile Include="Data\DataAnnotations\ValidateDateAttribute.cs" />
     <Compile Include="Data\IStoreDB.cs" />
     <Compile Include="Data\SaltDB.cs" />
     <Compile Include="Data\StoreDB.cs" />
-    <Compile Include="IAuthentication.cs" />
+    <Compile Include="IDBManager.cs" />
     <Compile Include="Menu\Workdays.cs" />
     <Compile Include="Menu\IMenu.cs" />
     <Compile Include="Menu\Menu.cs" />

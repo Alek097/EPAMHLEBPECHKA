@@ -35,7 +35,7 @@ namespace ChudoPechka.Models
 
         public static implicit operator EditModel(Order model)
         {
-            IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+            IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
             User usr = auth.User;
 
             EditModel Emodel = new EditModel();

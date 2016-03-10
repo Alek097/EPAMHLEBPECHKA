@@ -25,7 +25,7 @@ namespace ChudoPechka.Modules
         private void Authenticate(Object source, EventArgs e)
         {
             HttpContext context = (source as HttpApplication).Context;
-            IAuthentication auth = DependencyResolver.Current.GetService<IAuthentication>();
+            IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
             auth.Start(context,
                 DependencyResolver.Current.GetService<IStoreDB>());
         }
