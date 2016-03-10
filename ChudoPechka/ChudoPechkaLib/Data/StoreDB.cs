@@ -485,5 +485,16 @@ namespace ChudoPechkaLib.Data
 
             _IsSavedOrModified = true;
         }
+
+        public void TransferMoney(User from, User to, uint money)
+        {
+            from.Balnce -= (int)money;
+            to.Balnce += (int)money;
+
+            this.Entry<User>(from).State = EntityState.Modified;
+            this.Entry<User>(to).State = EntityState.Modified;
+
+            _IsSavedOrModified = true;
+        }
     }
 }

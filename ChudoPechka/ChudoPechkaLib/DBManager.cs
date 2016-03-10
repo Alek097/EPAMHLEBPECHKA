@@ -300,5 +300,18 @@ namespace ChudoPechkaLib
             else
                 _db.AddMoney(usr, addMoney);
         }
+
+        public void TransferMoney(string from, string to, uint money)
+        {
+            User usrFrom = null;
+            User usrTo = null;
+
+            if (!this.User.Login.Equals(from))
+                throw new HttpException(423, "Доступ запрещён");
+            else if (!this.GetUser(from, out usrFrom) || !this.GetUser(to, out usrTo))
+                throw new HttpException(404, "Пользователь не найден");
+            else
+                _db.TransferMoney(usrFrom, usrTo, money);
+        }
     }
 }

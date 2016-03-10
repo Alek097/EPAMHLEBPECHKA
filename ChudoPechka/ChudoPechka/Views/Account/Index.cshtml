@@ -42,6 +42,11 @@
             .Group:hover {
                 background-color: white;
             }
+
+        .transfer {
+            width: 200px;
+            margin-right: 5px;
+        }
     </style>
 
 }
@@ -51,19 +56,23 @@
         <span>Дата рождения: @Model.BirthDay.ToString("D")</span><br />
         <span>Логин: @Model.Login</span>
     </div>
-    <div style="margin-top:50px">
-        <span>Группы</span>
-    </div>
-    <div style="overflow-x:scroll; margin-left:25px;margin-bottom:10px;">
-        @foreach (Group group in groups)
-        {
+    @if (groups.Count > 0)
+    {
+        <div style="margin-top:50px">
+            <span>Группы</span>
+        </div>
+        <div style="overflow-x:scroll; margin-left:25px;margin-bottom:10px;">
+
+            @foreach (Group group in groups)
+            {
             <div class="Group">
-                <a href="@Url.Action("Index","Group", new {Group_id = group.Id })">
+                <a href="@Url.Action("Index", "Group", new { Group_id = group.Id })">
                     @group.Name
                 </a>
             </div>
-        }
-    </div>
+            }
+        </div>
+    }
     @if (auth.User.Equals(Model))
     {
         <div style="margin-top:50px; margin-bottom:10px;">
@@ -84,6 +93,20 @@
                 @Html.AntiForgeryToken()
                 <input type="text" class="text-box" name="addMoney" />
                 <input type="submit" class="button" value="Пополнить" />
+            }
+            <br />
+            <hr />
+            <br />
+            <span>Перевод средств</span>
+            @using (Html.BeginForm("TransferMoney", "Account", FormMethod.Post))
+            {
+                <div style="text-align:left;">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="from" value="@Model.Login" />
+                    <input type="text" class="text-box transfer" name="to" /><label>Кому</label><br />
+                    <input type="text" class="text-box transfer" name="money" /><label>руб.</label><br />
+                </div>
+                <input type="submit" class="button" value="Перевести" />
             }
         </div>
     }

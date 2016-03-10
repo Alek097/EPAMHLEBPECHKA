@@ -44,6 +44,7 @@ namespace ChudoPechkaLib.Data
         void RemoveOrder(Guid group_id, Guid order_id);
         void RecoveryOrder(Guid group_id, Guid order_id);
         void ToOrder(Guid group_id);
+        void TransferMoney(User from, User to, uint money);
         int SaveChanges();
     }
 }
