@@ -3,9 +3,6 @@
 @using ChudoPechkaLib
 @{
     IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
-    /*
-    НАПОМИНАНИЕ: Переплетается смысл меню еды и юзер меню. Если не будет лень исправить
-    */
     Layout = null;
 }
 
@@ -83,7 +80,6 @@
             font-size: 14pt;
             border: none;
         }
-        /*Начина от сюда пользовательское меню*/
         .User-menu, .User-menu:hover, .User-menu:visited {
             color: white;
         }
@@ -207,6 +203,11 @@
                                 {
                                     <span style="color:green">@string.Format("{0:N} руб.", auth.User.Balnce)</span>
                                 }
+                            </div>
+                        </li>
+                        <li class="auth-menu context-menu" style="margin-right:0px;" onclick="location.href = '@Url.Action("Index", "Account", new {login = auth.User.Login })'">
+                            <div class="name">
+                                <span>Профиль</span>
                             </div>
                         </li>
                             <li class="auth-menu context-menu" style="margin-right:0px;" onclick="location.href = '@Url.Action("Index","Order")'">
