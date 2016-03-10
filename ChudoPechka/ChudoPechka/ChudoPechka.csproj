@@ -167,7 +167,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncedController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
-    <Compile Include="Controllers\Base\PartialViewResult.cs" />
     <Compile Include="Controllers\DishController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -210,6 +209,7 @@
     <Content Include="Views\Group\OrderInf.cshtml" />
     <Content Include="Views\Dish\Index.cshtml" />
     <Content Include="Views\Dish\GetComments.cshtml" />
+    <Content Include="Views\Home\GetMenu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

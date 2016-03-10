@@ -111,22 +111,18 @@ namespace ChudoPechka.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult GetUserToRecovery(string login)
+        public PartialViewResult GetUserToRecovery(string login)
         {
             User usr;
-            if (Manager.GetUser(login, out usr))
-                return View(usr);
-            else
-                return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");//Сейчас мне на это больно смотреть....
-
+            Manager.GetUser(login, out usr);
+            return PartialView(usr);
         }
-        public ActionResult GetUser(string login)
+        public PartialViewResult GetUser(string login)
         {
             User usr;
-            if (Manager.GetUser(login, out usr))
-                return View(usr);
-            else
-                return new ChudoPechka.Controllers.Base.PartialViewResult("Пользователь с логином не найден");
+            Manager.GetUser(login, out usr);
+
+            return PartialView(usr);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -169,7 +165,7 @@ namespace ChudoPechka.Controllers
             }
             else
                 throw new HttpException(401, "Вы не авторизированы");
-            
+
 
         }
     }

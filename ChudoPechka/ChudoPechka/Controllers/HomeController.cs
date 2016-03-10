@@ -14,27 +14,9 @@ namespace ChudoPechka.Controllers
             return View();
         }
 
-        public ActionResult GetMenu()
+        public PartialViewResult GetMenu()
         {
-
-            ChudoPechkaLib.Menu.IMenu menu = System.Web.Mvc.DependencyResolver.Current.GetService<ChudoPechkaLib.Menu.IMenu>();
-            string HTML = null;
-
-            foreach (ChudoPechkaLib.Menu.MenuItem item in menu.MenuItems)
-            {
-                HTML += "<div class=\"menuItem\">" +
-                    "<div class=\"head\">"
-                    +"<hr size=\"5\" color=\"black\" width=\"200\" />"
-                    + "<span class=\"dayName\">"+ item.Day + "</span>"+
-                    "<hr size=\"5\" color=\"black\" width=\"200\" />"+
-                    "</div>"+
-                    "<div class=\"imgConteiner\">"
-                    + item.Img +
-                    "</div>" 
-                    + item.Menu + 
-                    "</div>";
-            }
-            return new ChudoPechka.Controllers.Base.PartialViewResult(HTML);
+            return PartialView();
         }
     }
 }

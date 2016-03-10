@@ -18,7 +18,7 @@
             margin: auto;
             width: 402px;
             height: auto;
-            margin-top:70px;
+            margin-top: 70px;
         }
 
         #avatar {
@@ -49,9 +49,11 @@
             font-size: 8pt;
             color: rgb(46, 116, 181);
         }
-        span{
-            font-size:10pt;
+
+        span {
+            font-size: 10pt;
         }
+
         label {
             margin-bottom: 10px;
         }
@@ -76,13 +78,11 @@
                 url: "@Url.Action("GetUserToRecovery", "Account")?login=" + val,
                 contentType: "html",
                 success: function (ResHtml) {
-                    if (ResHtml === "Пользователь с логином не найден") {
-                        $("#error").text(ResHtml);
-                    }
-                    else {
-                        $("#Recovery-form").html(ResHtml);
-                        SetMargin();
-                    }
+                    $("#Recovery-form").html(ResHtml);
+                    SetMargin();
+                },
+                error: function () {
+                    $("#error").text("Пользователь с логином не найден");
                 }
             });
         }

@@ -3,6 +3,8 @@
     Layout = null;
     string FullName = Model.FirsName + " " + Model.SecondName;
 }
+@if (Model != null)
+{
 <div id="head">
 
     <div id="info">
@@ -37,3 +39,8 @@
             $("#error").empty();
     });
 </script>
+}
+else
+{
+    @Html.Raw("Пользователь с логином не найден")
+}

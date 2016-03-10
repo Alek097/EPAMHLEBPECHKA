@@ -1,0 +1,18 @@
+﻿@{
+    IMenu menu = DependencyResolver.Current.GetService<IMenu>();
+}
+@using ChudoPechkaLib.Menu
+@foreach (MenuItem item in menu.MenuItems)
+{
+    <div class="menuItem">
+        <div class="head">
+            <hr size="5" color="black" width="200" />
+            <span class="dayName">@item.Day</span>
+            <hr size="5" color="black" width="200" />
+        </div>
+        <div class="imgConteiner">
+            @Html.Raw(item.Img)
+        </div>
+        @Html.Raw(item.Menu)
+    </div>
+}
