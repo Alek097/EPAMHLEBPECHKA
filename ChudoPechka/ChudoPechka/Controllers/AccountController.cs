@@ -16,11 +16,8 @@ namespace ChudoPechka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddMoney(string login, uint addMoney)
         {
-            User usr;
             if (!Manager.IsAuthentication)
-                throw new HttpException(423, "Вы не авторизованы");
-            else if (!Manager.GetUser(login, out usr))
-                throw new HttpException(404, "Пользователь не найден");
+                throw new HttpException(401, "Вы не авторизованы");
 
             Manager.AddMoney(login, addMoney);
 

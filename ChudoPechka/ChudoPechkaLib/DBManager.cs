@@ -252,7 +252,7 @@ namespace ChudoPechkaLib
             {
                 Comment comment = _db.GetComment(comment_id);
 
-                if(!this.User.Equals(comment.User))
+                if (!this.User.Equals(comment.User))
                     throw new HttpException(423, "Доступ запрещён");
 
                 _db.RemoveComment(comment_id);
@@ -291,7 +291,14 @@ namespace ChudoPechkaLib
 
         public void AddMoney(string login, uint addMoney)
         {
-            _db.AddMoney(login, addMoney);
+            User usr = null;
+
+            if (!this.User.Login.Equals(login))
+                throw new HttpException(423, "Доступ запрещён");
+            else if (!this.GetUser(login, out usr))
+                throw new HttpException(404, "Пользователь не найден");
+            else
+                _db.AddMoney(usr, addMoney);
         }
     }
 }
