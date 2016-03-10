@@ -25,6 +25,7 @@ namespace ChudoPechkaLib.Models
         public string ResponseQuestion { get; set; }
         public string SecretQuestion { get; set; }
         public DateTime BirthDay { get; set; }
+        public int Balnce { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Announced> Announceds { get; set; }

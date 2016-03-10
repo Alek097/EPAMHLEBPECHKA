@@ -337,6 +337,8 @@ namespace ChudoPechkaLib.Data
         public void AddOrder(Order order)
         {
             this.Orders.Add(order);
+            order.User.Balnce -= order.Price;
+
             _IsSavedOrModified = true;
         }
 
@@ -363,6 +365,9 @@ namespace ChudoPechkaLib.Data
                 remOrder.Status = "Отменён";
                 this.Entry<Order>(remOrder).State = EntityState.Modified;
             }
+
+            remOrder.User.Balnce += remOrder.Price;
+
             _IsSavedOrModified = true;
         }
 

@@ -197,40 +197,51 @@
                 <ul id="menu">
                     @if (auth.IsAuthentication)
                     {
-                        <li class="auth-menu context-menu" style="margin-right:0px;" onclick="location.href = '@Url.Action("Index","Order")'">
+                        <li class="auth-menu context-menu" style="margin-right:0px;">
                             <div class="name">
-                                <span>Заказ</span>
-                            </div>
-                        </li>
-                        //TODO: Добавить элементы аутендифицированного пользователя.
-                        <li class="auth-menu context-menu" onmouseover="Render('Group-context-menu')" onmouseout="Derender('Group-context-menu')">
-                            <div class="name">
-                                <span>Группа</span>
-                            </div>
-                            <ul id="Group-context-menu" class="Menu">
-                                <li class="HeadMenuItem" onclick="Riderict('@Url.Action("Create", "Group")')">
-                                    <a class="User-menu">Создать</a>
-                                </li>
-                                @if (auth.User.IsNewAnnouced())
+                                @if(auth.User.Balnce < 0)
                                 {
-                                    <li class="HeadMenuItem" style="background-color: red;" onclick="Riderict('@Url.Action("Index", "Announced")')">
-                                        <a class="User-menu">Оповещания</a><!--Не знаю почему но тоже самое со span не работает-->
-                                    </li>
+                                    <span style="color:red">@string.Format("{0:N} руб.", auth.User.Balnce)</span>
                                 }
                                 else
                                 {
-                                    <li class="HeadMenuItem" onclick="Riderict('@Url.Action("Index", "Announced")')">
-                                        <a class="User-menu">Оповещания</a>
-                                    </li>
+                                    <span style="color:green">@string.Format("{0:N} руб.", auth.User.Balnce)</span>
                                 }
-                                <li class="HeadMenuItem" onclick="Riderict('@Url.Action("My", "Group")')">
-                                    <a class="User-menu">Мои</a>
-                                </li>
-                            </ul>
+                            </div>
                         </li>
-                        <li class="account-element" style="float:none;">
-                            <a href="@Url.Action("LoginOut","Account")" class="User-menu">Выход</a>
-                        </li>
+                            <li class="auth-menu context-menu" style="margin-right:0px;" onclick="location.href = '@Url.Action("Index","Order")'">
+                                <div class="name">
+                                    <span>Заказ</span>
+                                </div>
+                            </li>
+                            <li class="auth-menu context-menu" onmouseover="Render('Group-context-menu')" onmouseout="Derender('Group-context-menu')">
+                                <div class="name">
+                                    <span>Группа</span>
+                                </div>
+                                <ul id="Group-context-menu" class="Menu">
+                                    <li class="HeadMenuItem" onclick="Riderict('@Url.Action("Create", "Group")')">
+                                        <a class="User-menu">Создать</a>
+                                    </li>
+                                    @if (auth.User.IsNewAnnouced())
+                                    {
+                                        <li class="HeadMenuItem" style="background-color: red;" onclick="Riderict('@Url.Action("Index", "Announced")')">
+                                            <a class="User-menu">Оповещания</a><!--Не знаю почему но тоже самое со span не работает-->
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="HeadMenuItem" onclick="Riderict('@Url.Action("Index", "Announced")')">
+                                            <a class="User-menu">Оповещания</a>
+                                        </li>
+                                    }
+                                    <li class="HeadMenuItem" onclick="Riderict('@Url.Action("My", "Group")')">
+                                        <a class="User-menu">Мои</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="account-element" style="float:none;">
+                                <a href="@Url.Action("LoginOut","Account")" class="User-menu">Выход</a>
+                            </li>
                     }
                     else
                     {
