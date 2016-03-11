@@ -77,12 +77,12 @@ namespace ChudoPechkaLib
         public bool UpdatePassword(string login, string newPass, string responseQuestion)
         {
 
-            if (_db.IsContainUser(login) && _db.ResponceOnQuestion(login, responseQuestion))
+            if (_db.IsContainUser(login))
             {
                 _db.UpdatePassword(login, newPass, responseQuestion);
                 return true;
             }
-            return false;
+            return false;//TODO:НЕ РАБОТАЕТ СМЕНА ПАРОЛЯ
         }
         private void DeleteCookies()
         {

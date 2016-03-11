@@ -106,7 +106,6 @@ namespace ChudoPechkaLib.Data
             string salt = _saltDB.GetSalt(usr.Id);
 
             usr.Password = this.Encrypt(usr.Password, salt);
-            usr.ResponseQuestion = this.Encrypt(usr.ResponseQuestion, salt);
             usr.AvatarPath = "~/img/Standart/Avatar.jpg";
 
             this.Users.Add(usr);
@@ -232,21 +231,6 @@ namespace ChudoPechkaLib.Data
                 return false;
             }
         }
-        public bool ResponceOnQuestion(string login, string response)
-        {
-
-            try
-            {
-                User usr = this.GetUser(login);
-                string responseWithSalt = Encrypt(response, _saltDB.GetSalt(usr.Id));
-                this.Users.First(u => u.Login.Equals(login) && u.ResponseQuestion.Equals(responseWithSalt));
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
         public bool IsContainOrder(Guid order_id)
         {
             try
@@ -266,7 +250,6 @@ namespace ChudoPechkaLib.Data
             string salt = this._saltDB.UpdateSalt(updateUsr.Id);
 
             updateUsr.Password = this.Encrypt(newPassword, salt);
-            updateUsr.ResponseQuestion = this.Encrypt(responseQuestion, salt);
 
             this.Entry<User>(updateUsr).State = EntityState.Modified;
             this._IsSavedOrModified = true;

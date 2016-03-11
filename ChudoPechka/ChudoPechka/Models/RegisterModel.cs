@@ -12,29 +12,32 @@ namespace ChudoPechka.Models
     {
         [Required(ErrorMessage = "Введите логин.")]
         [Display(Name = "Логин")]
-        [DuplicateLogin(ErrorMessage ="Логин уже занят.")]
+        [DuplicateLogin(ErrorMessage = "Логин уже занят.")]
         public string Login { get; set; }
         [Required(ErrorMessage = "Введите пароль.")]
         [Display(Name = "Пароль")]
         [StringLength(50, ErrorMessage = "Пароль должен быть не больше 50 символов и не меньше 7.", MinimumLength = 7)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        [Required(ErrorMessage = "Повторите пароль.")]
+        [Display(Name = "Повторить пароль")]
+        [DataType(DataType.Password)]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
         [Required(ErrorMessage = "Введите своё имя.")]
         [Display(Name = "Имя")]
         public string FirsName { get; set; }
         [Required(ErrorMessage = "Введите свою фамилию.")]
-        [Display(Name ="Фамилия")]
+        [Display(Name = "Фамилия")]
         public string SecondName { get; set; }
         [Required(ErrorMessage = "Введите дату своего рождения.")]
-        [Display(Name ="Дата рождения")]
+        [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
         public DateTime BirthDay { get; set; }
-        [Required(ErrorMessage ="Введите секретный вопрос.")]
-        [Display(Name ="Секретный вопрос")]
-        public string SecretQuestion { get; set; }
-        [Required(ErrorMessage = "Введите ответ на вопрос.")]
-        [Display(Name = "Ответ на секретный вопрос")]
-        public string ResponseQuestion { get; set; }
+        [Required(ErrorMessage = "Введите E-Mail.")]
+        [Display(Name = "E-Mail")]
+        [DataType(DataType.EmailAddress)]
+        public string E_Mail { get; set; }
 
         public static implicit operator User(RegisterModel model)
         {
@@ -44,9 +47,8 @@ namespace ChudoPechka.Models
             usr.Password = model.Password;
             usr.FirsName = model.FirsName;
             usr.SecondName = model.SecondName;
-            usr.SecretQuestion = model.SecretQuestion;
             usr.BirthDay = model.BirthDay;
-            usr.ResponseQuestion = model.ResponseQuestion;
+            usr.E_Mail = model.E_Mail;
             usr.AvatarPath = string.Empty;
 
             return usr;

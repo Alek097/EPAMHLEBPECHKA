@@ -96,28 +96,6 @@ namespace ChudoPechka.Controllers
                 return Redirect(Url.Action("Index", "Home"));
             return View();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Recovery(RecoveryModel model)
-        {
-            if (Manager.IsAuthentication)
-                return Redirect(Url.Action("Index", "Home"));
-            try
-            {
-                if (!ModelState.IsValid)
-                    return View();
-                else if (Manager.UpdatePassword(model.login, model.newPass, model.responseQuestion))
-                    return Redirect(Url.Action("LoginIn"));
-
-                else
-                    ModelState.AddModelError("", "Неверный ответ, попробуйте ещё.");
-            }
-            catch (NullReferenceException)
-            {
-                ModelState.AddModelError("", "Пользователь не найден, попробуйте ещё.");
-            }
-            return View();
-        }
         [HttpGet]
         public PartialViewResult GetUserToRecovery(string login)
         {

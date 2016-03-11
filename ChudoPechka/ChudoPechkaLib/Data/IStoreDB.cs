@@ -30,7 +30,6 @@ namespace ChudoPechkaLib.Data
         bool IsContainUser(Guid usr_id);
         bool IsContainAnnounced(Guid From_id);
         bool IsContainOrder(Guid order_id);
-        bool ResponceOnQuestion(string login, string response);
         void UpdateOrder(Order order);
         void UpdatePassword(string login, string newPassword, string responseQuestion);
         void UpdateAvatar(User usr, string fileName);

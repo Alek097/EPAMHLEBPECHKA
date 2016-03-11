@@ -14,6 +14,6 @@ namespace ChudoPechka.Models
         [StringLength(50, ErrorMessage = "Пароль должен быть не больше 50 символов и не меньше 7.", MinimumLength = 7)]
         public string newPass { get; set; }
         [Required(ErrorMessage ="Введите ответ на секретный вопрос")]
-        public string responseQuestion { get; set; }
+        public string responseQuestion { get; set; }//TODO:ПОМЕНЯТЬ МОДЕЛЬ
     }
 }
