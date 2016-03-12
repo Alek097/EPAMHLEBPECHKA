@@ -23,6 +23,7 @@ namespace ChudoPechkaLib.Models
         public string Password { get; set; }
         public string AvatarPath { get; set; }
         public string E_Mail { get; set; }
+        public string ActivationCode { get; set; }
         public DateTime BirthDay { get; set; }
         public int Balnce { get; set; }
         public bool IsActive { get; set; }

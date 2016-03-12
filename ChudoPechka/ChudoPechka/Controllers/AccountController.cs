@@ -99,9 +99,9 @@ namespace ChudoPechka.Controllers
         public PartialViewResult GetUser(string login)
         {
             User usr;
-            Manager.GetUser(login, out usr);//TODO: ADD 404 EXCEPTION
-
-            return PartialView(usr);
+            if (Manager.GetUser(login, out usr))
+                return PartialView(usr);
+            throw new HttpException(404, "Пользователь не найден");
         }
         public PartialViewResult GetUsers(string e_mail)
         {
