@@ -40,6 +40,7 @@ namespace ChudoPechkaLib
         void SetReadAnnounced(Announced ann);
         void ToOrder(Guid group_id);
         void ToOrder(Order order);
+        void SendConfirmCode(string login, string e_Mail);
         void TransferMoney(string from, string to, uint money);
         void UpdateAvatar(User usr, string fileName);
         void UpdateComment(Guid comment_id, string newText);

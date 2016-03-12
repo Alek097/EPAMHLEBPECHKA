@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Net.Mail;
 using System.Data;
 using System.Web;
 using System.Web.Security;
@@ -15,6 +15,7 @@ namespace ChudoPechkaLib
     {
         private const string COOKIE_NAME = "_TEST_COOKIE";//TODO: По завершению дать нормальное название
         private IStoreDB _db;
+        private static Random rndCode = new Random();
         public User User
         {
             get
@@ -323,6 +324,36 @@ namespace ChudoPechkaLib
                 throw new HttpException(404, "Пользователь не найден");
             else
                 _db.TransferMoney(usrFrom, usrTo, money);
+        }
+
+        public void SendConfirmCode(string login, string e_Mail)
+        {
+            User usr = null;
+            if (!this.GetUser(login, out usr))
+                throw new HttpException(404, "Пользователь не найден");
+            else if (!usr.E_Mail.Equals(e_Mail))
+                throw new HttpException(400, "Электронные почты не совпадают");
+
+            int code = rndCode.Next(1000, 9999);//Четырёх значное
+
+            MailAddress from = new MailAddress("forepamproject@gmail.com", "Chudo-Pechka");
+
+            MailAddress to = new MailAddress(usr.E_Mail);
+
+            MailMessage m = new MailMessage(from, to);
+
+            m.Subject = "Chudo-pechka код подтверждения";
+
+            m.Body = string.Format("Ваш код подтверждения\n<div style=\"width:300px;text-align:center;background-color: #00050A;color: white;\"><span>{0}</span></div>", code);
+            m.IsBodyHtml = true;
+
+            SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
+
+            smtp.Credentials = new System.Net.NetworkCredential("forepamproject@gmail.com", "projectEpam");
+            smtp.Send(m);
+
+            usr.ActivationCode = code.ToString();
+
         }
     }
 }

@@ -501,5 +501,11 @@ namespace ChudoPechkaLib.Data
                 .Include(u => u.Orders)
                 .Where(u => u.E_Mail.Equals(e_Mail)).ToList();
         }
+
+        public void SendConfirmCode(User usr)
+        {
+            this.Entry<User>(usr).State = EntityState.Modified;
+            _IsSavedOrModified = true;
+        }
     }
 }

@@ -151,8 +151,16 @@ namespace ChudoPechka.Controllers
             }
             else
                 throw new HttpException(401, "Вы не авторизированы");
+        }
+        [ValidateAntiForgeryToken]
+        public ActionResult SendConfirmCode(string e_mail, string login)
+        {
+            if (e_mail == null || login == null)
+                throw new HttpException(400, "Bad Request");
 
+            Manager.SendConfirmCode(login, e_mail);
 
+            return Redirect(Url.Action("Confirm", new {e_mail = e_mail, login = login }));
         }
     }
 }

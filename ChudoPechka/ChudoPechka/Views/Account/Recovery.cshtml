@@ -32,7 +32,7 @@
 
                     for (var i = 0; i < userLinks.length; i++) {
                         var login = $(userLinks[i]).attr("id")
-                        $(userLinks[i]).attr("onClick", 'location.href = "@Url.Action("ConfirmEmail", "Account")?e_mail=' + e_mail + '&login=' + login + '"');
+                        $(userLinks[i]).attr("onClick", 'location.href = "@Url.Action("SendConfirmCode", "Account")?e_mail=' + e_mail + '&login=' + login + '&__RequestVerificationToken=@Html.AntiForgeryToken()"');
                     }
                 })
             .error(function (data) {
