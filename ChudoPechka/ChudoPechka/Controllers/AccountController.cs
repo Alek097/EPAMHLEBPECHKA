@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
@@ -51,14 +51,15 @@ namespace ChudoPechka.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RegisterModel model)
+        public async Task<ActionResult> Create(RegisterModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
             else
             {
                 Manager.RegisterUser(model);
-                Manager.SendConfirmCode(model.Login, model.E_Mail);
+                await Manager.SendConfirmCodeAsync(model.Login, model.E_Mail);//Отправляем письмецо на подтверждение
+                Manager.LoginIn(model.Login, model.Password);//Логинимся
                 return Redirect(Url.Action("Confirm", new {e_mail = model.E_Mail, login = model.Login }));
             }
         }
@@ -154,12 +155,12 @@ namespace ChudoPechka.Controllers
                 throw new HttpException(401, "Вы не авторизированы");
         }
         [ValidateAntiForgeryToken]
-        public ActionResult SendConfirmCode(string e_mail, string login)
+        public async Task<ActionResult> SendConfirmCode(string e_mail, string login)
         {
             if (e_mail == null || login == null)
                 throw new HttpException(400, "Bad Request");
 
-            Manager.SendConfirmCode(login, e_mail);
+            await Manager.SendConfirmCodeAsync(login, e_mail);
 
             return Redirect(Url.Action("Confirm", new { e_mail = e_mail, login = login }));
         }

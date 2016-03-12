@@ -37,7 +37,7 @@ namespace ChudoPechkaLib.Data
         void UpdateAvatar(User usr, string fileName);
         void UpdateComment(Comment comment, string newText);
         void SendAnnounced(Announced ann);
-        void SendConfirmCode(User usr);
+        void SetConfirmCode(User usr);
         void SetReadAnnounced(Announced ann);
         void RemoveUser(Guid group_id, User removeUser);
         void RemoveOrder(Guid order_id);

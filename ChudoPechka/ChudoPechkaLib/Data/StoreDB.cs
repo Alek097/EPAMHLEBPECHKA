@@ -109,7 +109,7 @@ namespace ChudoPechkaLib.Data
             usr.AvatarPath = "~/img/Standart/Avatar.jpg";
 
             this.Users.Add(usr);
-            this._IsSavedOrModified = true;
+            base.SaveChanges();
         }
         public void AddGroup(Group grp)
         {
@@ -502,7 +502,7 @@ namespace ChudoPechkaLib.Data
                 .Where(u => u.E_Mail.Equals(e_Mail)).ToList();
         }
 
-        public void SendConfirmCode(User usr)
+        public void SetConfirmCode(User usr)
         {
             this.Entry<User>(usr).State = EntityState.Modified;
             _IsSavedOrModified = true;

@@ -3,6 +3,7 @@ using System.Net.Mail;
 using System.Data;
 using System.Web;
 using System.Web.Security;
+using System.Threading.Tasks;
 
 
 using ChudoPechkaLib.Models;
@@ -326,7 +327,7 @@ namespace ChudoPechkaLib
                 _db.TransferMoney(usrFrom, usrTo, money);
         }
 
-        public void SendConfirmCode(string login, string e_Mail)
+        public Task SendConfirmCodeAsync(string login, string e_Mail)
         {
             User usr = null;
             if (!this.GetUser(login, out usr))
@@ -336,7 +337,7 @@ namespace ChudoPechkaLib
 
             int code = rndCode.Next(1000, 9999);//Четырёх значное
 
-            MailAddress from = new MailAddress("forepamproject@gmail.com", "Chudo-Pechka");
+            MailAddress from = new MailAddress("epamprojectChudo-pechka@yandex.ru", "Chudo-Pechka");
 
             MailAddress to = new MailAddress(usr.E_Mail);
 
@@ -344,15 +345,22 @@ namespace ChudoPechkaLib
 
             m.Subject = "Chudo-pechka код подтверждения";
 
-            m.Body = string.Format("Ваш код подтверждения\n<div style=\"width:300px;text-align:center;background-color: #00050A;color: white;\"><span>{0}</span></div>", code);
+            m.Body = string.Format("<div style=\"width:300px;font-size:88pt;text-align:center;background-color: #00050A;color: white;font-family: cursive;\"><span>{0}</span></div>", code);
             m.IsBodyHtml = true;
 
-            SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
+            SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.yandex.ru", 25);
 
-            smtp.Credentials = new System.Net.NetworkCredential("forepamproject@gmail.com", "projectEpam");
-            smtp.Send(m);
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.UseDefaultCredentials = false;
+            smtp.EnableSsl = true;
+
+            smtp.Credentials = new System.Net.NetworkCredential("epamprojectChudo-pechka@yandex.ru", "epamProject");
 
             usr.ActivationCode = code.ToString();
+
+            _db.SetConfirmCode(usr);
+
+            return smtp.SendMailAsync(m);
 
         }
     }

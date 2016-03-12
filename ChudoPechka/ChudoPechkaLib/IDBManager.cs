@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
+using System.Threading.Tasks;
 using System.Web;
 
 using ChudoPechkaLib.Models;
@@ -40,7 +40,7 @@ namespace ChudoPechkaLib
         void SetReadAnnounced(Announced ann);
         void ToOrder(Guid group_id);
         void ToOrder(Order order);
-        void SendConfirmCode(string login, string e_Mail);
+        Task SendConfirmCodeAsync(string login, string e_Mail);
         void TransferMoney(string from, string to, uint money);
         void UpdateAvatar(User usr, string fileName);
         void UpdateComment(Guid comment_id, string newText);
