@@ -61,7 +61,7 @@ namespace ChudoPechka.Controllers
                 Manager.RegisterUser(model);
                 await Manager.SendConfirmCodeAsync(model.Login, model.E_Mail);//Отправляем письмецо на подтверждение
                 Manager.LoginIn(model.Login, model.Password);//Логинимся
-                return Redirect(Url.Action("Confirm", new {e_mail = model.E_Mail, login = model.Login }));
+                return Redirect(Url.Action("Confirm", new { e_mail = model.E_Mail, login = model.Login }));
             }
         }
         [HttpGet]
@@ -93,7 +93,8 @@ namespace ChudoPechka.Controllers
             return Redirect(Url.Action("Index", "Home"));
         }
         [HttpGet]
-        public ActionResult Recovery()
+        [AlllActive]
+        public ActionResult SelectUserToRecovery()
         {
             if (Manager.IsAuthentication)
                 return Redirect(Url.Action("Index", "Home"));
@@ -115,6 +116,7 @@ namespace ChudoPechka.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AlllActive]
         public ActionResult UploadAvatar(HttpPostedFileBase upload)
         {
             if (Manager.IsAuthentication)
@@ -168,14 +170,14 @@ namespace ChudoPechka.Controllers
         [HttpGet]
         public ActionResult Confirm(string e_mail, string login)
         {
-            if(!Manager.IsAuthentication)
+            if (!Manager.IsAuthentication)
                 throw new HttpException(401, "Вы не авторизованы");
             else if (e_mail == null || login == null)
                 throw new HttpException(400, "Bad Request");
             else if (!Manager.User.Login.Equals(login))
                 throw new HttpException(423, "Ошибка доступа");
 
-            return View(new ConfirmModel {E_Mail = e_mail, Login = login });
+            return View(new ConfirmModel { E_Mail = e_mail, Login = login });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
