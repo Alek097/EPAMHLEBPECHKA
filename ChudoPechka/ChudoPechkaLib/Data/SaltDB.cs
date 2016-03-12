@@ -10,7 +10,6 @@ namespace ChudoPechkaLib.Data
 {
     public class SaltDB : DbContext
     {
-        private bool _IsSavedOrModified;
         private static Random _rnd = new Random();
         public DbSet<Salt> Salts { get; set; }
         public string GetSalt(Guid usr_id)
@@ -32,7 +31,7 @@ namespace ChudoPechkaLib.Data
                 Salt upSalt = this.Salts.First(s => s.Id == id);
                 upSalt.SaltString = this.GenerateSalt();
                 this.Entry<Salt>(upSalt).State = EntityState.Modified;
-                this._IsSavedOrModified = true;
+                SaveChanges();
 
                 return upSalt.SaltString;
             }
@@ -49,7 +48,7 @@ namespace ChudoPechkaLib.Data
                 this.Salts.First(s => s.Id == id);
                 return true;
             }
-            catch (InvalidOperationException)
+            catch(InvalidCastException)
             {
                 return false;
             }
@@ -68,16 +67,9 @@ namespace ChudoPechkaLib.Data
             newSalt.SaltString = this.GenerateSalt();
 
             this.Salts.Add(newSalt);
-            this._IsSavedOrModified = true;
+            SaveChanges();
 
             return newSalt.SaltString;
-        }
-        public override int SaveChanges()
-        {
-            if (_IsSavedOrModified)
-                return base.SaveChanges();
-            else
-                return 0;
         }
     }
 }

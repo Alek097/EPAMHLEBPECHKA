@@ -261,7 +261,6 @@ namespace ChudoPechkaLib.Data
         }
         public override int SaveChanges()
         {
-            _saltDB.SaveChanges();
             if (_IsSavedOrModified)
                 return base.SaveChanges();
             else
