@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Восстановление";
+}
+
+@section ScriptAndStyle
+{
+    <style>
+        .line {
+            width: 100%;
+        }
+
+        .head {
+            text-align: center;
+        }
+    </style>
+    <script>
+        function GetUser()
+        {
+            var data = { "login": $("#login").val() };
+            $.post('@Url.Action("GetUser")', data)
+                .success(function(user)
+                {
+                    $("#action").html(user);
+                })
+            .error(function(data)
+            {
+
+            });
+        }
+
+    </script>
+    <script src="~/scripts/jquery-2.2.1.js"></script>
+}
+
+@using ChudoPechka.Models
+@model RecoveryModel
+<div style="padding:10px;">
+    <div>
+        <div class="head">
+            <hr size="5" color="black" class="line" />
+            <span style="font-family:'Segoe Print'; font-size:16pt">Восстановление</span>
+            <hr size="5" color="black" class="line" />
+        </div>
+        <div id="action">
+            <div>
+                <input type="text" class="text-box" id="login" /><label id="error"></label>
+                <br />
+                <button class="button" onclick="GetUser()">Найти</button>
+            </div>
+        </div>
+    </div>
+</div>
+

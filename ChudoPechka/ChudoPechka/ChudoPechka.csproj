@@ -208,6 +208,7 @@
     <Content Include="Views\Dish\Index.cshtml" />
     <Content Include="Views\Dish\GetComments.cshtml" />
     <Content Include="Views\Home\GetMenu.cshtml" />
+    <Content Include="Views\Account\Recovery.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

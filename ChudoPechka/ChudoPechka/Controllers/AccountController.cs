@@ -96,19 +96,16 @@ namespace ChudoPechka.Controllers
                 return Redirect(Url.Action("Index", "Home"));
             return View();
         }
-        [HttpGet]
-        public PartialViewResult GetUserToRecovery(string login)
-        {
-            User usr;
-            Manager.GetUser(login, out usr);
-            return PartialView(usr);
-        }
         public PartialViewResult GetUser(string login)
         {
             User usr;
             Manager.GetUser(login, out usr);
 
             return PartialView(usr);
+        }
+        public PartialViewResult GetUsers(string e_mail)
+        {
+            return PartialView();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
