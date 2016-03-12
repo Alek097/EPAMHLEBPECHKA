@@ -58,7 +58,8 @@ namespace ChudoPechka.Controllers
             else
             {
                 Manager.RegisterUser(model);
-                return Redirect(Url.Action("LoginIn"));
+                Manager.SendConfirmCode(model.Login, model.E_Mail);
+                return Redirect(Url.Action("Confirm", new {e_mail = model.E_Mail, login = model.Login }));
             }
         }
         [HttpGet]
@@ -160,7 +161,14 @@ namespace ChudoPechka.Controllers
 
             Manager.SendConfirmCode(login, e_mail);
 
-            return Redirect(Url.Action("Confirm", new {e_mail = e_mail, login = login }));
+            return Redirect(Url.Action("Confirm", new { e_mail = e_mail, login = login }));
+        }
+        public ActionResult Confirm(string e_mail, string login)
+        {
+            if (e_mail == null || login == null)
+                throw new HttpException(400, "Bad Request");
+
+            return View();
         }
     }
 }
