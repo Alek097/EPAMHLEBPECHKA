@@ -209,6 +209,7 @@
     <Content Include="Views\Dish\GetComments.cshtml" />
     <Content Include="Views\Home\GetMenu.cshtml" />
     <Content Include="Views\Account\Recovery.cshtml" />
+    <Content Include="Views\Account\GetUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

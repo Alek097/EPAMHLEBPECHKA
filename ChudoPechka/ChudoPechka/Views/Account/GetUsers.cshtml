@@ -1,0 +1,7 @@
+﻿@using ChudoPechkaLib.Models
+@model List<User>
+
+@foreach (User item in Model)
+{
+    Html.RenderPartial("GetUser", item);
+}

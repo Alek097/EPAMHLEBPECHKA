@@ -21,6 +21,7 @@ namespace ChudoPechkaLib
         void UpdateOrder(Order order);
         bool UpdatePassword(string login, string newPass, string responseQuestion);
         bool GetUser(string login, out User usr);
+        bool GetUsersForEmail(string e_Mail, out List<User> users);
         bool GetGroup(Guid id, out Group grp);
         bool GetOrder(Guid id, out Order ord);
         bool GetDish(Guid id, out Dish dish);

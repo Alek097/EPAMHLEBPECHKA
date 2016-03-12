@@ -178,7 +178,7 @@ namespace ChudoPechkaLib.Data
                 this.Comments.First(c => c.Id.Equals(comment_id));
                 return true;
             }
-            catch(InvalidCastException)
+            catch (InvalidCastException)
             {
                 return false;
             }
@@ -478,6 +478,28 @@ namespace ChudoPechkaLib.Data
             this.Entry<User>(to).State = EntityState.Modified;
 
             _IsSavedOrModified = true;
+        }
+
+        public bool IsContainUserEmail(string e_Mail)
+        {
+            try
+            {
+                this.Users.First(u => u.E_Mail.Equals(e_Mail));
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
+
+        public List<User> GetUsersForEmail(string e_Mail)
+        {
+            return this.Users
+                .Include(u => u.Groups)
+                .Include(u => u.Announceds)
+                .Include(u => u.Orders)
+                .Where(u => u.E_Mail.Equals(e_Mail)).ToList();
         }
     }
 }

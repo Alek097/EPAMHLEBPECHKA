@@ -99,13 +99,16 @@ namespace ChudoPechka.Controllers
         public PartialViewResult GetUser(string login)
         {
             User usr;
-            Manager.GetUser(login, out usr);
+            Manager.GetUser(login, out usr);//TODO: ADD 404 EXCEPTION
 
             return PartialView(usr);
         }
         public PartialViewResult GetUsers(string e_mail)
         {
-            return PartialView();
+            List<User> users = null;
+            if (Manager.GetUsersForEmail(e_mail, out users))
+                return PartialView(users);
+            else throw new HttpException(404, "Пользователи не найдены");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

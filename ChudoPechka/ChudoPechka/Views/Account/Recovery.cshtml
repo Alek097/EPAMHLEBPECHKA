@@ -13,19 +13,33 @@
         .head {
             text-align: center;
         }
+
+        .UserLink:hover {
+            background-color: white;
+        }
     </style>
     <script>
-        function GetUser()
-        {
-            var data = { "login": $("#login").val() };
-            $.post('@Url.Action("GetUser")', data)
-                .success(function(user)
-                {
-                    $("#action").html(user);
-                })
-            .error(function(data)
-            {
+        function GetUser() {
+            var e_mail = $("#e_Mail").val();
 
+            var data = { "e_Mail": e_mail };
+            $.post('@Url.Action("GetUsers")', data)
+                .success(function (users) {
+                    $("#action").html('<div style="text-align:center; margin-top:10px; margin-bottom:10px"><span style="font-size:16pt">Выберите пользователя</span></div>');
+                    $("#action").append(users);
+
+                    var userLinks = $(".UserLink");
+
+                    for (var i = 0; i < userLinks.length; i++) {
+                        var login = $(userLinks[i]).attr("id")
+                        $(userLinks[i]).attr("onClick", 'location.href = "@Url.Action("ConfirmEmail", "Account")?e_mail=' + e_mail + '&login=' + login + '"');
+                    }
+                })
+            .error(function (data) {
+                if (data.status == 404)
+                    $("#error").text("Ничего не найдено");
+                else
+                    $("#error").text("Неизвестная ошибка");
             });
         }
 
@@ -44,7 +58,7 @@
         </div>
         <div id="action">
             <div>
-                <input type="text" class="text-box" id="login" /><label id="error"></label>
+                <input type="email" class="text-box" id="e_Mail" /><span> </span><label id="error"></label>
                 <br />
                 <button class="button" onclick="GetUser()">Найти</button>
             </div>

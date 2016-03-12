@@ -14,6 +14,7 @@ namespace ChudoPechkaLib.Data
         Order GetOrder(Guid order_id);
         Dish GetDish(Guid dish_id);
         Comment GetComment(Guid comment_id);
+        List<User> GetUsersForEmail(string e_Mail);
         void AddUser(User usr);
         void AddMemberInGroup(Guid group_id, User usr);
         void AddAuthorInGroup(Guid group_id, string login);
@@ -22,6 +23,7 @@ namespace ChudoPechkaLib.Data
         void AddComment(User user, string text, Guid dish_id);
         void AddOrder(Order order);
         Guid AddDish(string nameDish);
+        bool IsContainUserEmail(string e_Mail);
         bool IsContainGroup(Guid group_id);
         bool IsContainDish(Guid dish_id);
         bool IsContainComment(Guid comment_id);

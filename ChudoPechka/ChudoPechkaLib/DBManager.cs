@@ -7,6 +7,7 @@ using System.Web.Security;
 
 using ChudoPechkaLib.Models;
 using ChudoPechkaLib.Data;
+using System.Collections.Generic;
 
 namespace ChudoPechkaLib
 {
@@ -112,6 +113,16 @@ namespace ChudoPechkaLib
                 return true;
             }
             return false;
+        }
+        public bool GetUsersForEmail(string e_Mail, out List<User> users)
+        {
+            users = null;
+            if (_db.IsContainUserEmail(e_Mail))
+            {
+                users = _db.GetUsersForEmail(e_Mail);
+                return true;
+            }
+            else return false;
         }
 
         public bool GetGroup(Guid id, out Group grp)
