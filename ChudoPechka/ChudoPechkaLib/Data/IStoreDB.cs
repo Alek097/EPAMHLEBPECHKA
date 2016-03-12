@@ -39,6 +39,7 @@ namespace ChudoPechkaLib.Data
         void SendAnnounced(Announced ann);
         void SetConfirmCode(User usr);
         void SetReadAnnounced(Announced ann);
+        void SetActiveCode(User usr);
         void RemoveUser(Guid group_id, User removeUser);
         void RemoveOrder(Guid order_id);
         void RemoveCancelledOrders(Guid group_id);

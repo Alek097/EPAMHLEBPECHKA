@@ -61,7 +61,7 @@ namespace ChudoPechka.Controllers
                 Manager.AddMemberInGroup(Group_Id);
             }
             else
-                throw new HttpException(401, "Вы не авторизированы");
+                throw new HttpException(401, "Вы не авторизованы");
         }
         [ValidateAntiForgeryToken]
         public void AddAuthor(Guid Group_Id, string login)
@@ -72,7 +72,7 @@ namespace ChudoPechka.Controllers
                 throw new HttpException(200, "OK");
             }
             else
-                throw new HttpException(401, "Вы не авторизированы");
+                throw new HttpException(401, "Вы не авторизованы");
         }
         [ValidateAntiForgeryToken]
         public ActionResult RemoveUser(Guid group_id)
@@ -83,7 +83,7 @@ namespace ChudoPechka.Controllers
                 return Redirect(Url.Action("My"));
             }
             else
-                throw new HttpException(401, "Вы не авторизированы");
+                throw new HttpException(401, "Вы не авторизованы");
         }
         public ActionResult OrderInf(Guid Group_Id)
         {
@@ -102,7 +102,7 @@ namespace ChudoPechka.Controllers
         public ActionResult RemoveOrder(Guid Group_id, Guid Order_id)
         {
             if (!Manager.IsAuthentication)
-                throw new HttpException(401, "Вы не авторизированы");
+                throw new HttpException(401, "Вы не авторизованы");
 
             Manager.RemoveOrder(Group_id, Order_id);
             throw new HttpException(200, "Закзаз удалён из списка группы");
@@ -112,7 +112,7 @@ namespace ChudoPechka.Controllers
         public ActionResult RecoveryOrder(Guid Group_id, Guid Order_id)
         {
             if (!Manager.IsAuthentication)
-                throw new HttpException(401, "Вы не авторизированы");
+                throw new HttpException(401, "Вы не авторизованы");
 
             Manager.RecoveryOrder(Group_id, Order_id);
             throw new HttpException(200, "Закзаз удалён из списка группы");
@@ -121,7 +121,7 @@ namespace ChudoPechka.Controllers
         public ActionResult ToOrder(Guid Group_id)
         {
             if (!Manager.IsAuthentication)
-                throw new HttpException(401, "Вы не авторизированы");
+                throw new HttpException(401, "Вы не авторизованы");
             Manager.ToOrder(Group_id);
             return Redirect(Url.Action("OrderInf", new { Group_id = Group_id }));
         }
@@ -129,7 +129,7 @@ namespace ChudoPechka.Controllers
         public ActionResult RemoveCancelledOrders(Guid Group_id)
         {
             if (!Manager.IsAuthentication)
-                throw new HttpException(401, "Вы не авторизированы");
+                throw new HttpException(401, "Вы не авторизованы");
             Manager.RemoveCancelledOrders(Group_id);
             return Redirect(Url.Action("OrderInf", new { Group_id = Group_id }));
         }

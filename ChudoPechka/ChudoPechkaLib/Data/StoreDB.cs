@@ -506,5 +506,14 @@ namespace ChudoPechkaLib.Data
             this.Entry<User>(usr).State = EntityState.Modified;
             _IsSavedOrModified = true;
         }
+
+        public void SetActiveCode(User usr)
+        {
+            usr.IsActive = true;
+            usr.ActivationCode = "";
+            this.Entry<User>(usr).State = EntityState.Modified;
+
+            _IsSavedOrModified = true;
+        }
     }
 }

@@ -38,6 +38,7 @@ namespace ChudoPechkaLib
         void RemoveComment(Guid comment_id);
         void RecoveryOrder(Guid group_id, Guid order_id);
         void SetReadAnnounced(Announced ann);
+        void SetActiveCode(User usr);
         void ToOrder(Guid group_id);
         void ToOrder(Order order);
         Task SendConfirmCodeAsync(string login, string e_Mail);

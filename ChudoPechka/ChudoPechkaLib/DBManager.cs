@@ -363,5 +363,10 @@ namespace ChudoPechkaLib
             return smtp.SendMailAsync(m);
 
         }
+
+        public void SetActiveCode(User usr)
+        {
+            _db.SetActiveCode(usr);
+        }
     }
 }

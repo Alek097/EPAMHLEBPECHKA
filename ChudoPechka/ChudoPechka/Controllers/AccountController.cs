@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Drawing;
 
+using ChudoPechka.Filters;
 using ChudoPechka.Models;
 using ChudoPechkaLib.Models;
 
@@ -34,8 +35,8 @@ namespace ChudoPechka.Controllers
 
             return Redirect(Url.Action("Index", new { login = login }));
         }
-        // GET: Account
         [HttpGet]
+        [AlllActive]
         public ActionResult Index(string login)
         {
             User usr;
@@ -152,7 +153,7 @@ namespace ChudoPechka.Controllers
                     throw new HttpException(400, "Вы не выбрали файл");
             }
             else
-                throw new HttpException(401, "Вы не авторизированы");
+                throw new HttpException(401, "Вы не авторизованы");
         }
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendConfirmCode(string e_mail, string login)
@@ -164,12 +165,36 @@ namespace ChudoPechka.Controllers
 
             return Redirect(Url.Action("Confirm", new { e_mail = e_mail, login = login }));
         }
+        [HttpGet]
         public ActionResult Confirm(string e_mail, string login)
         {
-            if (e_mail == null || login == null)
+            if(!Manager.IsAuthentication)
+                throw new HttpException(401, "Вы не авторизованы");
+            else if (e_mail == null || login == null)
                 throw new HttpException(400, "Bad Request");
+            else if (!Manager.User.Login.Equals(login))
+                throw new HttpException(423, "Ошибка доступа");
 
-            return View();
+            return View(new ConfirmModel {E_Mail = e_mail, Login = login });
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Confirm(ConfirmModel model)
+        {
+            if (!Manager.IsAuthentication)
+                throw new HttpException(401, "Вы не авторизованы");
+            else if (!Manager.User.Login.Equals(model.Login))
+                throw new HttpException(423, "Ошибка доступа");
+            else if (!Manager.User.ActivationCode.Equals(model.Code))
+            {
+                ModelState.AddModelError("", "Коды не совпадают");
+                return View(model);
+            }
+            else
+            {
+                Manager.SetActiveCode(Manager.User);
+                return Redirect(Url.Action("Index", "Home"));
+            }
         }
     }
 }

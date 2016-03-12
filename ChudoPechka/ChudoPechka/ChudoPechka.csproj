@@ -171,10 +171,12 @@
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Filters\AlllActiveAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AnnouncedModel.cs" />
+    <Compile Include="Models\ConfirmModel.cs" />
     <Compile Include="Models\EditModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -210,6 +212,7 @@
     <Content Include="Views\Home\GetMenu.cshtml" />
     <Content Include="Views\Account\Recovery.cshtml" />
     <Content Include="Views\Account\GetUsers.cshtml" />
+    <Content Include="Views\Account\Confirm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Confirm";
+}
+@section ScriptAndStyle{
+    <script>
+        function SendConfirm(e_mail, login) {
+            var data = { '__RequestVerificationToken': $('[name=__RequestVerificationToken]').val(), "login": login, "e_mail": e_mail };
+
+            $.post('@Url.Action("SendConfirmCode")', data);
+        }
+    </script>
+<script src="~/scripts/jquery-2.2.1.js"></script>
+}
+@model ChudoPechka.Models.ConfirmModel
+<div style="padding: 10px;">
+    @Html.ValidationSummary()
+    @using (Html.BeginForm("Confirm", "Account", FormMethod.Post))
+    {
+        <span>На ваш почтовый ящик (@Model.E_Mail) было отправлено письмо с кодом подтверждения. Если письмо не пришло в течении 5 минут нажмите <span style="color:rgb(46, 116, 181); cursor:pointer" onclick="SendConfirm('@Model.E_Mail','@Model.Login')">здесь</span> для повторной отправки.</span>
+        <br />
+        <br />
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="E_Mail" value="@Model.E_Mail" />
+        <input type="hidden" name="Login" value="@Model.Login" />
+        <input type="text" name="Code" class="text-box" /><br />
+        <input type="submit" class="button" value="Отправить" />
+    }
+</div>
+
