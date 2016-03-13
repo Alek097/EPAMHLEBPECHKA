@@ -49,7 +49,7 @@
                     {
                         <div class="Groups">
                             <div style="display:inline; margin-right: 5px; margin-left: 5px;">
-                                <a href="@Url.Action("Index", "Group", new { Group_id = item.Id })">@item.Name</a>
+                                <a class="Links" href="@Url.Action("Index", "Group", new { Group_id = item.Id })">@item.Name</a>
                             </div>
                             <div style="display:inline">
                                 @using (Html.BeginForm("RemoveUser", "Group"))

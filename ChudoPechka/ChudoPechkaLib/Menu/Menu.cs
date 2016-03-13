@@ -215,7 +215,7 @@ namespace ChudoPechkaLib.Menu
                                         {
                                             cellVal = Regex.Replace(cellVal, @"/(.|\s)+?/", "");
                                             Guid dish_id = _db.AddDish(cellVal);
-                                            menutext += "<span>" + "<a href=\"Dish/Index?dish_id=" + dish_id.ToString() + "\">" + cellVal + "</a>, ";
+                                            menutext += "<span>" + "<a class=\"Links\" href=\"Dish/Index?dish_id=" + dish_id.ToString() + "\">" + cellVal + "</a>, ";
                                         }
 
                                         break;
