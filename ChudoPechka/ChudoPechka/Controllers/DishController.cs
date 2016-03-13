@@ -26,13 +26,13 @@ namespace ChudoPechka.Controllers
         }
         [ValidateAntiForgeryToken]
         [AlllActive]
-        public ActionResult AddComment(string text, string user_login, Guid dish_id)
+        public ActionResult AddComment(string text, string user_login, int ball, Guid dish_id)
         {
             User usr = null;
 
             if (Manager.GetUser(user_login, out usr) && usr.Equals(Manager.User))
             {
-                Manager.AddComment(usr, text, dish_id);
+                Manager.AddComment(usr, text,ball ,dish_id);
                 throw new HttpException(200, "OK");
             }
             else
@@ -70,6 +70,16 @@ namespace ChudoPechka.Controllers
             }
             else
                 throw new HttpException(401, "Ошибка авторизации");
+        }
+
+        public string GetRating(Guid dish_id)
+        {
+            Dish dish = null;
+
+            if (Manager.GetDish(dish_id, out dish))
+                return string.Format("{0:N}", dish.Rating);
+            else
+                throw new HttpException(404, "Блюдо не найден");
         }
     }
 }

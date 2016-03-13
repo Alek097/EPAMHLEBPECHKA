@@ -28,7 +28,7 @@ namespace ChudoPechkaLib
         bool GetComment(Guid id, out Comment comment);
         void SendAnnounced(Announced ann);
         void AddMoney(string login, uint addMoney);
-        void AddComment(User user, string text, Guid dish_id);
+        void AddComment(User user, string text, int ball, Guid dish_id);
         void AddMemberInGroup(Guid Group_id);
         void AddAdministrationInGroup(Guid Group_Id, string login);
         void RemoveUser(Guid group_id);

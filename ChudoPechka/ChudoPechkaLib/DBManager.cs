@@ -254,9 +254,9 @@ namespace ChudoPechkaLib
             _db.UpdateAvatar(usr, fileName);
         }
 
-        public void AddComment(User user, string text, Guid dish_id)
+        public void AddComment(User user, string text, int ball, Guid dish_id)
         {
-            _db.AddComment(user, text, dish_id);
+            _db.AddComment(user, text, ball, dish_id);
         }
 
         public void RemoveComment(Guid comment_id)

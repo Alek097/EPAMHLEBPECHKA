@@ -424,8 +424,9 @@ namespace ChudoPechkaLib.Data
             }
         }
 
-        public void AddComment(User user, string text, Guid dish_id)
+        public void AddComment(User user, string text, int ball ,Guid dish_id)
         {
+            double rating = 0.0;
             Dish dish = this.GetDish(dish_id);
 
             Comment comment = new Comment();
@@ -433,18 +434,43 @@ namespace ChudoPechkaLib.Data
             comment.Dish = dish;
             comment.Text = text;
             comment.Date = DateTime.Now;
+            comment.Ball = ball;
 
             dish.Comments.Add(comment);
 
+            dish.Rating = this.GetRating(dish);
+
+            this.Entry<Dish>(dish).State = EntityState.Modified;
             this.Comments.Add(comment);
 
             _IsSavedOrModified = true;
+        }
+        private double GetRating(Dish dish)
+        {
+            double rating = 0.0;
+            List<Comment> comments = dish.Comments.Where(c => c.Ball != 0).ToList();
+
+            if (comments.Count == 0)
+                return 0.0;
+
+            foreach (Comment item in comments)
+                rating += item.Ball;
+
+            rating /= comments.Count;//Подсчитываем среднее значение это и будет рейтинг
+
+            return rating;
         }
 
         public void RemoveComment(Guid comment_id)
         {
             Comment comment = this.GetComment(comment_id);
 
+            Dish dish = comment.Dish;
+            dish.Comments.Remove(comment);
+
+            dish.Rating = this.GetRating(dish);
+
+            this.Entry<Dish>(dish).State = EntityState.Modified;
             this.Entry<Comment>(comment).State = EntityState.Deleted;
 
             _IsSavedOrModified = true;

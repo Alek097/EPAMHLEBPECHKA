@@ -33,7 +33,15 @@
                 @comment.Text
             </span><br />
             <hr />
-            <span style="font-size:8pt; font-family: monospace">Дата: @comment.Date</span>
+            <span style="font-size:8pt; font-family: monospace">Дата: @comment.Date</span><br />
+            @if (comment.Ball != 0)
+            {
+                <span style="font-size:8pt; font-family: monospace">Оценка: @comment.Ball</span>
+            }
+            else
+            {
+                <span style="font-size:8pt; font-family: monospace">Оценка: От оценки воздержался</span>
+            }
         </div>
     </div> 
 }

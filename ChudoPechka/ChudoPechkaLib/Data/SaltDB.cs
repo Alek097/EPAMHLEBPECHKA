@@ -48,7 +48,7 @@ namespace ChudoPechkaLib.Data
                 this.Salts.First(s => s.Id == id);
                 return true;
             }
-            catch(InvalidCastException)
+            catch(InvalidOperationException)
             {
                 return false;
             }

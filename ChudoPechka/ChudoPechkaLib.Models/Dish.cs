@@ -17,6 +17,7 @@ namespace ChudoPechkaLib.Models
         [Key]
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public double Rating { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }

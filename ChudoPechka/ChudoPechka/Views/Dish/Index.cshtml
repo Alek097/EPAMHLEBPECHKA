@@ -52,6 +52,14 @@
             width: 100%;
             height: 100%;
         }
+
+        td {
+            border-left: 1px solid black;
+        }
+
+            td:hover {
+                background-color: #ee5f0b;
+            }
     </style>
     <script>
         $(window).load(function () {
@@ -68,89 +76,126 @@
                 success: function (data) {
                     $("#comments").html(data);
                     $("#load").remove();
+                    SetRating();
                 }
             });
         }
 
-        function SendComment() {
-            var data = {
-                "__RequestVerificationToken": $("[name=__RequestVerificationToken]").val(),
-                "user_login": $("#user_login").val(),
-                "dish_id": $("#dish_id").val(),
-                "text": $(".text").val()
-            };
-
-            $.post('@Url.Action("AddComment")', data)
-                .success(function () {
-                    SetComments();
-                    $(".text").val("");
-                });
-        }
-        function DeleteComment(elem) {
-            elem = $(elem).closest(".comment");
-            elem = $(elem).find(".comment-information");
-            var data = {
-                "__RequestVerificationToken": $("[name=__RequestVerificationToken]").val(),
-                "user_login": $(elem).find(".login").val(),
-                "comment_id": $(elem).find(".comment_id").val()
-            }
-            $.post('@Url.Action("RemoveComment")', data)
-                .success(function () {
-                    SetComments();
-                });
-        }
-        function SetEditorForComment(elem) {
-            elem = $(elem).closest($('.comment-text-container'));
-            var text = $(elem).find(".comment-text").text();
-            text = text.replace(/\s+/g, ' ')
-
-
-            elem = $(elem).closest(".comment").find(".comment-information");
-            //Я просто скопипастил редактор и добавил кнопку отмены и попроавил кнопку
-            var html = '<div style="width:80px;height:auto; display:inline-block;"><img src="@Url.Content(auth.User.AvatarPath)" style="width:100%; height:100%; border-radius:100%;" /></div><div style="display:inline-block"><textarea class="text"></textarea></div><button class="button" onclick="UpdateComment(this)">Отправить</button><span style="font-size:8pt; margin-left: 400px;" onclick="SetComments()">Отменить</span>';
-            var inform = $(elem).html();
-
-            elem = $(elem).closest(".comment");
-
-            $(elem).html(html);
-            $(elem).find("textarea").val(text);
-            $(elem).append(inform);
-        }
-        function UpdateComment(elem) {
-            elem = $(elem).closest(".comment");
-            var token = $("[name=__RequestVerificationToken]").val();
-            var login = $(elem).find(".login").val();
-            var comment_id = $(elem).find(".comment_id").val();
-            var text = $(elem).find(".text").val();
-            var data = {
-                "__RequestVerificationToken": token,
-                "user_login": login,
-                "comment_id": comment_id,
-                "text": text
-            };
-
-            $.post('@Url.Action("UpdateComment")', data)
-                .success(function () {
-                    SetComments();
-                    $(".text").val("");
-                });
-        }
-        function OnLeaveButton(elem, src) {
-            $(elem).find(".comment-button-img").removeAttr("src");
-            $(elem).find(".comment-button-img").attr("src", src);
-        }
-        function OnMoveButton(elem, src) {
-            $(elem).find(".comment-button-img").removeAttr("src");
-            $(elem).find(".comment-button-img").attr("src", src);
+        function SetRating() {
+            $.ajax({
+                async: true,
+                contentType: "html",
+                method: "Post",
+                url: '@Url.Action("GetRating")?dish_id=@Model.Id',
+                success: function (rating) {
+                    $("#rating").text(rating);
+                }
+            });
         }
     </script>
+    @if (auth.IsAuthentication)
+    {
+        <script>
+            function SendComment() {
+                var data = {
+                    "__RequestVerificationToken": $("[name=__RequestVerificationToken]").val(),
+                    "user_login": $("#user_login").val(),
+                    "dish_id": $("#dish_id").val(),
+                    "ball": $("#ball").val(),
+                    "text": $(".text").val()
+                };
+
+                $.post('@Url.Action("AddComment")', data)
+                    .success(function () {
+                        SetComments();
+                        $(".text").val("");
+                    });
+            }
+            function DeleteComment(elem) {
+                elem = $(elem).closest(".comment");
+                elem = $(elem).find(".comment-information");
+                var data = {
+                    "__RequestVerificationToken": $("[name=__RequestVerificationToken]").val(),
+                    "user_login": $(elem).find(".login").val(),
+                    "comment_id": $(elem).find(".comment_id").val()
+                }
+                $.post('@Url.Action("RemoveComment")', data)
+                    .success(function () {
+                        SetComments();
+                    });
+            }
+            function SetEditorForComment(elem) {
+                elem = $(elem).closest($('.comment-text-container'));
+                var text = $(elem).find(".comment-text").text();
+                text = text.replace(/\s+/g, ' ')
+
+
+                elem = $(elem).closest(".comment").find(".comment-information");
+                //Я просто скопипастил редактор и добавил кнопку отмены и попроавил кнопку
+                var html = '<div style="width:80px;height:auto; display:inline-block;"><img src="@Url.Content(auth.User.AvatarPath)" style="width:100%; height:100%; border-radius:100%;" /></div><div style="display:inline-block"><textarea class="text"></textarea></div><button class="button" onclick="UpdateComment(this)">Отправить</button><span style="font-size:8pt; margin-left: 400px;" onclick="SetComments()">Отменить</span>';
+                var inform = $(elem).html();
+
+                elem = $(elem).closest(".comment");
+
+                $(elem).html(html);
+                $(elem).find("textarea").val(text);
+                $(elem).append(inform);
+            }
+            function UpdateComment(elem) {
+                elem = $(elem).closest(".comment");
+                var token = $("[name=__RequestVerificationToken]").val();
+                var login = $(elem).find(".login").val();
+                var comment_id = $(elem).find(".comment_id").val();
+                var text = $(elem).find(".text").val();
+                var data = {
+                    "__RequestVerificationToken": token,
+                    "user_login": login,
+                    "comment_id": comment_id,
+                    "text": text
+                };
+
+                $.post('@Url.Action("UpdateComment")', data)
+                    .success(function () {
+                        SetComments();
+                        $(".text").val("");
+                    });
+            }
+            function OnLeaveButton(elem, src) {
+                $(elem).find(".comment-button-img").removeAttr("src");
+                $(elem).find(".comment-button-img").attr("src", src);
+            }
+            function OnMoveButton(elem, src) {
+                $(elem).find(".comment-button-img").removeAttr("src");
+                $(elem).find(".comment-button-img").attr("src", src);
+            }
+            function SetBall(elem) {
+                var ball = $("#ball").val()
+                var val = $(elem).text();
+                if (val == ball) {
+                    $("#ball").val(0);
+                    $(elem).css("background-color", "transparent");
+                }
+                else {
+                    var td = $('td:contains("' + ball + '")');
+
+                    $(td).css("background-color", "transparent");
+
+                    $("#ball").val(val);
+                    $(elem).css("background-color", "#ee5f0b");
+                }
+            }
+        </script>
+    }
     <script src="~/scripts/jquery-2.2.1.js"></script>
 }
 <div style="padding-left:15px;">
-    <div style="text-align:center; font-size: 19pt;">
+    <div style="text-align:center; font-size: 19pt; margin-bottom:30px;">
         <hr size="5" color="black" class="line">
         <span>@Model.Name</span>
         <hr size="5" color="black" class="line">
+        <div style="text-align:left; font-size:14pt; padding-left: 100px">
+            <span>Рейтинг: </span><span id="rating"></span>
+        </div>
     </div>
     @if (auth.IsAuthentication)
     {
@@ -159,6 +204,16 @@
         </div>
         <div style="display:inline-block">
             @Html.AntiForgeryToken()
+            <table cellspacing="0" style="border:1px solid black; margin-bottom:15px;">
+                <tr>
+                    <td style="border:0px;" onclick="SetBall(this)">+1</td>
+                    <td onclick="SetBall(this)">+2</td>
+                    <td onclick="SetBall(this)">+3</td>
+                    <td onclick="SetBall(this)">+4</td>
+                    <td onclick="SetBall(this)">+5</td>
+                </tr>
+            </table>
+            <input type="hidden" value="0" id="ball" />
             <input type="hidden" value="@auth.User.Login" id="user_login" />
             <input type="hidden" value="@Model.Id" id="dish_id" />
             <textarea class="text"></textarea><br />

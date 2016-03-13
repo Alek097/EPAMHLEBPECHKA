@@ -14,6 +14,7 @@ namespace ChudoPechkaLib.Models
         }
         public Guid Id { get; set; }
         public string Text { get; set; }
+        public int Ball { get; set; }
         public DateTime Date { get; set; }
         public virtual User User { get; set; }
         public virtual Dish Dish { get; set; }
