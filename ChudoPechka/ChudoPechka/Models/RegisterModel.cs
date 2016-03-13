@@ -22,7 +22,7 @@ namespace ChudoPechka.Models
         [Required(ErrorMessage = "Повторите пароль.")]
         [Display(Name = "Повторить пароль")]
         [DataType(DataType.Password)]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage ="Пароли не совпадют")]
         public string ConfirmPassword { get; set; }
         [Required(ErrorMessage = "Введите своё имя.")]
         [Display(Name = "Имя")]
