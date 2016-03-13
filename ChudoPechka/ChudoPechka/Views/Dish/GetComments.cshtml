@@ -15,7 +15,9 @@
             <input class="comment_id" type="hidden" value="@comment.Id" />
         </div>
         <div style="width:80px;height:80px; display:inline-block;">
-            <img src="@Url.Content(comment.User.AvatarPath)" style="width:100%; height:100%; display:inline-block; border-radius:100%" />
+            <a href="@Url.Action("Index", "Account", new { login = comment.User.Login })">
+                <img src="@Url.Content(comment.User.AvatarPath)" style="width:100%; height:100%; display:inline-block; border-radius:100%" />
+            </a>
         </div>
         <div class="comment-text-container">
             @if (auth.IsAuthentication && auth.User.Equals(comment.User))
@@ -33,6 +35,7 @@
                 @comment.Text
             </span><br />
             <hr />
+            <span style="font-size:9pt; font-family: monospace">Логин: @comment.User.Login</span><br />
             <span style="font-size:8pt; font-family: monospace">Дата: @comment.Date</span><br />
             @if (comment.Ball != 0)
             {

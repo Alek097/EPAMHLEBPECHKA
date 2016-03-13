@@ -15,7 +15,7 @@ namespace ChudoPechka.Controllers
     {
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TransferMoney(string from, string to, uint money)
+        public ActionResult TransferMoney(string from, string to, uint money = 0)
         {
             if (!Manager.IsAuthentication)
                 throw new HttpException(401, "Вы не авторизованы");
@@ -26,7 +26,7 @@ namespace ChudoPechka.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddMoney(string login, uint addMoney)
+        public ActionResult AddMoney(string login, uint addMoney = 0)
         {
             if (!Manager.IsAuthentication)
                 throw new HttpException(401, "Вы не авторизованы");

@@ -15,7 +15,7 @@
     <style>
         #AvatarContainer {
             width: 300px;
-            height: 100%;
+            height: 300px;;
             float: left;
         }
 
@@ -48,6 +48,14 @@
             margin-right: 5px;
         }
     </style>
+    @if (!auth.IsAuthentication)
+    {
+        <style>
+            #content{
+                height:310px;
+            }
+        </style>
+    }
 
 }
 <div id="User-information">
@@ -65,15 +73,15 @@
 
             @foreach (Group group in groups)
             {
-            <div class="Group">
-                <a href="@Url.Action("Index", "Group", new { Group_id = group.Id })">
-                    @group.Name
-                </a>
-            </div>
+                <div class="Group">
+                    <a class="Links" href="@Url.Action("Index", "Group", new { Group_id = group.Id })">
+                        @group.Name
+                    </a>
+                </div>
             }
         </div>
     }
-    @if (auth.User.Equals(Model))
+    @if (auth.IsAuthentication && auth.User.Equals(Model))
     {
         <div style="margin-top:50px; margin-bottom:10px;">
             <span>Сменить аватар</span>
