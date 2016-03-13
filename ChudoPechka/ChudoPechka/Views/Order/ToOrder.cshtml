@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "ToOrder";
+    ViewBag.Title = "Заказать";
     IMenu menu = DependencyResolver.Current.GetService<IMenu>();
     IDBManager auth = DependencyResolver.Current.GetService<IDBManager>();
     List<Group> groups = new List<Group>(auth.User.Groups);
@@ -80,7 +80,6 @@
             height: 50px;
         }
     </style>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
         var days = [];
     </script>

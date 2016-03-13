@@ -489,6 +489,9 @@ namespace ChudoPechkaLib.Data
         {
             usr.Balnce += (int)addMoney;
 
+            if (usr.Balnce > 99999999)
+                usr.Balnce = 99999999;//Дабы при большем значении разметка ломается
+
             this.Entry<User>(usr).State = EntityState.Modified;
 
             _IsSavedOrModified = true;
@@ -496,8 +499,12 @@ namespace ChudoPechkaLib.Data
 
         public void TransferMoney(User from, User to, uint money)
         {
+
             from.Balnce -= (int)money;
             to.Balnce += (int)money;
+
+            if (to.Balnce > 99999999)
+                to.Balnce = 99999999;//Дабы при большем значении разметка ломается
 
             this.Entry<User>(from).State = EntityState.Modified;
             this.Entry<User>(to).State = EntityState.Modified;

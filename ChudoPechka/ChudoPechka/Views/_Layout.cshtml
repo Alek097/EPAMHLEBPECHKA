@@ -10,6 +10,7 @@
 
 <html>
 <head>
+    <link rel="shortcut icon" href="http://chudo-pechka.by/assets/templates/Chudopechka/images/logo.png" type="image/png">
     <style>
         body {
             margin: 0px;
@@ -156,7 +157,7 @@
         }
     </script>
     <script>
-        $(document).ready(function () {
+        $(window).load(function () {
             function Resize() {
                 var CapSize = $("#cap").height();
                 var spanSize = $(".name>span").height();
@@ -216,7 +217,7 @@
                         </li>
                             <li class="auth-menu context-menu" style="margin-right:0px;" onclick="location.href = '@Url.Action("Index","Order")'">
                                 <div class="name">
-                                    <span>Заказ</span>
+                                    <span>Заказы</span>
                                 </div>
                             </li>
                             <li class="auth-menu context-menu" onmouseover="Render('Group-context-menu')" onmouseout="Derender('Group-context-menu')">

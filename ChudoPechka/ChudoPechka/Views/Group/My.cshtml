@@ -21,7 +21,6 @@
             text-align:center;
         }
     </style>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
         function out(group_id) {
             var data = { 'Group_id': group_id, '__RequestVerificationToken': $('[name=__RequestVerificationToken]').val() };
@@ -77,7 +76,7 @@
                     {
                         <div class="Groups">
                             <div style="display:inline; margin-right: 5px; margin-left: 5px;">
-                                <a href="@Url.Action("Index", "Group", new { Group_id = item.Id })">@item.Name</a>
+                                <a class="Links" href="@Url.Action("Index", "Group", new { Group_id = item.Id })">@item.Name</a>
                             </div>
                             <div style="display:inline">
                                 <button class="button" onclick="out('@item.Id')">Покинуть</button>

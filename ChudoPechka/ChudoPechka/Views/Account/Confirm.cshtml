@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Confirm";
+    ViewBag.Title = "Подтверждение";
 }
 @section ScriptAndStyle{
     <script>
@@ -10,7 +10,6 @@
             $.post('@Url.Action("SendConfirmCode")', data);
         }
     </script>
-<script src="~/scripts/jquery-2.2.1.js"></script>
 }
 @model ChudoPechka.Models.ConfirmModel
 <div style="padding: 10px;">
