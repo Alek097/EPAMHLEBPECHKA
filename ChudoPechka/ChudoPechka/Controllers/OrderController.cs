@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using ChudoPechka.Models;
-using ChudoPechkaLib;
+using ChudoPechka.Filters;
 using ChudoPechkaLib.Models;
 
 namespace ChudoPechka.Controllers
@@ -13,6 +13,7 @@ namespace ChudoPechka.Controllers
     public class OrderController : ChudoPechka.Controllers.Base.BaseController
     {
         // GET: Order
+        [AlllActive]
         public ActionResult Index()
         {
             if (Manager.IsAuthentication)
@@ -20,6 +21,7 @@ namespace ChudoPechka.Controllers
             else
                 return Redirect(Url.Action("Index", "Home"));
         }
+        [AlllActive]
         public ActionResult Edit(Guid Order_id)
         {
             if (Manager.IsAuthentication)
@@ -44,6 +46,7 @@ namespace ChudoPechka.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AlllActive]
         public ActionResult Edit(EditModel model)
         {
             if (Manager.IsAuthentication || !model.Status.Equals("Заказан") || !model.IsOrdered)
@@ -60,6 +63,7 @@ namespace ChudoPechka.Controllers
                 return Redirect(Url.Action("Index", "Home"));
         }
         [HttpGet]
+        [AlllActive]
         public ActionResult ToOrder()
         {
             if (Manager.IsAuthentication)
@@ -72,6 +76,7 @@ namespace ChudoPechka.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AlllActive]
         public ActionResult ToOrder(OrderModel model)
         {
             if (!Manager.IsAuthentication)
@@ -87,6 +92,7 @@ namespace ChudoPechka.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AlllActive]
         public ActionResult Remove(Guid order_id)
         {
             Manager.RemoveOrder(order_id);

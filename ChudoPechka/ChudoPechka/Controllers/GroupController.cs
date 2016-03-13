@@ -6,12 +6,13 @@ using System.Web.Mvc;
 
 using ChudoPechkaLib.Models;
 
-using ChudoPechka.Models;
+using ChudoPechka.Filters;
 
 namespace ChudoPechka.Controllers
 {
     public class GroupController : ChudoPechka.Controllers.Base.BaseController
     {
+        [AlllActive]
         public ActionResult Index(Guid Group_id)
         {
             Group grp;
@@ -21,6 +22,7 @@ namespace ChudoPechka.Controllers
                 throw new HttpException(404, "Группа не найдена");
         }
         [HttpGet]
+        [AlllActive]
         public ActionResult Create()
         {
             if (Manager.IsAuthentication)
@@ -30,6 +32,7 @@ namespace ChudoPechka.Controllers
         }
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [AlllActive]
         public ActionResult Create(string gName)
         {
             if (!Manager.IsAuthentication)
@@ -46,6 +49,7 @@ namespace ChudoPechka.Controllers
                 return Redirect(Url.Action("Index", new { Group_id = grp_id }));
             }
         }
+        [AlllActive]
         public ActionResult My()
         {
             if (Manager.IsAuthentication)
@@ -85,6 +89,7 @@ namespace ChudoPechka.Controllers
             else
                 throw new HttpException(401, "Вы не авторизованы");
         }
+        [AlllActive]
         public ActionResult OrderInf(Guid Group_Id)
         {
             Group grp = null;
@@ -118,6 +123,7 @@ namespace ChudoPechka.Controllers
             throw new HttpException(200, "Закзаз удалён из списка группы");
         }
         [ValidateAntiForgeryToken]
+        [AlllActive]
         public ActionResult ToOrder(Guid Group_id)
         {
             if (!Manager.IsAuthentication)
@@ -126,6 +132,7 @@ namespace ChudoPechka.Controllers
             return Redirect(Url.Action("OrderInf", new { Group_id = Group_id }));
         }
         [ValidateAntiForgeryToken]
+        [AlllActive]
         public ActionResult RemoveCancelledOrders(Guid Group_id)
         {
             if (!Manager.IsAuthentication)

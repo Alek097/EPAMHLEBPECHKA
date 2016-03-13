@@ -93,7 +93,6 @@ namespace ChudoPechka.Controllers
             return Redirect(Url.Action("Index", "Home"));
         }
         [HttpGet]
-        [AlllActive]
         public ActionResult SelectUserToRecovery()
         {
             if (Manager.IsAuthentication)

@@ -4,13 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using ChudoPechka.Filters;
 using ChudoPechka.Models;
 using ChudoPechkaLib.Models;
+
 
 namespace ChudoPechka.Controllers
 {
     public class AnnouncedController : ChudoPechka.Controllers.Base.BaseController
     {
+        [AlllActive]
         public ActionResult Index()
         {
             if (!Manager.IsAuthentication)
@@ -18,6 +21,7 @@ namespace ChudoPechka.Controllers
             else
                 return View();
         }
+        [AlllActive]
         public PartialViewResult GetAnnounced()
         {
             if (!Manager.IsAuthentication)
@@ -29,6 +33,7 @@ namespace ChudoPechka.Controllers
             }
         }
         [ValidateAntiForgeryToken]
+        [AlllActive]
         public void SendAnnounced(AnnouncedModel model)
         {
             if (Manager.IsAuthentication)

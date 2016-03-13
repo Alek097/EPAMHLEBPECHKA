@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using ChudoPechka.Filters;
 using ChudoPechkaLib.Models;
 
 namespace ChudoPechka.Controllers
@@ -11,6 +12,7 @@ namespace ChudoPechka.Controllers
     public class DishController : ChudoPechka.Controllers.Base.BaseController
     {
         // GET: Dish
+        [AlllActive]
         public ActionResult Index(Guid dish_id)
         {
             Dish dish = null;
@@ -23,6 +25,7 @@ namespace ChudoPechka.Controllers
                 throw new HttpException(404, "Блюдо не найдено");
         }
         [ValidateAntiForgeryToken]
+        [AlllActive]
         public ActionResult AddComment(string text, string user_login, Guid dish_id)
         {
             User usr = null;
@@ -36,6 +39,7 @@ namespace ChudoPechka.Controllers
                 throw new HttpException(401, "Ошибка авторизации");
         }
         [ValidateAntiForgeryToken]
+
         public ActionResult RemoveComment(string user_login, Guid comment_id)
         {
             if (Manager.IsAuthentication)
