@@ -14,7 +14,7 @@ namespace ChudoPechkaLib
 {
     public class DBManager : IDBManager
     {
-        private const string COOKIE_NAME = "_TEST_COOKIE";//TODO: По завершению дать нормальное название
+        private const string COOKIE_NAME = "_EPAMCHUDO-PECHKA";
         private IStoreDB _db;
         private static Random rndCode = new Random();
         public User User
@@ -85,7 +85,7 @@ namespace ChudoPechkaLib
                 _db.UpdatePassword(login, newPass);
                 return true;
             }
-            return false;//TODO:НЕ РАБОТАЕТ СМЕНА ПАРОЛЯ
+            return false;
         }
         private void DeleteCookies()
         {
