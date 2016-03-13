@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Восстановление";
+}
+@section ScriptAndStyle
+{
+    <script src="~/scripts/jquery-2.2.1.js"></script>
+    <script>
+        $(window).load(function () {
+            $("[type=text]").addClass("text-box");
+        })
+    </script>
+    <style>
+        label
+        {
+            font-size:15pt;
+        }
+    </style>
+}
+@using ChudoPechka.Models
+@model RecoveryModel
+<div style="padding:10px">
+    @using (Html.BeginForm("Recovery", "Account", FormMethod.Post))
+    {
+        <span>На ваш почтовый ящик (@Model.E_Mail) было отправлено письмо с кодом подтверждения. Если письмо не пришло в течении 5 минут нажмите <span style="color:rgb(46, 116, 181); cursor:pointer" onclick="SendConfirm('@Model.E_Mail','@Model.Login')">здесь</span> для повторной отправки.</span>
+        <br />
+        @Html.HiddenFor(m => m.E_Mail)
+        @Html.HiddenFor(m => m.Login)
+        @Html.LabelFor(m => m.newPass)<br />
+        @Html.TextBoxFor(m => m.newPass)<br />
+        @Html.LabelFor(m => m.ConfirmNewPass)<br />
+        @Html.TextBoxFor(m => m.ConfirmNewPass)<br />
+        @Html.LabelFor(m => m.Code)<br />
+        @Html.TextBoxFor(m => m.Code)
+        <br />
+        <input type="submit" value="Восстановить" class="button" />
+    }
+
+    @Html.ValidationSummary()
+</div>

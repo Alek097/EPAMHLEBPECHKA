@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Восстановление";
+    ViewBag.Title = "Recovery";
 }
 
 @section ScriptAndStyle
@@ -19,6 +19,14 @@
         }
     </style>
     <script>
+        function Redirect(login, e_mail) {
+            var token = $("[name=__RequestVerificationToken]").val();
+            var url = '@Url.Action("SendConfirmCode", "Account")';
+            var data = { "__RequestVerificationToken": token, "login": login, "e_mail": e_mail };
+            $.post(url, data);
+
+            location.href = '@Url.Action("Recovery", "Account")' + "?login=" + login + "&e_mail=" + e_mail;
+        }
         function GetUser() {
             var e_mail = $("#e_Mail").val();
 
@@ -32,7 +40,8 @@
 
                     for (var i = 0; i < userLinks.length; i++) {
                         var login = $(userLinks[i]).attr("id")
-                        $(userLinks[i]).attr("onClick", 'location.href = "@Url.Action("SendConfirmCode", "Account")?e_mail=' + e_mail + '&login=' + login + '&__RequestVerificationToken=@Html.AntiForgeryToken()"');
+                        $(userLinks[i]).attr("onClick", "Redirect('" + login + "','" + e_mail + "')");
+
                     }
                 })
             .error(function (data) {
@@ -46,8 +55,7 @@
     </script>
     <script src="~/scripts/jquery-2.2.1.js"></script>
 }
-
-@using ChudoPechka.Models
+@Html.AntiForgeryToken()
 <div style="padding:10px;">
     <div>
         <div class="head">

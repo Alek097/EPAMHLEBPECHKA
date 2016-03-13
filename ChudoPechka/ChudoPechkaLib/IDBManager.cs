@@ -19,7 +19,7 @@ namespace ChudoPechkaLib
         void RegisterUser(User newUser);
         Guid RegisterGroup(string Name);
         void UpdateOrder(Order order);
-        bool UpdatePassword(string login, string newPass, string responseQuestion);
+        bool UpdatePassword(string login, string newPass);
         bool GetUser(string login, out User usr);
         bool GetUsersForEmail(string e_Mail, out List<User> users);
         bool GetGroup(Guid id, out Group grp);

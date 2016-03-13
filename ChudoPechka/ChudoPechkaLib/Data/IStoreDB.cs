@@ -33,7 +33,7 @@ namespace ChudoPechkaLib.Data
         bool IsContainAnnounced(Guid From_id);
         bool IsContainOrder(Guid order_id);
         void UpdateOrder(Order order);
-        void UpdatePassword(string login, string newPassword, string responseQuestion);
+        void UpdatePassword(string login, string newPassword);
         void UpdateAvatar(User usr, string fileName);
         void UpdateComment(Comment comment, string newText);
         void SendAnnounced(Announced ann);

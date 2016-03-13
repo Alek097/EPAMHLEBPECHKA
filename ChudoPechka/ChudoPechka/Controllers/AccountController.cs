@@ -165,7 +165,10 @@ namespace ChudoPechka.Controllers
 
             await Manager.SendConfirmCodeAsync(login, e_mail);
 
-            return Redirect(Url.Action("Confirm", new { e_mail = e_mail, login = login }));
+            if (!Manager.IsAuthentication)//Если мы вошли значит мы восстанавливаем пароль
+                throw new HttpException(200, "OK");
+            else
+                return Redirect(Url.Action("Confirm", new { e_mail = e_mail, login = login }));
         }
         [HttpGet]
         public ActionResult Confirm(string e_mail, string login)
@@ -192,10 +195,46 @@ namespace ChudoPechka.Controllers
                 ModelState.AddModelError("", "Коды не совпадают");
                 return View(model);
             }
+            else if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
             else
             {
                 Manager.SetActiveCode(Manager.User);
                 return Redirect(Url.Action("Index", "Home"));
+            }
+        }
+        public ActionResult Recovery(string login, string e_mail)
+        {
+            if(Manager.IsAuthentication)
+                return Redirect(Url.Action("Index", "Home"));
+
+            RecoveryModel model = new RecoveryModel();
+            model.Login = login;
+            model.E_Mail = e_mail;
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Recovery(RecoveryModel model)
+        {
+            User user = null;
+            if (Manager.IsAuthentication)
+                return Redirect(Url.Action("Index", "Home"));
+            else if (!ModelState.IsValid)
+                return View(model);
+            else if (!Manager.GetUser(model.Login, out user))
+                throw new HttpException(404, "Пользователь не найден");
+            else if (!user.ActivationCode.Equals(model.Code))
+            {
+                ModelState.AddModelError("", "Коды не совпадают");
+                return View(model);
+            }
+            else
+            {
+                Manager.UpdatePassword(model.Login, model.newPass);
+                return Redirect(Url.Action("LoginIn"));
             }
         }
     }

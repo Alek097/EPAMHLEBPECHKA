@@ -213,6 +213,7 @@
     <Content Include="Views\Account\SelectUserToRecovery.cshtml" />
     <Content Include="Views\Account\GetUsers.cshtml" />
     <Content Include="Views\Account\Confirm.cshtml" />
+    <Content Include="Views\Account\Recovery.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

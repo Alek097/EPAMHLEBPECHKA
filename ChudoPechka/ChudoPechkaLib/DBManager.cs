@@ -77,12 +77,12 @@ namespace ChudoPechkaLib
             return newGroup.Id;
         }
 
-        public bool UpdatePassword(string login, string newPass, string responseQuestion)
+        public bool UpdatePassword(string login, string newPass)
         {
 
             if (_db.IsContainUser(login))
             {
-                _db.UpdatePassword(login, newPass, responseQuestion);
+                _db.UpdatePassword(login, newPass);
                 return true;
             }
             return false;//TODO:НЕ РАБОТАЕТ СМЕНА ПАРОЛЯ

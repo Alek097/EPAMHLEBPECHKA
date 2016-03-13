@@ -243,7 +243,7 @@ namespace ChudoPechkaLib.Data
                 return false;
             }
         }
-        public void UpdatePassword(string login, string newPassword, string responseQuestion)
+        public void UpdatePassword(string login, string newPassword)
         {
             User updateUsr = this.Users.First(u => u.Login.Equals(login));
 
