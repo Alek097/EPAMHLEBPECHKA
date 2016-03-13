@@ -129,8 +129,10 @@
             var index = days.indexOf(today);
             if (index != -1)
                 days.splice(index, 1);
+            else
+                index = 0;
 
-            for (var i = 0; i < days.length; i++) {
+            for (var i = index; i < days.length; i++) {
                 SetDay(days[i]);
             }
         });

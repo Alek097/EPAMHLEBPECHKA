@@ -27,7 +27,9 @@ namespace ChudoPechkaLib.Data.DataAnnotations
                 DayOfWeek orderDay = GetDay(dayNum);
                 DayOfWeek today = date.DayOfWeek;
 
-                if (orderDay == today)
+                if (today == DayOfWeek.Friday)//В пятницу нельзя заказывать так как невозможно угадать когда у них меняется меню, а сделать это я уже не успеваю
+                    return false;
+                else if (orderDay == today)
                     return false;
                 else if (orderDay > today && orderDay != DayOfWeek.Saturday)
                 {
@@ -35,7 +37,7 @@ namespace ChudoPechkaLib.Data.DataAnnotations
                         return false;
                     return this.IsWorkDay(date, orderDay);
                 }
-                else if (orderDay < today && orderDay != DayOfWeek.Sunday && orderDay != DayOfWeek.Saturday)// Если пятница то меню поменялось, здесь мы смотрим чьто возможно день закза - не рабочий
+                else if (orderDay < today && orderDay != DayOfWeek.Sunday && orderDay != DayOfWeek.Saturday)// здесь мы смотрим чьто возможно день закза - не рабочий
                 {
                     return this.IsWorkDay(date, orderDay);
                 }
@@ -47,7 +49,8 @@ namespace ChudoPechkaLib.Data.DataAnnotations
                 DateTime val = (DateTime)value;
                 DayOfWeek nowDay = date.DayOfWeek;
                 TimeSpan nowTime = date.TimeOfDay;
-
+                if (nowDay == DayOfWeek.Friday)
+                    return false;
                 if (val > date && val.DayOfWeek != DayOfWeek.Saturday)
                 {
                     if (val == date.AddDays(1) && !(now < _validTime))
