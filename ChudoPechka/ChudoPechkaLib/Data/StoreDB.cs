@@ -424,9 +424,8 @@ namespace ChudoPechkaLib.Data
             }
         }
 
-        public void AddComment(User user, string text, int ball ,Guid dish_id)
+        public void AddComment(User user, string text, int ball, Guid dish_id)
         {
-            double rating = 0.0;
             Dish dish = this.GetDish(dish_id);
 
             Comment comment = new Comment();
@@ -454,7 +453,8 @@ namespace ChudoPechkaLib.Data
                 return 0.0;
 
             foreach (Comment item in comments)
-                rating += item.Ball;
+                if (item.Ball != 0)
+                    rating += item.Ball;
 
             rating /= comments.Count;//Подсчитываем среднее значение это и будет рейтинг
 
